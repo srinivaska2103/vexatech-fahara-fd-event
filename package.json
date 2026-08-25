@@ -3,21 +3,39 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "node --max-old-space-size=4096 node_modules/next/dist/bin/next dev",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
+    "@tanstack/react-query": "^5.101.2",
+    "axios": "^1.18.1",
+    "date-fns": "^4.4.0",
+    "framer-motion": "^12.42.2",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^1.25.0",
+    "next": "15.5.20",
     "react": "19.1.0",
+    "react-circular-progressbar": "^2.2.0",
     "react-dom": "19.1.0",
-    "next": "15.5.20"
+    "react-hook-form": "^7.82.0",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.7.0",
+    "react-leaflet": "^5.0.0",
+    "recharts": "^3.10.0",
+    "xlsx": "^0.18.5",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.5.20",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4"
   }
 }
