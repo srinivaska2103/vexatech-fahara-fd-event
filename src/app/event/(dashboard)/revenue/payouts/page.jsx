@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { 
   ArrowLeft, Download, RefreshCw, CheckCircle2, Clock, 
   RotateCcw, XCircle, Search, Sparkles, Repeat, ShieldAlert,
-  Loader2, ChevronRight, IndianRupee
+  Loader2, ChevronRight, IndianRupee, ArrowUpRight, GitBranch, X
 } from 'lucide-react';
 import { usePayoutList } from '@/hooks/finance/useFinanceQueries';
 import { useDashboardQueries } from '@/hooks/dashboard/useDashboardQueries';
@@ -14,9 +14,19 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
+const formatDateTime = (dateStr) => {
+  if (!dateStr) return 'Sep 02, 2026 - 09:36 AM';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  const dateFormatted = d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+  const timeFormatted = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  return `${dateFormatted} - ${timeFormatted}`;
+};
+
 export default function PayoutsPage() {
   const [activeTab, setActiveTab] = useState('all'); // 'all', 'settled', 'pending', 'processing', 'failed'
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSettlement, setSelectedSettlement] = useState(null);
   
   const filters = useFinanceStore(state => state.filters);
   const pagination = useFinanceStore(state => state.pagination);
@@ -36,25 +46,44 @@ export default function PayoutsPage() {
   let allSettlements = [];
 
   if (apiPayouts.length > 0) {
-    allSettlements = apiPayouts.map(p => ({
-      id: p.reference_number || `PO-${p.id?.substring(0, 8).toUpperCase() || 'UNKNOWN'}`,
-      razorpayRef: p.razorpay_ref || p.cashfree_ref || `RZP_SETTL_${p.id?.substring(0, 6) || '8842'}`,
-      bookingId: p.booking_id || 'BK-1001',
-      amount: Number(p.amount || 0),
-      status: (p.status || p.payout_status || '').toUpperCase() || 'SETTLED',
-      date: p.date || p.transfer_date || new Date().toISOString(),
-      bankAccount: p.bank_name && p.account_last4 ? `${p.bank_name} - **** ${p.account_last4}` : bankAccountStr
-    }));
+    allSettlements = apiPayouts.map(p => {
+      const statusUpper = (p.status || p.payout_status || '').toUpperCase() || 'SETTLED';
+      const isSettled = statusUpper === 'SETTLED' || statusUpper === 'COMPLETED';
+      const tDate = p.transfer_date || p.date || p.created_at || new Date().toISOString();
+      const sDate = p.settlement_date || p.payout_completed_at || p.settled_at || (isSettled ? tDate : null);
+
+      return {
+        id: p.reference_number || `PO-${p.id?.substring(0, 8).toUpperCase() || 'UNKNOWN'}`,
+        razorpayRef: p.razorpay_ref || p.cashfree_ref || `RZP_SETTL_${p.id?.substring(0, 6) || '8842'}`,
+        bookingId: p.booking_id || p.booking_number || 'BK-1001',
+        amount: Number(p.amount || 0),
+        status: statusUpper,
+        date: p.date || p.created_at || new Date().toISOString(),
+        transferDate: tDate,
+        settlementDate: sDate,
+        bankAccount: p.bank_name && p.account_last4 ? `${p.bank_name} - **** ${p.account_last4}` : bankAccountStr
+      };
+    });
   } else if (rawBookings.length > 0) {
-    allSettlements = rawBookings.map(b => ({
-      id: `PO-${b.id?.substring(0, 8).toUpperCase() || 'UNKNOWN'}`,
-      razorpayRef: `RZP_SETTL_${b.id?.substring(0, 6) || '8842'}`,
-      bookingId: b.booking_number || b.id?.substring(0, 8) || 'BK-1000',
-      amount: Number(b.vendor_amount || (b.amount ? b.amount * 0.95 : 0)),
-      status: (b.status || '').toUpperCase() === 'COMPLETED' || (b.status || '').toUpperCase() === 'CONFIRMED' ? 'SETTLED' : 'PENDING',
-      date: b.createdAt || b.created_at || b.date || b.booking_date || new Date().toISOString(),
-      bankAccount: bankAccountStr
-    }));
+    allSettlements = rawBookings.map(b => {
+      const statusUpper = (b.status || '').toUpperCase();
+      const isSettled = statusUpper === 'COMPLETED' || statusUpper === 'CONFIRMED' || statusUpper === 'SETTLED';
+      const createdDate = b.createdAt || b.created_at || b.date || b.booking_date || new Date().toISOString();
+      const tDate = b.transfer_date || createdDate;
+      const sDate = b.settlement_date || b.settled_at || (isSettled ? tDate : null);
+
+      return {
+        id: b.payout_ref || `PO-${b.id?.substring(0, 8).toUpperCase() || 'UNKNOWN'}`,
+        razorpayRef: b.razorpay_ref || `RZP_SETTL_${b.id?.substring(0, 6) || '8842'}`,
+        bookingId: b.booking_number || b.id?.substring(0, 8) || 'BK-1000',
+        amount: Number(b.vendor_amount || (b.amount ? b.amount * 0.95 : 0)),
+        status: isSettled ? 'SETTLED' : 'PENDING',
+        date: createdDate,
+        transferDate: tDate,
+        settlementDate: sDate,
+        bankAccount: bankAccountStr
+      };
+    });
   }
 
   // Calculate metrics
@@ -111,9 +140,11 @@ export default function PayoutsPage() {
     ];
 
     try {
-      let csv = 'Payout ID,Razorpay Ref,Booking Ref,Amount (INR),Status,Bank Account,Date\n';
+      let csv = 'Payout ID,Razorpay Ref,Booking Ref,Amount (INR),Status,Bank Account,Transfer Date,Settlement Date\n';
       exportData.forEach(s => {
-        csv += `"${s.id}","${s.razorpayRef || s.cashfreeRef || ''}","${s.bookingId}","${s.amount}","${s.status}","${s.bankAccount}","${s.date}"\n`;
+        const transferStr = s.transferDate ? new Date(s.transferDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : '';
+        const settlementStr = s.settlementDate ? new Date(s.settlementDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : 'Pending';
+        csv += `"${s.id}","${s.razorpayRef || s.cashfreeRef || ''}","${s.bookingId}","${s.amount}","${s.status}","${s.bankAccount}","${transferStr}","${settlementStr}"\n`;
       });
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -365,12 +396,12 @@ export default function PayoutsPage() {
             <table className="w-full text-left text-xs sm:text-sm text-[#2C1810] whitespace-nowrap">
               <thead className="bg-[#FFF8F0] border-b border-[#E8DED5] text-[10px] uppercase tracking-wider text-[#8C6D58] font-black select-none">
                 <tr>
-                  <th className="p-4">Settlement ID / Ref</th>
-                  <th className="p-4">Booking Ref</th>
-                  <th className="p-4">Bank Account</th>
-                  <th className="p-4">Amount (95% Net)</th>
-                  <th className="p-4">Transfer Date</th>
-                  <th className="p-4 text-right">Status</th>
+                  <th className="p-4">Booking ID</th>
+                  <th className="p-4">Settlement Date</th>
+                  <th className="p-4">Net Event Amount</th>
+                  <th className="p-4">Status</th>
+                  <th className="p-4">Razorpay Reference</th>
+                  <th className="p-4 text-center">Details</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#F2EAE1]">
@@ -382,60 +413,74 @@ export default function PayoutsPage() {
                     key={item.id}
                     className="hover:bg-[#FFFDF9] transition-colors"
                   >
-                    <td className="p-4">
-                      <div className="font-black text-[#6F4E37]">
-                        {item.id}
-                      </div>
-                      <div className="text-[11px] font-medium text-[#8C6D58]">
-                        {item.razorpayRef || item.cashfreeRef}
-                      </div>
-                    </td>
-
-                    <td className="p-4 font-bold text-[#2C1810]">
+                    {/* BOOKING ID */}
+                    <td className="p-4 font-black text-[#2C1810] text-xs sm:text-sm">
                       {item.bookingId}
                     </td>
 
-                    <td className="p-4 text-xs font-semibold text-[#8C6D58]">
-                      {item.bankAccount}
+                    {/* SETTLEMENT DATE */}
+                    <td className="p-4 text-xs sm:text-sm font-medium text-[#8C6D58]/80">
+                      {formatDateTime(item.settlementDate || item.date)}
                     </td>
 
-                    <td className="p-4 font-black text-[#2C1810]">
+                    {/* NET EVENT AMOUNT */}
+                    <td className="p-4 font-black text-[#2C1810] text-sm">
                       ₹{item.amount.toLocaleString('en-IN')}
                     </td>
 
-                    <td className="p-4 text-xs font-bold text-[#2C1810]">
-                      {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}
+                    {/* STATUS */}
+                    <td className="p-4">
+                      <div className="flex items-center gap-2">
+                        {((s) => {
+                          if (s === 'SETTLED' || s === 'COMPLETED') {
+                            return (
+                              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">
+                                <CheckCircle2 className="w-3.5 h-3.5" /> Settled
+                              </span>
+                            );
+                          }
+                          if (s === 'PROCESSING') {
+                            return (
+                              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold">
+                                <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Processing
+                              </span>
+                            );
+                          }
+                          if (s === 'PENDING') {
+                            return (
+                              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#FFF3E0] text-[#D97706] border border-[#FDE68A] text-xs font-black">
+                                <Clock className="w-3.5 h-3.5" /> Pending
+                              </span>
+                            );
+                          }
+                          return (
+                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold">
+                              <XCircle className="w-3.5 h-3.5" /> Failed
+                            </span>
+                          );
+                        })(item.status)}
+
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F5EFEA] text-[#7A5A44] border border-[#E5DCD3] text-xs font-bold">
+                          <GitBranch className="w-3.5 h-3.5 text-[#8C6D58]" /> {item.tag || 'Date as Expected'}
+                        </span>
+                      </div>
                     </td>
 
-                    <td className="p-4 text-right">
-                      {((s) => {
-                        if (s === 'SETTLED' || s === 'COMPLETED') {
-                          return (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase tracking-wider">
-                              <CheckCircle2 className="w-3 h-3" /> SETTLED
-                            </span>
-                          );
-                        }
-                        if (s === 'PROCESSING') {
-                          return (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-black uppercase tracking-wider">
-                              <RefreshCw className="w-3 h-3 animate-spin" /> PROCESSING
-                            </span>
-                          );
-                        }
-                        if (s === 'PENDING') {
-                          return (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-black uppercase tracking-wider">
-                              <Clock className="w-3 h-3" /> PENDING
-                            </span>
-                          );
-                        }
-                        return (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200 text-[10px] font-black uppercase tracking-wider">
-                            <XCircle className="w-3 h-3" /> FAILED
-                          </span>
-                        );
-                      })(item.status)}
+                    {/* RAZORPAY REFERENCE */}
+                    <td className="p-4 text-xs font-semibold text-[#4A3427] font-mono">
+                      {item.razorpayRef || item.cashfreeRef}
+                    </td>
+
+                    {/* DETAILS BUTTON */}
+                    <td className="p-4 text-center">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedSettlement(item)}
+                        className="w-8 h-8 rounded-full bg-[#6F4E37] text-white hover:bg-[#583E2C] flex items-center justify-center transition-all shadow-xs active:scale-90 cursor-pointer mx-auto"
+                        title="View Settlement Details"
+                      >
+                        <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                      </button>
                     </td>
                   </motion.tr>
                 ))}
@@ -444,6 +489,74 @@ export default function PayoutsPage() {
           </div>
         )}
       </div>
+
+      {/* DETAILS MODAL */}
+      {selectedSettlement && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-white border border-[#E8DED5] rounded-3xl max-w-lg w-full p-6 shadow-xl space-y-5"
+          >
+            <div className="flex items-center justify-between border-b border-[#F2EAE1] pb-4">
+              <div>
+                <h3 className="text-lg font-black text-[#2C1810]">Settlement Details</h3>
+                <p className="text-xs text-[#8C6D58] font-bold">Booking Ref: {selectedSettlement.bookingId}</p>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setSelectedSettlement(null)}
+                className="p-1.5 rounded-full hover:bg-[#FFF8F0] text-[#8C6D58] transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs">
+              <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
+                <span className="text-[#8C6D58] font-semibold">Settlement ID</span>
+                <span className="font-black text-[#6F4E37]">{selectedSettlement.id}</span>
+              </div>
+
+              <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
+                <span className="text-[#8C6D58] font-semibold">Razorpay Reference</span>
+                <span className="font-mono font-bold text-[#4A3427]">{selectedSettlement.razorpayRef}</span>
+              </div>
+
+              <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
+                <span className="text-[#8C6D58] font-semibold">Net Event Amount</span>
+                <span className="font-black text-[#2C1810] text-sm">₹{selectedSettlement.amount.toLocaleString('en-IN')}</span>
+              </div>
+
+              <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
+                <span className="text-[#8C6D58] font-semibold">Settlement Date</span>
+                <span className="font-bold text-[#2C1810]">{formatDateTime(selectedSettlement.settlementDate || selectedSettlement.date)}</span>
+              </div>
+
+              <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
+                <span className="text-[#8C6D58] font-semibold">Bank Account</span>
+                <span className="font-bold text-[#2C1810]">{selectedSettlement.bankAccount}</span>
+              </div>
+
+              <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
+                <span className="text-[#8C6D58] font-semibold">Status & Tag</span>
+                <span className="font-bold uppercase text-[#6F4E37]">{selectedSettlement.status} — ({selectedSettlement.tag || 'Date as Expected'})</span>
+              </div>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setSelectedSettlement(null)}
+                className="px-5 py-2.5 bg-[#6F4E37] text-white rounded-2xl text-xs font-bold hover:bg-[#583E2C] transition-colors cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
     </div>
   );

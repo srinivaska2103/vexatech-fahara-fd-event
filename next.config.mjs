@@ -14,6 +14,21 @@ const nextConfig = {
         destination: '/event/dashboard',
         permanent: false,
       },
+      {
+        source: '/owner/dashboard',
+        destination: '/event/dashboard',
+        permanent: true,
+      },
+      {
+        source: '/owner',
+        destination: '/event/dashboard',
+        permanent: true,
+      },
+      {
+        source: '/owner/:path*',
+        destination: '/event/:path*',
+        permanent: true,
+      },
     ];
   },
 };
