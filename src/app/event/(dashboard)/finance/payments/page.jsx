@@ -43,13 +43,15 @@ export default function PaymentsPage() {
   const totalBookingValue = payments.reduce((acc, curr) => acc + Number(curr.totalAmount || curr.amount || 0), 0);
   const yourNetEarnings = payments.reduce((acc, curr) => acc + Number(curr.vendorShare || (curr.totalAmount ? curr.totalAmount * 0.95 : 0)), 0);
   
-  const pendingSettlement = payments
-    .filter(p => (p.status || '').toUpperCase() === 'PENDING')
-    .reduce((acc, curr) => acc + Number(curr.vendorShare || curr.totalAmount || 0), 0);
-    
+  // Settled Amount: Only payments that have been explicitly transferred to bank (settlementStatus / status === 'SETTLED')
   const settledAmount = payments
-    .filter(p => (p.status || '').toUpperCase() === 'SUCCESS' || (p.status || '').toUpperCase() === 'SETTLED')
+    .filter(p => (p.settlementStatus || p.status || '').toUpperCase() === 'SETTLED')
     .reduce((acc, curr) => acc + Number(curr.vendorShare || curr.totalAmount || 0), 0);
+
+  // Pending Settlement: Customer payments received but pending Razorpay bank split transfer
+  const pendingSettlement = payments.length > 0 
+    ? Math.max(0, yourNetEarnings - settledAmount)
+    : 0;
 
   const refundAmount = payments
     .filter(p => (p.status || '').toUpperCase() === 'FAILED' || (p.status || '').toUpperCase() === 'REFUNDED')

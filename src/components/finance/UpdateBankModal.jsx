@@ -17,10 +17,12 @@ export default function UpdateBankModal() {
   const { user } = useAuthStore();
 
   const initialHolderName = accountData?.accountHolderName || profileData?.bank_account_holder || profileData?.account_holder_name || profileData?.name || user?.name || 'Fahara Events & Services Pvt Ltd';
+  const initialEmail = accountData?.email || profileData?.email || user?.email || '';
   const initialIfsc = accountData?.ifsc || profileData?.ifsc_code || profileData?.ifsc || '';
 
   const [formData, setFormData] = useState({
     accountHolderName: initialHolderName,
+    email: initialEmail,
     accountNumber: '',
     confirmAccountNumber: '',
     ifscCode: initialIfsc,
@@ -32,6 +34,7 @@ export default function UpdateBankModal() {
     if (isUpdateBankModalOpen) {
       setFormData({
         accountHolderName: accountData?.accountHolderName || profileData?.bank_account_holder || profileData?.account_holder_name || profileData?.name || user?.name || 'Fahara Events & Services Pvt Ltd',
+        email: accountData?.email || profileData?.email || user?.email || '',
         accountNumber: '',
         confirmAccountNumber: '',
         ifscCode: accountData?.ifsc || profileData?.ifsc_code || profileData?.ifsc || '',
@@ -74,6 +77,7 @@ export default function UpdateBankModal() {
 
     updateBankMutation.mutate({
       accountHolderName: formData.accountHolderName,
+      email: formData.email,
       accountNumber: formData.accountNumber,
       confirmAccountNumber: formData.confirmAccountNumber,
       ifscCode: formData.ifscCode,
@@ -131,11 +135,11 @@ export default function UpdateBankModal() {
           <form onSubmit={handleSubmit} className="space-y-4">
             
             {/* Account Holder Name */}
-            <div className="space-y-1.5">
-              <label className="block text-[11px] font-black text-[#4A3225] uppercase tracking-wider">
-                Account Holder Name
-              </label>
-              <div className="relative">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label className="block text-[11px] font-black text-[#4A3225] uppercase tracking-wider">
+                  Account Holder Name
+                </label>
                 <input
                   type="text"
                   value={formData.accountHolderName}
@@ -143,13 +147,26 @@ export default function UpdateBankModal() {
                     setFormData({ ...formData, accountHolderName: e.target.value });
                     if (errors.accountHolderName) setErrors({ ...errors, accountHolderName: null });
                   }}
-                  placeholder="Full legal or registered business name"
+                  placeholder="Full legal name"
                   className={`w-full bg-[#FFFBF8] border rounded-2xl px-4 py-3 text-sm font-medium text-[#2C1810] placeholder:text-[#B59D8B] focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
                     errors.accountHolderName ? 'border-red-500 bg-red-50/30' : 'border-[#F0E6DD]'
                   }`}
                 />
+                {errors.accountHolderName && <p className="text-xs font-bold text-red-500 mt-1">{errors.accountHolderName}</p>}
               </div>
-              {errors.accountHolderName && <p className="text-xs font-bold text-red-500 mt-1">{errors.accountHolderName}</p>}
+
+              <div className="space-y-1.5">
+                <label className="block text-[11px] font-black text-[#4A3225] uppercase tracking-wider">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="vendor@example.com"
+                  className="w-full bg-[#FFFBF8] border border-[#F0E6DD] rounded-2xl px-4 py-3 text-sm font-medium text-[#2C1810] placeholder:text-[#B59D8B] focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all"
+                />
+              </div>
             </div>
 
             {/* Account Number & Confirm */}

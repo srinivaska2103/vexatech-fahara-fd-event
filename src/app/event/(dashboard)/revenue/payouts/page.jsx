@@ -96,9 +96,11 @@ export default function PayoutsPage() {
     .filter(s => s.status === 'SETTLED' || s.status === 'COMPLETED')
     .reduce((sum, s) => sum + s.amount, 0);
 
-  const pendingSettlement = allSettlements
-    .filter(s => s.status === 'PENDING')
+  const pendingSettlementCalc = allSettlements
+    .filter(s => s.status === 'PENDING' || s.status === 'PROCESSING' || s.status === 'CREATED' || s.status === 'UNPAID')
     .reduce((sum, s) => sum + s.amount, 0);
+
+  const pendingSettlement = pendingSettlementCalc > 0 ? pendingSettlementCalc : Math.max(0, allSettlements.reduce((sum, s) => sum + s.amount, 0) - totalSettled);
 
   const processingQueue = allSettlements
     .filter(s => s.status === 'PROCESSING')

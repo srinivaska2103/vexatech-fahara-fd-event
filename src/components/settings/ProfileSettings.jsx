@@ -62,6 +62,37 @@ export default function ProfileSettings() {
     );
   }
 
+  const [photoPreview, setPhotoPreview] = React.useState(profile?.profileImage || profile?.avatar || null);
+  const fileInputRef = React.useRef(null);
+
+  useEffect(() => {
+    if (profile?.profileImage || profile?.avatar) {
+      setPhotoPreview(profile.profileImage || profile.avatar);
+    }
+  }, [profile]);
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file (JPG, PNG, or GIF)');
+      return;
+    }
+
+    if (file.size > 800 * 1024) {
+      toast.error('File size exceeds 800KB limit');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPhotoPreview(reader.result);
+      toast.success('Profile photo updated successfully!');
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className="bg-white rounded-3xl border border-[#E8DED5] p-6 sm:p-8 shadow-xs space-y-6 select-none font-sans">
       
@@ -76,11 +107,27 @@ export default function ProfileSettings() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         
+        {/* Hidden File Input */}
+        <input 
+          type="file"
+          ref={fileInputRef}
+          onChange={handlePhotoChange}
+          accept="image/jpeg,image/png,image/gif,image/webp"
+          className="hidden"
+        />
+
         {/* Avatar Upload */}
         <div className="flex items-center gap-6 p-4 rounded-2xl bg-[#FFFDF9] border border-[#E8DED5]">
-          <div className="relative group cursor-pointer shrink-0">
+          <div 
+            onClick={() => fileInputRef.current?.click()}
+            className="relative group cursor-pointer shrink-0"
+          >
             <div className="w-20 h-20 rounded-full bg-[#FFF8F0] border-4 border-white shadow-md flex items-center justify-center overflow-hidden">
-              <span className="text-2xl font-black text-[#6F4E37]">{profile?.ownerName?.charAt(0) || 'S'}</span>
+              {photoPreview ? (
+                <img src={photoPreview} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-2xl font-black text-[#6F4E37]">{profile?.ownerName?.charAt(0) || 'S'}</span>
+              )}
             </div>
             <div className="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
               <Camera className="w-5 h-5 text-white" />
@@ -91,8 +138,8 @@ export default function ProfileSettings() {
             <p className="text-[11px] text-[#8C6D58] font-medium mb-2.5">JPG, GIF or PNG. Max size of 800K</p>
             <button 
               type="button" 
-              onClick={() => toast.success('Photo selector opened')}
-              className="text-xs font-bold text-[#6F4E37] hover:text-white border border-[#E8DED5] bg-white hover:bg-[#6F4E37] px-4 py-2 rounded-xl transition-all flex items-center gap-2 shadow-2xs active:scale-95"
+              onClick={() => fileInputRef.current?.click()}
+              className="text-xs font-bold text-[#6F4E37] hover:text-white border border-[#E8DED5] bg-white hover:bg-[#6F4E37] px-4 py-2 rounded-xl transition-all flex items-center gap-2 shadow-2xs active:scale-95 cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5" /> Upload New
             </button>
