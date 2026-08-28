@@ -3,7 +3,7 @@
 import React from 'react';
 import { 
   ArrowLeft, RefreshCw, Shield, Edit3, Landmark, CheckCircle2, 
-  FileText, Sparkles, Loader2, CreditCard, ShieldCheck, Check
+  FileText, Sparkles, Loader2, CreditCard, ShieldCheck, Check, Mail
 } from 'lucide-react';
 import Link from 'next/link';
 import { useFinanceStore } from '@/store/useFinanceStore';
@@ -32,6 +32,12 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
     user?.name || 
     user?.ownerName || 
     'SRINIVAS K A';
+
+  const emailAddress = 
+    accountData?.email || 
+    profileData?.email || 
+    user?.email || 
+    'srinivas@fahara.com';
 
   const rawAccountNumber = 
     accountData?.accountNumber || 
@@ -215,6 +221,16 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
               </span>
               <span className="text-base sm:text-lg font-black text-[#2C1810] block tracking-wider font-mono">
                 {ifscCode}
+              </span>
+            </div>
+
+            <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-5 space-y-1.5">
+              <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider block">
+                Account Holder Email
+              </span>
+              <span className="text-base sm:text-lg font-extrabold text-[#2C1810] block truncate flex items-center gap-2">
+                <Mail className="w-4 h-4 text-[#8C6D58] shrink-0" />
+                <span className="truncate">{emailAddress}</span>
               </span>
             </div>
 

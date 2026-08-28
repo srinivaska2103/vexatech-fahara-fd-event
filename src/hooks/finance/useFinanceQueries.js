@@ -156,9 +156,11 @@ export const usePaymentsList = (filters = {}, pagination = {}, sort = {}) => {
         
         const mapped = (Array.isArray(list) ? list : []).map(p => {
           const totalAmt = Number(p.amount || 0);
-          const vendorShare = Math.round(totalAmt * 0.95);
+          const vendorShare = Math.round(p.vendor_share || p.vendor_amount || Math.round(totalAmt * 0.95));
           const platformFee = totalAmt - vendorShare;
           const safeId = p.id ? String(p.id) : '00000000';
+          const rawStatus = (p.status || p.payment_status || 'PENDING').toUpperCase();
+          const settlementStatus = (p.settlement_status || p.payout_status || (rawStatus === 'SETTLED' ? 'SETTLED' : 'PENDING')).toUpperCase();
           
           return {
             id: p.id,
@@ -171,7 +173,8 @@ export const usePaymentsList = (filters = {}, pagination = {}, sort = {}) => {
             paymentMethod: p.method || 'Razorpay PG',
             cashfreePaymentId: p.transaction_id || p.gateway_order_id || `rzp_pay_${safeId.slice(0, 8)}`,
             razorpayPaymentId: p.transaction_id || p.gateway_order_id || `rzp_pay_${safeId.slice(0, 8)}`,
-            status: (p.status === 'PAID' || p.status === 'SUCCESS') ? 'SUCCESS' : (p.status || 'SUCCESS'),
+            status: rawStatus,
+            settlementStatus: settlementStatus,
             createdAt: p.date || p.created_at || new Date().toISOString(),
           };
         });
