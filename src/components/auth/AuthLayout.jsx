@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 
 export default function AuthLayout({ children }) {
   return (
-    <div className="min-h-screen bg-[#FBF6F0] flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden select-none font-sans">
+    <div className="min-h-screen bg-gradient-to-b from-[#F7EFE5] via-[#FAF5EF] to-[#F2E8DC] flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden select-none font-sans">
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
-        className="w-full max-w-[420px] bg-white border border-[#F0E6DD] rounded-[28px] shadow-xl shadow-[#6F4E37]/[0.06] p-7 sm:p-9 relative z-10"
+        className="w-full max-w-[440px] bg-white/95 backdrop-blur-md border border-white/80 rounded-[32px] shadow-2xl p-7 sm:p-9 relative z-10"
       >
         {children}
       </motion.div>

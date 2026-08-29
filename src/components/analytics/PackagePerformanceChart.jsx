@@ -12,13 +12,7 @@ const PackagePerformanceChart = ({ data = [], isLoading }) => {
     );
   }
 
-  // Fallback demo package performance data if empty
-  const chartData = (data && data.length > 0 && data.some(d => d.revenue > 0 || d.bookings > 0)) ? data : [
-    { name: 'Grand Birthday Hall', revenue: 45000, bookings: 12 },
-    { name: 'Garden Photography Setup', revenue: 32000, bookings: 8 },
-    { name: 'Cocktail Bar Tender Package', revenue: 24000, bookings: 6 },
-    { name: 'Acoustic Live Band', revenue: 18000, bookings: 4 },
-  ];
+  const chartData = data || [];
 
   const COLORS = ['#6F4E37', '#A67B5B', '#C8A285', '#E8DED5'];
 

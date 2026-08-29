@@ -8,8 +8,8 @@ export const useNotifications = (filters) => {
     queryFn: async () => {
       try {
         const res = await axiosInstance.get(API_ENDPOINTS.NOTIFICATIONS.LIST, { params: filters });
-        console.log('NOTIFICATIONS RES:', res.data);
-        return res.data.data;
+        const data = res.data?.data?.notifications || res.data?.notifications || res.data?.data || res.data || [];
+        return Array.isArray(data) ? data : [];
       } catch (error) {
         console.error('NOTIFICATIONS ERR:', error);
         return [];

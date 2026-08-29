@@ -199,10 +199,15 @@ export default function LoadingScreen({ text: initialText = "Preparing owner wor
               <img 
                 src="/fahara-logo.jpeg" 
                 alt="Fahara Logo" 
-                className="w-full h-full object-cover rounded-lg sm:rounded-xl transition-transform duration-300 group-hover:scale-110"
+                className="w-full h-full object-cover rounded-lg sm:rounded-xl transition-transform duration-300 group-hover:scale-110 max-w-full max-h-full"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', maxWidth: '64px', maxHeight: '64px' }}
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = '/Fahara Logo.jpeg';
+                  e.target.style.display = 'none';
+                  if (e.target.parentElement) {
+                    e.target.parentElement.innerText = 'F';
+                    e.target.parentElement.className = 'w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-[#6F4E37] text-white font-black flex items-center justify-center text-xl shadow-md';
+                  }
                 }}
               />
             </div>

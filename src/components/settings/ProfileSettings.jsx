@@ -29,6 +29,9 @@ export default function ProfileSettings() {
     }
   });
 
+  const [photoPreview, setPhotoPreview] = React.useState(null);
+  const fileInputRef = React.useRef(null);
+
   useEffect(() => {
     if (profile) {
       reset({
@@ -36,6 +39,9 @@ export default function ProfileSettings() {
         email: profile.email || 'srinivaska2103@gmail.com',
         phone: profile.phone || '8946029206'
       });
+      if (profile.profileImage || profile.avatar) {
+        setPhotoPreview(profile.profileImage || profile.avatar);
+      }
     }
   }, [profile, reset]);
 
@@ -61,15 +67,6 @@ export default function ProfileSettings() {
       </div>
     );
   }
-
-  const [photoPreview, setPhotoPreview] = React.useState(profile?.profileImage || profile?.avatar || null);
-  const fileInputRef = React.useRef(null);
-
-  useEffect(() => {
-    if (profile?.profileImage || profile?.avatar) {
-      setPhotoPreview(profile.profileImage || profile.avatar);
-    }
-  }, [profile]);
 
   const handlePhotoChange = (e) => {
     const file = e.target.files?.[0];

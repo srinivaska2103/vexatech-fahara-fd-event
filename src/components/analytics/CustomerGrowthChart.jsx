@@ -12,15 +12,7 @@ const CustomerGrowthChart = ({ data = [], isLoading }) => {
     );
   }
 
-  // Fallback demo customer growth data if empty
-  const chartData = (data && data.length > 0 && data.some(d => d.customers > 0)) ? data : [
-    { name: 'Mar', customers: 8 },
-    { name: 'Apr', customers: 14 },
-    { name: 'May', customers: 22 },
-    { name: 'Jun', customers: 19 },
-    { name: 'Jul', customers: 31 },
-    { name: 'Aug', customers: 38 },
-  ];
+  const chartData = data || [];
 
   return (
     <div className="bg-white p-6 sm:p-7 rounded-3xl border border-[#E8DED5] shadow-xs select-none space-y-4">

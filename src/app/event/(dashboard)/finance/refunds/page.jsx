@@ -20,7 +20,7 @@ export default function RefundsPage() {
 
   const refundsList = refundsData?.data || [
     {
-      id: 'RFD_RZP_1092',
+      id: 'RFD-1092',
       bookingId: 'EVT-BK-1052',
       customerName: 'Kavita Menon',
       serviceName: 'Private Garden Photography Setup',
@@ -32,7 +32,7 @@ export default function RefundsPage() {
       createdAt: '2026-08-14T14:20:00Z',
     },
     {
-      id: 'RFD_RZP_1091',
+      id: 'RFD-1091',
       bookingId: 'EVT-BK-1049',
       customerName: 'Sameer Kulkarni',
       serviceName: 'Cocktail Bar Tender Package',
@@ -44,7 +44,7 @@ export default function RefundsPage() {
       createdAt: '2026-08-11T10:15:00Z',
     },
     {
-      id: 'RFD_RZP_1090',
+      id: 'RFD-1090',
       bookingId: 'EVT-BK-1045',
       customerName: 'Tanya Bansal',
       serviceName: 'Acoustic Band Live Performance',
@@ -88,7 +88,7 @@ export default function RefundsPage() {
   const handleExport = () => {
     const exportData = filteredRefunds.length > 0 ? filteredRefunds : [
       {
-        id: 'RFD_RZP_1092',
+        id: 'RFD-1092',
         bookingId: 'EVT-BK-1052',
         customerName: 'Kavita Menon',
         refundAmount: 15000,
@@ -153,7 +153,7 @@ export default function RefundsPage() {
                 <span>Back to Payments</span>
               </Link>
               <span className="text-[11px] font-black uppercase tracking-widest text-[#7A5A44]">
-                • RAZORPAY REFUNDS MANAGEMENT
+                • REFUNDS MANAGEMENT
               </span>
             </div>
             
@@ -162,7 +162,7 @@ export default function RefundsPage() {
             </h1>
             
             <p className="text-xs sm:text-sm text-[#7A5A44] font-medium max-w-2xl leading-relaxed">
-              Monitor, initiate, and audit Razorpay payment gateway refunds for event booking cancellations.
+              Monitor, initiate, and audit payment gateway refunds for event booking cancellations.
             </p>
           </div>
 
@@ -273,23 +273,6 @@ export default function RefundsPage() {
           </div>
         </div>
 
-      </div>
-
-      {/* ========================================== */}
-      {/* 3. AUTOMATED BACKEND REFUND PROTOCOL BANNER*/}
-      {/* ========================================== */}
-      <div className="bg-[#FFF8F0]/90 border border-[#E8DED5] rounded-3xl p-5 shadow-2xs flex items-start gap-3.5">
-        <div className="w-8 h-8 rounded-full bg-[#6F4E37]/10 text-[#6F4E37] flex items-center justify-center shrink-0 mt-0.5">
-          <Info className="w-4 h-4 stroke-[2.5]" />
-        </div>
-        <div className="space-y-0.5">
-          <h4 className="text-xs font-black text-[#2C1810] uppercase tracking-wider">
-            Automated Backend Refund Protocol
-          </h4>
-          <p className="text-xs text-[#8C6D58] font-medium leading-relaxed">
-            All customer refunds are initiated and authorized strictly via secure backend Fahara API integrations. The frontend displays confirmed Razorpay gateway adjustment logs to maintain complete financial transparency.
-          </p>
-        </div>
       </div>
 
       {/* ========================================== */}

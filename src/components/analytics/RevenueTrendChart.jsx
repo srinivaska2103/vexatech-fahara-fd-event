@@ -12,15 +12,8 @@ const RevenueTrendChart = ({ data = [], isLoading }) => {
     );
   }
 
-  // Fallback demo trend data if empty
-  const chartData = (data && data.length > 0 && data.some(d => d.revenue > 0)) ? data : [
-    { name: 'Mar', revenue: 18000 },
-    { name: 'Apr', revenue: 24000 },
-    { name: 'May', revenue: 32000 },
-    { name: 'Jun', revenue: 29000 },
-    { name: 'Jul', revenue: 41000 },
-    { name: 'Aug', revenue: 48000 },
-  ];
+  const chartData = data || [];
+  const hasData = chartData.some(d => Number(d.revenue || 0) > 0);
 
   return (
     <div className="bg-white p-6 sm:p-7 rounded-3xl border border-[#E8DED5] shadow-xs select-none space-y-4">

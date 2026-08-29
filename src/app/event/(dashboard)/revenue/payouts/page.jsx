@@ -142,7 +142,7 @@ export default function PayoutsPage() {
     ];
 
     try {
-      let csv = 'Payout ID,Razorpay Ref,Booking Ref,Amount (INR),Status,Bank Account,Transfer Date,Settlement Date\n';
+      let csv = 'Payout ID,Reference ID,Booking Ref,Amount (INR),Status,Bank Account,Transfer Date,Settlement Date\n';
       exportData.forEach(s => {
         const transferStr = s.transferDate ? new Date(s.transferDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : '';
         const settlementStr = s.settlementDate ? new Date(s.settlementDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : 'Pending';
@@ -199,7 +199,7 @@ export default function PayoutsPage() {
                 <span>Back to Payments</span>
               </Link>
               <span className="text-[11px] font-black uppercase tracking-widest text-[#7A5A44]">
-                • RAZORPAY BANK SETTLEMENTS
+                • BANK SETTLEMENTS
               </span>
             </div>
             
@@ -208,7 +208,7 @@ export default function PayoutsPage() {
             </h1>
             
             <p className="text-xs sm:text-sm text-[#7A5A44] font-medium max-w-2xl leading-relaxed">
-              Track Razorpay Route vendor payout transfers directly into your registered bank account.
+              Track vendor payout transfers directly into your registered bank account.
             </p>
           </div>
 
@@ -275,7 +275,7 @@ export default function PayoutsPage() {
               ₹{Math.round(pendingSettlement).toLocaleString('en-IN')}
             </div>
             <p className="text-xs text-amber-700 font-bold mt-1">
-              Razorpay split pending
+              Split settlement pending
             </p>
           </div>
         </div>
@@ -355,7 +355,7 @@ export default function PayoutsPage() {
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8C6D58]" />
           <input 
             type="text"
-            placeholder="Search Booking ID, Razorpay Ref..."
+            placeholder="Search Booking ID, Reference..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#2C1810] focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/15 transition-all"
@@ -402,7 +402,7 @@ export default function PayoutsPage() {
                   <th className="p-4">Settlement Date</th>
                   <th className="p-4">Net Event Amount</th>
                   <th className="p-4">Status</th>
-                  <th className="p-4">Razorpay Reference</th>
+                  <th className="p-4">Reference ID</th>
                   <th className="p-4 text-center">Details</th>
                 </tr>
               </thead>

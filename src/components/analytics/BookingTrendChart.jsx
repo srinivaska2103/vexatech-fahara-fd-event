@@ -12,15 +12,7 @@ const BookingTrendChart = ({ data = [], isLoading }) => {
     );
   }
 
-  // Fallback demo booking data if empty
-  const chartData = (data && data.length > 0 && data.some(d => d.bookings > 0)) ? data : [
-    { name: 'Mar', bookings: 4 },
-    { name: 'Apr', bookings: 7 },
-    { name: 'May', bookings: 12 },
-    { name: 'Jun', bookings: 9 },
-    { name: 'Jul', bookings: 15 },
-    { name: 'Aug', bookings: 18 },
-  ];
+  const chartData = data || [];
 
   return (
     <div className="bg-white p-6 sm:p-7 rounded-3xl border border-[#E8DED5] shadow-xs select-none space-y-4">

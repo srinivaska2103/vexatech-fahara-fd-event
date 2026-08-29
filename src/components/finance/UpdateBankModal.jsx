@@ -134,11 +134,11 @@ export default function UpdateBankModal() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             
-            {/* Account Holder Name */}
+            {/* Beneficiary Name */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <label className="block text-[11px] font-black text-[#4A3225] uppercase tracking-wider">
-                  Account Holder Name
+                  Beneficiary Name
                 </label>
                 <input
                   type="text"
@@ -147,7 +147,7 @@ export default function UpdateBankModal() {
                     setFormData({ ...formData, accountHolderName: e.target.value });
                     if (errors.accountHolderName) setErrors({ ...errors, accountHolderName: null });
                   }}
-                  placeholder="Full legal name"
+                  placeholder="Enter Beneficiary Name"
                   className={`w-full bg-[#FFFBF8] border rounded-2xl px-4 py-3 text-sm font-medium text-[#2C1810] placeholder:text-[#B59D8B] focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
                     errors.accountHolderName ? 'border-red-500 bg-red-50/30' : 'border-[#F0E6DD]'
                   }`}

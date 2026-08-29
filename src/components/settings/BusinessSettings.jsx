@@ -27,13 +27,13 @@ export default function BusinessSettings() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: zodResolver(businessSchema),
     defaultValues: { 
-      businessName: 'Fahara Event Management & Venue Services', 
-      gstNumber: '29ABCDE1234F1Z5', 
-      address: 'Indiranagar 100ft Road, Bengaluru, Karnataka - 560038', 
-      bankName: 'HDFC Bank', 
-      accountHolder: 'SRINIVAS K A', 
-      accountNumber: '5971', 
-      ifscCode: 'HDFC0007337' 
+      businessName: '', 
+      gstNumber: '', 
+      address: '', 
+      bankName: '', 
+      accountHolder: '', 
+      accountNumber: '', 
+      ifscCode: '' 
     }
   });
 
@@ -141,11 +141,11 @@ export default function BusinessSettings() {
 
             <div>
               <label className="block text-xs font-black text-[#2C1810] uppercase tracking-wider mb-1.5">
-                Account Holder Name
+                Beneficiary Name
               </label>
               <input 
                 {...register('accountHolder')}
-                placeholder="e.g. SRINIVAS K A"
+                placeholder="Enter Beneficiary Name"
                 className="w-full px-4 py-3 bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl text-xs font-bold text-[#2C1810] uppercase focus:outline-none focus:border-[#6F4E37]"
               />
             </div>
