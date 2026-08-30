@@ -1,4 +1,4 @@
-# Multi-stage Dockerfile for Fahara Event Manager Next.js App
+# Multi-stage Dockerfile for Fahara Cafe Owner Next.js App
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
@@ -26,7 +26,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=3003
+ENV PORT=3001
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -36,10 +36,8 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 
-RUN mkdir -p .next/cache && chown -R nextjs:nodejs .next
-
 USER nextjs
 
-EXPOSE 3003
+EXPOSE 3002
 
 CMD ["npm", "start"]
