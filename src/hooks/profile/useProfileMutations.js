@@ -63,9 +63,7 @@ export const useUploadImageMutation = () => {
     mutationFn: async (file) => {
       const formData = new FormData();
       formData.append('image', file);
-      const res = await axiosInstance.post(API_ENDPOINTS.UPLOADS.SINGLE, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const res = await axiosInstance.post(API_ENDPOINTS.UPLOADS.SINGLE, formData);
       return res.data?.data?.url || res.data?.url || res.data?.imageUrl; // Depends on backend response structure
     },
     onError: (error) => {
@@ -81,9 +79,7 @@ export const useUploadMultipleImagesMutation = () => {
       Array.from(files).forEach(file => {
         formData.append('images', file);
       });
-      const res = await axiosInstance.post(API_ENDPOINTS.UPLOADS.MULTIPLE, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const res = await axiosInstance.post(API_ENDPOINTS.UPLOADS.MULTIPLE, formData);
       return res.data?.urls || res.data?.imageUrls || [];
     },
     onError: (error) => {
