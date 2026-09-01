@@ -109,3 +109,16 @@ export const useUpdatePreferences = () => {
     },
   });
 };
+
+export const useSendMessage = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data) => {
+      const res = await axiosInstance.post('/notifications/send-message', data);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
+    },
+  });
+};

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import ProtectedLayout from '@/components/layouts/ProtectedLayout';
 import SidebarNavigation from '@/components/dashboard/SidebarNavigation';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
@@ -10,6 +11,11 @@ import BottomNavigation from '@/components/dashboard/BottomNavigation';
 export default function DashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    document.title = "Fahara Event Manager";
+  }, [pathname]);
 
   useEffect(() => {
     const checkMobile = () => {

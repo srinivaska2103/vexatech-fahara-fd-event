@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useReviewDetails } from '@/hooks/reviews/useReviewQueries';
 import ReviewDetailsCard from '@/components/reviews/ReviewDetailsCard';
 import ReviewGallery from '@/components/reviews/ReviewGallery';
-import ReviewReplyEditor from '@/components/reviews/ReviewReplyEditor';
 import ReviewTimeline from '@/components/reviews/ReviewTimeline';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 
@@ -44,7 +43,6 @@ export default function ReviewDetailsPage({ params }) {
           <div className="lg:col-span-2">
             <ReviewDetailsCard review={review} />
             <ReviewGallery images={review.images || []} />
-            <ReviewReplyEditor review={review} />
           </div>
 
           <div>

@@ -9,16 +9,17 @@ export const useReviewList = (filters = {}, pagination = {}, sort = {}) => {
       try {
         const params = { ...filters, ...pagination, ...sort };
         const res = await axiosInstance.get(API_ENDPOINTS.REVIEWS.LIST, { params });
+        const list = res.data?.data || (Array.isArray(res.data) ? res.data : []);
         return {
-          data: res.data.data || [],
-          total: res.data.total || 0,
+          data: list,
+          total: res.data?.total || list.length,
         };
       } catch (err) {
-        console.warn('Backend API missing for Review List. Returning empty array.');
+        console.warn('Backend API notice for Review List:', err);
         return { data: [], total: 0 };
       }
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0,
   });
 };
 

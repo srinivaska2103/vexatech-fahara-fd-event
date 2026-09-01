@@ -50,9 +50,9 @@ export default function PendingRequestsCard({ requests = [] }) {
                 <p className="text-xs text-[#2C1810]/60 font-medium mt-0.5">
                   Requested for {new Date(request.booking_date).toLocaleDateString()} at {request.start_time}
                 </p>
-                {request.special_request && (
+                {(request.event_special_request || request.special_request || request.special_requests || request.specialRequests) && (
                   <p className="text-xs mt-2 text-[#6F4E37] bg-[#FFF8F0] px-3 py-1.5 rounded-xl border border-[#6F4E37]/15 inline-block font-medium">
-                    "{request.special_request}"
+                    "{request.event_special_request || request.special_request || request.special_requests || request.specialRequests}"
                   </p>
                 )}
               </div>

@@ -21,13 +21,13 @@ export default function EventInformationCard({ booking }) {
         <div>
           <p className="text-xs font-semibold text-text/50 uppercase tracking-wider mb-1 flex items-center gap-1"><Tag className="w-3 h-3"/> Service</p>
           <p className="font-bold text-text bg-background/50 px-4 py-2.5 rounded-xl border border-white/5 backdrop-blur-sm">
-            {booking.service_name || booking.event_services?.service_name || booking.event_services?.category || 'Not specified'}
+            {booking.event_services?.service_name || booking.event_services?.category || booking.service_name || booking.packages?.package_name || 'Event Service'}
           </p>
         </div>
         <div>
           <p className="text-xs font-semibold text-text/50 uppercase tracking-wider mb-1 flex items-center gap-1"><PackageIcon className="w-3 h-3"/> Package</p>
           <p className="font-bold text-primary bg-background/50 px-4 py-2.5 rounded-xl border border-white/5 backdrop-blur-sm">
-            {booking.package_name || booking.packages?.package_name || booking.cafe_packages?.package_name || (booking.event_service_id ? 'Custom Service' : 'N/A')}
+            {booking.packages?.package_name || booking.package_name || booking.cafe_packages?.package_name || booking.event_services?.service_name || booking.event_services?.category || 'Standard Package'}
           </p>
         </div>
       </div>
@@ -69,7 +69,16 @@ export default function EventInformationCard({ booking }) {
       <div className="relative z-10">
         <p className="text-xs font-semibold text-text/50 uppercase tracking-wider mb-1 flex items-center gap-1"><MapPin className="w-3 h-3"/> Venue Address</p>
         <p className="font-semibold text-text/80 bg-background/50 px-4 py-3 rounded-xl border border-white/5 backdrop-blur-sm leading-relaxed">
-          {booking.venue_address || booking.cafes?.address || 'Not specified'}
+          {(() => {
+            if (booking.venue_address && booking.venue_address.trim()) return booking.venue_address;
+            if (booking.cafes?.address && booking.cafes.address.trim()) {
+              return booking.cafes.city ? `${booking.cafes.address}, ${booking.cafes.city}` : booking.cafes.address;
+            }
+            if (booking.cafes?.name) {
+              return `${booking.cafes.name}${booking.cafes.city ? ` (${booking.cafes.city})` : ''}`;
+            }
+            return 'Venue details available on cafe confirmation';
+          })()}
         </p>
       </div>
     </div>

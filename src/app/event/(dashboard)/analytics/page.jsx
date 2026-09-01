@@ -2,7 +2,7 @@ import React from 'react';
 import AnalyticsDashboard from '@/components/analytics/AnalyticsDashboard';
 
 export const metadata = {
-  title: 'Analytics & BI | Fahara Event Manager',
+  title: 'Fahara Event Manager',
   description: 'Track business performance, revenue, bookings, and more.',
 };
 

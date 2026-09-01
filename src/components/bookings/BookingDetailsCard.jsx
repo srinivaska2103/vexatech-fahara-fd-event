@@ -18,18 +18,31 @@ export default function BookingDetailsCard({ booking }) {
       </div>
 
       <div className="relative z-10 space-y-6">
+        {/* Event Manager Special Request */}
         <div>
-          <p className="text-xs font-semibold text-text/50 uppercase tracking-wider mb-2">Special Requests</p>
-          {booking.special_requests ? (
-            <p className="text-sm text-text/80 bg-background/50 p-4 rounded-xl border border-white/5 backdrop-blur-sm leading-relaxed whitespace-pre-wrap">
-              {booking.special_requests}
+          <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            ✨ Event Manager Requests
+          </p>
+          {(booking.event_special_request || booking.special_request || booking.special_requests || booking.specialRequests) ? (
+            <p className="text-sm text-text/90 bg-primary/5 p-4 rounded-xl border border-primary/20 backdrop-blur-sm leading-relaxed whitespace-pre-wrap font-medium">
+              {booking.event_special_request || booking.special_request || booking.special_requests || booking.specialRequests}
             </p>
           ) : (
             <p className="text-sm font-medium text-text/40 italic p-4 bg-background/30 rounded-xl border border-dashed border-border">
-              No special requests provided.
+              No specific event arrangement requests provided.
             </p>
           )}
         </div>
+
+        {/* Venue Special Request */}
+        {booking.special_request && booking.event_special_request && (
+          <div>
+            <p className="text-xs font-semibold text-text/50 uppercase tracking-wider mb-2">Venue & Cafe Requests</p>
+            <p className="text-sm text-text/80 bg-background/50 p-4 rounded-xl border border-white/5 backdrop-blur-sm leading-relaxed whitespace-pre-wrap">
+              {booking.special_request}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
