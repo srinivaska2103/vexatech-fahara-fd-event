@@ -11,7 +11,8 @@ import toast from 'react-hot-toast';
 export default function VerifyEmailOTP() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get('email') || '';
+  const idParam = searchParams.get('id') || searchParams.get('userId') || searchParams.get('email') || '';
+  const emailParam = searchParams.get('email') || idParam;
   
   const verifyMutation = useVerifyOtpMutation();
   const forgotMutation = useForgotPasswordMutation();
@@ -26,7 +27,7 @@ export default function VerifyEmailOTP() {
     }
     setError('');
     
-    verifyMutation.mutate({ email, otp }, {
+    verifyMutation.mutate({ email: emailParam || idParam, id: idParam, otp }, {
       onSuccess: () => {
         router.push('/event/login');
       }
@@ -34,13 +35,13 @@ export default function VerifyEmailOTP() {
   };
 
   const handleResend = () => {
-    if (!email) {
-      toast.error('Email not found. Please register again.');
+    if (!emailParam) {
+      toast.error('Account ID not found. Please register again.');
       return;
     }
-    forgotMutation.mutate(email, {
+    forgotMutation.mutate(emailParam, {
       onSuccess: () => {
-        toast.success('A new OTP has been sent to your email.');
+        toast.success('A new OTP has been sent to your registered account email.');
       }
     });
   };
@@ -49,7 +50,7 @@ export default function VerifyEmailOTP() {
     <div className="space-y-6 w-full flex flex-col items-center select-none mt-2">
       <div className="w-full text-center">
         <p className="text-xs sm:text-sm text-[#7A5A44] font-medium mb-4">
-          We've sent a 6-digit verification code to <span className="font-extrabold text-[#2C1810] underline">{email || 'your email'}</span>
+          We've sent a 6-digit verification code to Account ID <span className="font-extrabold text-[#2C1810] font-mono border border-stone-300 px-2 py-0.5 rounded-lg bg-white/60">{idParam}</span>
         </p>
       </div>
 

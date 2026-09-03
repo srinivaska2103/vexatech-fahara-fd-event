@@ -23,9 +23,10 @@ export default function EventSignupForm() {
 
   const onSubmit = (data) => {
     registerMutation.mutate(data, {
-      onSuccess: () => {
-        // Pass email via query params to pre-fill on Verify page
-        router.push(`/event/verify-email?email=${encodeURIComponent(data.email)}`);
+      onSuccess: (res) => {
+        const userId = res?.userId || res?.user?.id || res?.data?.userId || res?.data?.user?.id;
+        const queryParam = userId ? `id=${encodeURIComponent(userId)}` : `email=${encodeURIComponent(data.email)}`;
+        router.push(`/event/verify-email?${queryParam}`);
       }
     });
   };

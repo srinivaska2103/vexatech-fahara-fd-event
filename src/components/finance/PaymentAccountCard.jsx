@@ -55,16 +55,31 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
     user?.email || 
     'Not Configured';
 
-  const maskedBankAccount = accountData?.bankAccountMasked && accountData?.bankAccountMasked !== 'Not Configured'
-    ? accountData.bankAccountMasked
-    : (rawAccountNumber ? `•••• ${String(rawAccountNumber).slice(-4)}` : 'Not Configured');
+  const last4Digits = 
+    accountData?.bankAccountLast4 || 
+    (rawAccountNumber ? String(rawAccountNumber).slice(-4) : '') ||
+    profileData?.bank_account_last4 ||
+    '';
 
-  const ifscCode = 
+  const maskedBankAccount = last4Digits
+    ? `XXXX XXXX ${last4Digits}`
+    : (accountData?.bankAccountMasked && accountData?.bankAccountMasked !== 'Not Configured' ? accountData.bankAccountMasked : 'Not Configured');
+
+  const rawIfsc = 
     accountData?.ifsc || 
     accountData?.ifscMasked || 
+    accountData?.rawIfsc ||
+    accountData?.bankIfsc ||
     profileData?.ifsc_code || 
     profileData?.ifsc || 
-    'Not Configured';
+    profileData?.bank_ifsc ||
+    user?.ifsc_code ||
+    user?.ifsc ||
+    user?.bank_ifsc;
+
+  const ifscCode = (rawIfsc && rawIfsc !== 'Not Configured')
+    ? rawIfsc
+    : 'Not Configured';
 
   const isVerified = isConfigured && accountData?.status !== 'PENDING';
 
