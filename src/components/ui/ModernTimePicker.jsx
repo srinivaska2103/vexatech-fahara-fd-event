@@ -30,7 +30,7 @@ export default function ModernTimePicker({ value, onChange, placeholder = "Selec
   }, []);
 
   return (
-    <div ref={containerRef} className="relative inline-block w-full sm:w-auto min-w-[130px] select-none">
+    <div ref={containerRef} className="relative inline-block w-full sm:w-auto min-w-[100px] sm:min-w-[130px] select-none">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}

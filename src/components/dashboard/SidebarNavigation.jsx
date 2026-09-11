@@ -11,7 +11,7 @@ import {
   CalendarDays, Users, Star, CreditCard, Landmark, RotateCcw, 
   Wallet, BarChart3, Bell, Settings, LogOut, PanelLeftClose, 
   PanelLeftOpen, X, ChevronRight, ChevronDown, User, LifeBuoy, Sparkles,
-  ArrowLeftRight, ShieldCheck, HelpCircle, Store, CornerDownRight
+  ArrowLeftRight, ShieldCheck, HelpCircle, Store, CornerDownRight, Megaphone
 } from 'lucide-react';
 
 const NAV_GROUPS = [
@@ -19,12 +19,18 @@ const NAV_GROUPS = [
     group: 'MAIN MENU',
     items: [
       { name: 'Dashboard', href: '/event/dashboard', icon: LayoutGrid, color: 'text-amber-600', bg: 'bg-amber-100/70' },
-      { name: 'Event Management', href: '/event/profile', icon: Store, color: 'text-indigo-600', bg: 'bg-indigo-100/70' },
       { name: 'Services & Packages', href: '/event/services', icon: PackageCheck, color: 'text-rose-600', bg: 'bg-rose-100/70' },
       { name: 'Bookings', href: '/event/bookings', icon: CalendarCheck2, color: 'text-emerald-600', bg: 'bg-emerald-100/70' },
-      { name: 'Events', href: '/event/calendar', icon: CalendarDays, color: 'text-cyan-600', bg: 'bg-cyan-100/70' },
+      { name: 'Events', href: '/event/calendar', icon: CalendarDays, color: 'text-[#6F4E37]', bg: 'bg-amber-100/70' },
+    ]
+  },
+  {
+    group: 'MARKETING',
+    items: [
+      { name: 'Campaigns', href: '/event/campaigns', icon: Megaphone, color: 'text-fuchsia-600', bg: 'bg-fuchsia-100/70' },
       { name: 'Customers', href: '/event/customers', icon: Users, color: 'text-sky-600', bg: 'bg-sky-100/70' },
       { name: 'Reviews', href: '/event/reviews', icon: Star, color: 'text-amber-500', bg: 'bg-amber-100/70' },
+      { name: 'Analytics', href: '/event/analytics', icon: BarChart3, color: 'text-purple-600', bg: 'bg-purple-100/70' },
     ]
   },
   {
@@ -39,7 +45,7 @@ const NAV_GROUPS = [
   {
     group: 'SYSTEM',
     items: [
-      { name: 'Analytics', href: '/event/analytics', icon: BarChart3, color: 'text-purple-600', bg: 'bg-purple-100/70' },
+      { name: 'Event Management', href: '/event/profile', icon: Store, color: 'text-indigo-600', bg: 'bg-indigo-100/70' },
       { name: 'Notifications', href: '/event/notifications', icon: Bell, color: 'text-rose-600', bg: 'bg-rose-100/70' },
       { name: 'Settings', href: '/event/settings', icon: Settings, color: 'text-slate-600', bg: 'bg-slate-200/80' },
       { name: 'Help & Support', href: '/event/support', icon: HelpCircle, color: 'text-teal-600', bg: 'bg-teal-100/70' },
@@ -59,6 +65,7 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
 
   const [openGroups, setOpenGroups] = useState({
     'MAIN MENU': true,
+    'MARKETING': true,
     'FINANCE': true,
     'SYSTEM': true,
   });
@@ -203,12 +210,16 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                         const active = isItemActive(item.href);
                         const Icon = item.icon;
                         const showBadge = item.name === 'Notifications' && notificationCount > 0;
+                        const tourId = item.href === '/event/services' ? 'nav-services' :
+                                       item.href === '/event/profile' ? 'nav-profile' :
+                                       item.href === '/event/calendar' ? 'nav-calendar' :
+                                       `nav-${item.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 
                         return (
                           <div key={item.name} className="relative group/item">
                             <Link
                               href={item.href}
-                              data-tour-id={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                              data-tour-id={tourId}
                               className={`
                                 relative flex items-center min-h-[34px] rounded-xl transition-all duration-200 ease-out cursor-pointer
                                 ${isCollapsed ? 'justify-center px-0 py-1.5' : 'px-2.5 py-1.5 gap-2'}

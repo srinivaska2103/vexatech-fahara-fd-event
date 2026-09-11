@@ -1,11 +1,54 @@
 'use client';
 
-import { Check, X, AlertCircle, ArrowRight } from 'lucide-react';
+import { Check, X, AlertCircle, ArrowRight, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useUpdateBookingStatus } from '@/hooks/bookings/useBookingQueries';
+import toast from 'react-hot-toast';
 
 export default function PendingRequestsCard({ requests = [] }) {
+  const updateStatusMutation = useUpdateBookingStatus();
   const hasRequests = requests && requests.length > 0;
+
+  const handleStatusUpdate = (id, newStatus) => {
+    updateStatusMutation.mutate(
+      { id, status: newStatus },
+      {
+        onSuccess: () => {
+          toast.success(`Booking ${newStatus.toLowerCase()} successfully`);
+        },
+        onError: (err) => {
+          toast.error(err?.response?.data?.message || `Failed to update status`);
+        }
+      }
+    );
+  };
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return 'Date TBD';
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    } catch (e) {
+      return dateStr;
+    }
+  };
+
+  const formatTime = (timeStr) => {
+    if (!timeStr) return '';
+    try {
+      if (timeStr.includes('T')) {
+        return new Date(timeStr).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'UTC' });
+      }
+      const [h, m] = timeStr.split(':');
+      const d = new Date();
+      d.setHours(h, m);
+      return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    } catch (e) {
+      return timeStr;
+    }
+  };
 
   return (
     <motion.div 
@@ -43,31 +86,54 @@ export default function PendingRequestsCard({ requests = [] }) {
         </div>
       ) : (
         <div className="space-y-3 flex-1 relative z-10">
-          {requests.map((request, idx) => (
-            <div key={idx} className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center p-4 rounded-2xl bg-[#FFFDF9] border border-[#F2EAE1] hover:border-[#6F4E37]/30 hover:bg-white hover:shadow-md transition-all duration-300">
-              <div>
-                <h4 className="font-extrabold text-sm text-[#2C1810]">{request.customer_name || 'New Customer'}</h4>
-                <p className="text-xs text-[#2C1810]/60 font-medium mt-0.5">
-                  Requested for {new Date(request.booking_date).toLocaleDateString()} at {request.start_time}
-                </p>
-                {(request.event_special_request || request.special_request || request.special_requests || request.specialRequests) && (
-                  <p className="text-xs mt-2 text-[#6F4E37] bg-[#FFF8F0] px-3 py-1.5 rounded-xl border border-[#6F4E37]/15 inline-block font-medium">
-                    "{request.event_special_request || request.special_request || request.special_requests || request.specialRequests}"
+          {requests.map((request, idx) => {
+            const customerName = request.customerName || request.customer_name || request.users?.name || request.user?.name || 'Customer Request';
+            const rawDate = request.date || request.booking_date || request.createdAt;
+            const rawTime = request.startTime || request.start_time;
+            const timeFormatted = formatTime(rawTime);
+            const dateFormatted = formatDate(rawDate);
+            const note = request.event_special_request || request.special_request || request.special_requests || request.specialRequests;
+
+            return (
+              <div key={request.id || idx} className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center p-4 rounded-2xl bg-[#FFFDF9] border border-[#F2EAE1] hover:border-[#6F4E37]/30 hover:bg-white hover:shadow-md transition-all duration-300">
+                <div>
+                  <h4 className="font-extrabold text-sm text-[#2C1810]">{customerName}</h4>
+                  <p className="text-xs text-[#2C1810]/60 font-medium mt-0.5 flex items-center gap-1.5">
+                    <span>Requested for <strong className="text-[#6F4E37] font-bold">{dateFormatted}</strong></span>
+                    {timeFormatted && (
+                      <span className="flex items-center gap-1">
+                        • <Clock className="w-3 h-3 text-[#6F4E37]" /> {timeFormatted}
+                      </span>
+                    )}
                   </p>
-                )}
+                  {note && (
+                    <p className="text-xs mt-2 text-[#6F4E37] bg-[#FFF8F0] px-3 py-1.5 rounded-xl border border-[#6F4E37]/15 inline-block font-medium">
+                      "{note}"
+                    </p>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
+                  <button 
+                    onClick={() => handleStatusUpdate(request.id, 'CONFIRMED')}
+                    disabled={updateStatusMutation.isPending}
+                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white rounded-xl text-xs font-bold transition-all duration-300 border border-emerald-200 shadow-2xs cursor-pointer disabled:opacity-50"
+                  >
+                    <Check className="w-4 h-4 stroke-[2.5]" /> Accept
+                  </button>
+                  <button 
+                    onClick={() => handleStatusUpdate(request.id, 'CANCELLED')}
+                    disabled={updateStatusMutation.isPending}
+                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-2 bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white rounded-xl text-xs font-bold transition-all duration-300 border border-rose-200 shadow-2xs cursor-pointer disabled:opacity-50"
+                  >
+                    <X className="w-4 h-4 stroke-[2.5]" /> Decline
+                  </button>
+                </div>
               </div>
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <button className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white rounded-xl text-xs font-bold transition-all duration-300 border border-emerald-200 shadow-2xs">
-                  <Check className="w-4 h-4 stroke-[2.5]" /> Accept
-                </button>
-                <button className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-2 bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white rounded-xl text-xs font-bold transition-all duration-300 border border-rose-200 shadow-2xs">
-                  <X className="w-4 h-4 stroke-[2.5]" /> Decline
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </motion.div>
   );
 }
+

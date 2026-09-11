@@ -18,8 +18,8 @@ const TAB_TOUR_STEPS = [
     target: null,
     title: 'Welcome to Fahara',
     category: 'ONBOARDING',
-    icon: Coffee,
-    description: "Let's take an interactive guided tour and show you how to set up your venue, manage bookings, and receive payouts.",
+    icon: PartyPopper,
+    description: "Let's take an interactive guided tour and show you how to set up your event services, manage bookings, and receive payouts.",
   },
   {
     target: '[data-tour-id="nav-dashboard"]',
@@ -38,14 +38,14 @@ const TAB_TOUR_STEPS = [
     ]
   },
   {
-    target: '[data-tour-id="nav-event-management"]',
+    target: '[data-tour-id="nav-profile"]',
     title: 'Add Your Event Manager Profile',
     icon: Building2,
-    category: 'VENUE LISTING',
+    category: 'BUSINESS LISTING',
     route: '/event/profile',
-    description: 'Create your venue profile so customers can discover and book your event services.',
+    description: 'Create your business profile so customers can discover and book your event services.',
     statusBox: {
-      text: 'Your venue profile is already created. You can update details anytime.'
+      text: 'Your business profile is already created. You can update details anytime.'
     },
     actionBtn: { label: 'Go to Profile →', route: '/event/profile' }
   },
@@ -76,7 +76,7 @@ const TAB_TOUR_STEPS = [
     ]
   },
   {
-    target: '[data-tour-id="nav-events"]',
+    target: '[data-tour-id="nav-calendar"]',
     title: 'Smart Schedule Calendar',
     icon: Calendar,
     category: 'AVAILABILITY SCHEDULER',
@@ -102,14 +102,14 @@ const TAB_TOUR_STEPS = [
   },
   {
     target: '[data-tour-id="nav-reviews"]',
-    title: 'Reputation & Diner Praise',
+    title: 'Reputation & Client Praise',
     icon: Star,
     category: 'REPUTATION STUDIO',
     route: '/event/reviews',
-    description: 'Monitor client feedback ratings, diner testimonials, response rate metrics, and manage your online reputation.',
+    description: 'Monitor client feedback ratings, customer testimonials, response rate metrics, and manage your online reputation.',
     metrics: [
       { label: 'Star Ratings (4.9 ★)' },
-      { label: 'Verified Diner Praise' },
+      { label: 'Verified Client Praise' },
       { label: 'Official Responses' },
       { label: 'Reputation Score' }
     ]
@@ -124,7 +124,7 @@ const TAB_TOUR_STEPS = [
     description: 'Add and verify your bank account so eligible payments and settlements can be processed securely via Razorpay.',
     infoBox: {
       label: 'Account Status:',
-      val: 'Linked Bank Account Verified (XXXX-XXXX-5971)'
+      val: 'Linked Bank Account Verified'
     }
   }
 ];
@@ -168,22 +168,28 @@ export default function DashboardTour() {
   const [targetRect, setTargetRect] = useState(null);
   const [showCelebration, setShowCelebration] = useState(false);
 
-  // Check if tour triggered from support page or localStorage
+  // Check if tour triggered from support page or localStorage on initial mount
   useEffect(() => {
     const isCompleted = localStorage.getItem('fahara_tour_completed');
     if (isCompleted === 'false') {
       setIsOpen(true);
-      setCurrentStep(0);
     }
-  }, [pathname]);
+  }, []);
 
   const updateTargetRect = useCallback(() => {
     if (!isOpen || showCelebration) return;
     const step = TAB_TOUR_STEPS[currentStep];
-    if (!step) return;
+    if (!step || !step.target) {
+      setTargetRect(null);
+      return;
+    }
 
-    const element = document.querySelector(step.target);
-    if (element) {
+    let element = document.querySelector(step.target);
+    if (!element && step.route) {
+      element = document.querySelector(`a[href="${step.route}"]`);
+    }
+
+    if (element && element.offsetParent !== null && element.getBoundingClientRect().width > 0) {
       const rect = element.getBoundingClientRect();
       setTargetRect({
         top: rect.top,
@@ -498,24 +504,24 @@ export default function DashboardTour() {
                 )}
 
                 {/* Bottom Action Pill Buttons (Back, Optional Action, Next Step) */}
-                <div className="flex items-center justify-between pt-1">
+                <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 pt-1">
                   {currentStep > 0 ? (
                     <button
                       type="button"
                       onClick={handlePrev}
-                      className="px-5 py-2.5 rounded-full border border-[#E8DED5] bg-white hover:bg-[#FFF8F0] text-[#2C1810] text-xs font-extrabold transition-all flex items-center gap-1 active:scale-95 shadow-2xs cursor-pointer"
+                      className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-2xl sm:rounded-full border border-[#E8DED5] bg-white hover:bg-[#FFF8F0] text-[#2C1810] text-xs font-extrabold transition-all flex items-center gap-1 active:scale-95 shadow-2xs cursor-pointer shrink-0"
                     >
                       <ChevronLeft className="w-4 h-4" />
                       <span>Back</span>
                     </button>
                   ) : <div />}
 
-                  <div className="flex items-center gap-2 ml-auto">
+                  <div className="flex items-center gap-2 ml-auto shrink-0">
                     {step.actionBtn && (
                       <button
                         type="button"
                         onClick={() => router.push(step.actionBtn.route)}
-                        className="px-4 py-2.5 rounded-full bg-[#6F4E37]/15 hover:bg-[#6F4E37]/25 text-[#6F4E37] text-xs font-extrabold transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+                        className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl sm:rounded-full bg-[#6F4E37]/15 hover:bg-[#6F4E37]/25 text-[#6F4E37] text-xs font-extrabold transition-all flex items-center gap-1 active:scale-95 cursor-pointer shrink-0"
                       >
                         <span>{step.actionBtn.label}</span>
                       </button>
@@ -524,7 +530,7 @@ export default function DashboardTour() {
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="px-6 py-2.5 rounded-full bg-[#6F4E37] hover:bg-[#5D4037] text-white text-xs font-extrabold shadow-md shadow-[#6F4E37]/20 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                      className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-2xl sm:rounded-full bg-[#6F4E37] hover:bg-[#5D4037] text-white text-xs font-extrabold shadow-md shadow-[#6F4E37]/20 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer shrink-0"
                     >
                       <span>{currentStep === TAB_TOUR_STEPS.length - 1 ? 'Finish Tour 🎉' : 'Next Step'}</span>
                       <ChevronRight className="w-4 h-4" />

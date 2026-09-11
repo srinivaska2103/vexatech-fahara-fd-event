@@ -90,9 +90,8 @@ function DashboardContent() {
         </div>
       </div>
 
-      {/* Pending Requests & Recent Bookings */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <PendingRequestsCard requests={pendingApprovals} />
+      {/* Recent Bookings */}
+      <div className="grid grid-cols-1 gap-6">
         <RecentBookingsCard bookings={recentBookings} />
       </div>
     </motion.div>

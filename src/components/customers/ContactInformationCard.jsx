@@ -16,7 +16,7 @@ export default function ContactInformationCard({ customer }) {
           </div>
           <div>
             <div className="text-xs font-bold text-text/50 uppercase tracking-wider mb-1">Email Address</div>
-            <div className="text-sm font-semibold text-text">{customer.email || 'N/A'}</div>
+            <div className="text-sm font-semibold text-text break-all">{customer.email || 'N/A'}</div>
           </div>
         </div>
 

@@ -73,20 +73,6 @@ export default function ServiceCard({ service, onDelete }) {
           {displayDescription}
         </p>
 
-        {/* Pricing divider */}
-        <div className="mb-5 py-3 border-y border-[#F2EAE1] flex items-center justify-between">
-          <div>
-            <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider block">Starting Price</span>
-            <div className="flex items-center font-black text-lg text-[#2C1810]">
-              <IndianRupee className="w-4 h-4 text-[#6F4E37] stroke-[2.5]" />
-              <span>{Number(service.price || 0).toLocaleString('en-IN')}</span>
-            </div>
-          </div>
-          <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-[#FFF8F0] text-[#6F4E37] border border-[#6F4E37]/20">
-            Per Event
-          </span>
-        </div>
-
         {/* Card Action Buttons */}
         <div className="flex items-center gap-2.5 mt-auto">
           <Link 

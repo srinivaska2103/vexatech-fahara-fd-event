@@ -1,50 +1,72 @@
-import { IndianRupee, FileText } from 'lucide-react';
+import { IndianRupee, CheckCircle, Clock, Sparkles } from 'lucide-react';
 
 export default function PaymentSummaryCard({ booking }) {
   if (!booking) return null;
 
+  const eventAmount = Number(booking.event_service_amount || 0);
+
+  // Extract inclusion items (strictly EVENT items, exclude CAFE charges & cafe inclusions)
+  const inclusionItems = Array.isArray(booking.booking_items)
+    ? booking.booking_items.filter(item => (item.provider_type === 'EVENT' || item.item_type === 'EVENT_INCLUSION') && item.item_type !== 'CAFE_CHARGE' && item.provider_type !== 'CAFE')
+    : (Array.isArray(booking.inclusions) ? booking.inclusions : []);
+
+  const isPaid = (booking.payment_status || '').toLowerCase() === 'paid';
+
   return (
-    <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden h-full flex flex-col">
-      <div className="absolute top-0 right-0 w-40 h-40 bg-green-500/5 rounded-full blur-[60px] -z-10" />
-      
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500/20 to-green-500/5 flex items-center justify-center text-green-600 shrink-0 shadow-inner border border-white/10">
-          <IndianRupee className="w-6 h-6" />
+    <div className="bg-white rounded-3xl border border-stone-200/80 p-6 md:p-7 shadow-xs hover:shadow-sm transition-all space-y-6 text-[#2C1810]">
+      <div className="flex items-center gap-3.5 pb-4 border-b border-stone-100">
+        <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center justify-center font-black text-sm shrink-0">
+          <IndianRupee className="w-5 h-5" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-text tracking-tight">Payment Summary</h2>
-          <p className="text-sm text-text/60 mt-0.5">Pricing and payment status</p>
+          <h2 className="text-lg font-black text-[#2C1810] tracking-tight">Payment Summary</h2>
+          <p className="text-xs text-stone-500 font-medium">Event manager charges & payment status</p>
         </div>
       </div>
 
-      <div className="flex-1 relative z-10 flex flex-col justify-between space-y-6">
-        <div className="space-y-4 bg-background/50 p-5 rounded-2xl border border-white/5 backdrop-blur-sm">
-          <div className="flex justify-between items-center pb-3 border-b border-white/10">
-            <span className="text-sm font-medium text-text/70">Base Package Amount</span>
-            <span className="font-semibold text-text">₹{Number(booking.cafe_amount || booking.event_service_amount || booking.subtotal || 0).toLocaleString()}</span>
-          </div>
-          <div className="flex justify-between items-center pt-1">
-            <span className="text-base font-bold text-text">Total Amount</span>
-            <span className="text-lg font-bold text-primary">₹{Number(booking.cafe_amount || booking.event_service_amount || booking.subtotal || 0).toLocaleString()}</span>
-          </div>
+      <div className="p-4 rounded-2xl bg-gradient-to-br from-[#FFF8F0] via-[#FAF0E6] to-[#FFF3E4] border border-[#DDB892]/60 space-y-2">
+        <div className="flex justify-between items-center text-xs">
+          <span className="font-extrabold text-[#6F4E37] uppercase tracking-wider">Event Service Package</span>
+          <span className="font-black text-[#2C1810]">₹{eventAmount.toLocaleString('en-IN')}</span>
         </div>
+        <div className="pt-2 border-t border-[#DDB892]/40 flex justify-between items-center">
+          <span className="text-xs font-black text-[#2C1810]">Total Event Earnings</span>
+          <span className="text-xl font-black text-[#6F4E37]">₹{eventAmount.toLocaleString('en-IN')}</span>
+        </div>
+      </div>
 
-        <div>
-          <p className="text-xs font-semibold text-text/50 uppercase tracking-wider mb-2">Payment Status</p>
-          {booking.payment_status?.toLowerCase() === 'paid' ? (
-            <div className="flex items-center justify-center gap-2 bg-green-500/10 text-green-700 py-3 rounded-xl border border-green-500/20 font-bold">
-              <CheckCircle className="w-4 h-4" /> Paid in Full
-            </div>
-          ) : (
-            <div className="flex items-center justify-center gap-2 bg-yellow-500/10 text-yellow-700 py-3 rounded-xl border border-yellow-500/20 font-bold">
-              <Clock className="w-4 h-4" /> Pending Payment
-            </div>
-          )}
+      {/* Selected Inclusions */}
+      {inclusionItems.length > 0 && (
+        <div className="space-y-2">
+          <p className="text-[10px] font-extrabold text-[#6F4E37] uppercase tracking-wider flex items-center gap-1">
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Selected Inclusions
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {inclusionItems.map((inc, i) => {
+              const name = typeof inc === 'string' ? inc : (inc.item_name || inc.name || inc.tier_name || 'Inclusion');
+              const level = inc.package_level || inc.tier_name || inc.level || '';
+              return (
+                <span key={i} className="text-xs font-bold px-2.5 py-1 rounded-xl bg-white border border-stone-200 shadow-2xs text-[#2C1810]">
+                  ✓ {name}{level ? ` (${level})` : ''}
+                </span>
+              );
+            })}
+          </div>
         </div>
+      )}
+
+      <div>
+        <p className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider mb-1.5">Payment Status</p>
+        {isPaid ? (
+          <div className="flex items-center justify-center gap-2 bg-emerald-50 text-emerald-800 py-2.5 rounded-2xl border border-emerald-200 font-extrabold text-xs">
+            <CheckCircle className="w-4 h-4 text-emerald-600" /> Paid in Full
+          </div>
+        ) : (
+          <div className="flex items-center justify-center gap-2 bg-amber-50 text-amber-800 py-2.5 rounded-2xl border border-amber-200 font-extrabold text-xs">
+            <Clock className="w-4 h-4 text-amber-600" /> Pending Payment
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-// Ensure icons used inside conditional are imported if not at top level
-import { CheckCircle, Clock } from 'lucide-react';

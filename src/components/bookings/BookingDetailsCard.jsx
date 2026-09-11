@@ -1,45 +1,46 @@
-import { AlignLeft } from 'lucide-react';
+import { AlignLeft, MessageSquare, Sparkles } from 'lucide-react';
 
 export default function BookingDetailsCard({ booking }) {
   if (!booking) return null;
 
+  const eventReq = booking.event_special_request || booking.special_request || booking.special_requests || booking.specialRequests;
+  const cafeReq = booking.special_request;
+
   return (
-    <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden h-full">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/5 rounded-full blur-[80px] -z-10" />
-      
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-primary shrink-0 shadow-inner border border-white/10">
-          <AlignLeft className="w-6 h-6" />
+    <div className="bg-white rounded-3xl border border-stone-200/80 p-6 md:p-7 shadow-xs hover:shadow-sm transition-all space-y-6 text-[#2C1810]">
+      <div className="flex items-center gap-3.5 pb-4 border-b border-stone-100">
+        <div className="w-11 h-11 rounded-2xl bg-[#6F4E37]/10 text-[#6F4E37] border border-[#DDB892]/40 flex items-center justify-center font-black text-sm shrink-0">
+          <AlignLeft className="w-5 h-5" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-text tracking-tight">Booking Notes & Requests</h2>
-          <p className="text-sm text-text/60 mt-0.5">Special requirements from the customer</p>
+          <h2 className="text-lg font-black text-[#2C1810] tracking-tight">Booking Notes & Requests</h2>
+          <p className="text-xs text-stone-500 font-medium">Special instructions from the customer</p>
         </div>
       </div>
 
-      <div className="relative z-10 space-y-6">
-        {/* Event Manager Special Request */}
+      <div className="space-y-4">
         <div>
-          <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            ✨ Event Manager Requests
-          </p>
-          {(booking.event_special_request || booking.special_request || booking.special_requests || booking.specialRequests) ? (
-            <p className="text-sm text-text/90 bg-primary/5 p-4 rounded-xl border border-primary/20 backdrop-blur-sm leading-relaxed whitespace-pre-wrap font-medium">
-              {booking.event_special_request || booking.special_request || booking.special_requests || booking.specialRequests}
+          <span className="text-[10px] font-extrabold text-[#6F4E37] uppercase tracking-wider block mb-1.5 flex items-center gap-1">
+            <Sparkles size={12} className="text-amber-500" /> Event Manager Special Requests
+          </span>
+          {eventReq ? (
+            <p className="text-xs text-[#2C1810] bg-[#FFF8F0] p-4 rounded-2xl border border-[#DDB892]/50 font-medium leading-relaxed italic">
+              "{eventReq}"
             </p>
           ) : (
-            <p className="text-sm font-medium text-text/40 italic p-4 bg-background/30 rounded-xl border border-dashed border-border">
-              No specific event arrangement requests provided.
+            <p className="text-xs font-bold text-stone-400 italic p-4 bg-stone-50 rounded-2xl border border-dashed border-stone-200">
+              No specific event arrangement requests provided by customer.
             </p>
           )}
         </div>
 
-        {/* Venue Special Request */}
-        {booking.special_request && booking.event_special_request && (
+        {cafeReq && eventReq && cafeReq !== eventReq && (
           <div>
-            <p className="text-xs font-semibold text-text/50 uppercase tracking-wider mb-2">Venue & Cafe Requests</p>
-            <p className="text-sm text-text/80 bg-background/50 p-4 rounded-xl border border-white/5 backdrop-blur-sm leading-relaxed whitespace-pre-wrap">
-              {booking.special_request}
+            <span className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider block mb-1.5 flex items-center gap-1">
+              <MessageSquare size={12} /> Cafe Venue Requests
+            </span>
+            <p className="text-xs text-stone-600 bg-stone-50 p-3.5 rounded-2xl border border-stone-200 font-medium leading-relaxed">
+              "{cafeReq}"
             </p>
           </div>
         )}

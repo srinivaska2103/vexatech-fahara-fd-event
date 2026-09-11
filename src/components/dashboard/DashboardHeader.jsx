@@ -133,7 +133,7 @@ export default function DashboardHeader({ onMenuClick }) {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 8, scale: 0.96 }}
                 transition={{ duration: 0.15 }}
-                className="absolute right-0 mt-2 w-64 bg-[#FFFDFB] border border-[#E8DED5] rounded-3xl p-3 shadow-2xl z-50 space-y-2 select-none"
+                className="fixed sm:absolute top-16 sm:top-auto right-3 sm:right-0 left-3 sm:left-auto mt-0 sm:mt-2 sm:w-64 max-w-[calc(100vw-1.5rem)] bg-[#FFFDFB] border border-[#E8DED5] rounded-3xl p-3 shadow-2xl z-50 space-y-2 select-none"
               >
                 {/* User Info Header */}
                 <div className="p-3 rounded-2xl bg-[#FFF8F0] border border-[#E8DED5] space-y-1">

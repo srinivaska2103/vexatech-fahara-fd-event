@@ -160,22 +160,22 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        {/* Card 3: AVG PACKAGE RATE */}
+        {/* Card 3: FEATURED HIGHLIGHTS */}
         <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-purple-300 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-black text-purple-700 uppercase tracking-wider">
-              Avg Package Rate
+              Service Features
             </span>
             <div className="w-9 h-9 rounded-full bg-purple-100/80 text-purple-700 flex items-center justify-center">
-              <IndianRupee className="w-4 h-4" />
+              <Sparkles className="w-4 h-4" />
             </div>
           </div>
           <div>
             <div className="text-3xl sm:text-4xl font-black text-[#2C1810] tracking-tight">
-              ₹{avgPackageRate.toLocaleString()}
+              100%
             </div>
             <p className="text-xs text-[#8C6D58] font-medium mt-1">
-              Average base rate
+              Customizable inclusions
             </p>
           </div>
         </div>

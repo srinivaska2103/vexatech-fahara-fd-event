@@ -9,7 +9,7 @@ import {
   LayoutGrid, CalendarCheck2, PlusCircle, Building2, Menu, X, 
   Sparkles, CreditCard, Users, Bell, Settings, LogOut, PackageCheck, 
   Clock, ChevronUp, Star, BarChart3, IndianRupee, LifeBuoy, Plus,
-  ArrowLeftRight, RotateCcw, ShieldCheck, CalendarDays
+  ArrowLeftRight, RotateCcw, ShieldCheck, CalendarDays, Megaphone
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -45,6 +45,7 @@ export default function BottomNavigation() {
     { name: 'Events Calendar', href: '/event/calendar', icon: CalendarDays, cardBg: 'bg-gradient-to-br from-[#CCFBF1] to-[#F0FDFA]', cardBorder: 'border-teal-300/60 hover:border-teal-400', textColor: 'text-teal-950', badgeStyle: 'bg-teal-600 text-white shadow-xs' },
     { name: 'Customers', href: '/event/customers', icon: Users, cardBg: 'bg-gradient-to-br from-[#FCE7F3] to-[#FDF2F8]', cardBorder: 'border-pink-300/60 hover:border-pink-400', textColor: 'text-pink-950', badgeStyle: 'bg-pink-600 text-white shadow-xs' },
     { name: 'Reviews', href: '/event/reviews', icon: Star, cardBg: 'bg-gradient-to-br from-[#FEF3C7] to-[#FFFBEB]', cardBorder: 'border-amber-300/60 hover:border-amber-400', textColor: 'text-amber-950', badgeStyle: 'bg-amber-500 text-white shadow-xs' },
+    { name: 'Campaigns', href: '/event/campaigns', icon: Megaphone, cardBg: 'bg-gradient-to-br from-[#FAE8FF] to-[#FDF4FF]', cardBorder: 'border-fuchsia-300/60 hover:border-fuchsia-400', textColor: 'text-fuchsia-950', badgeStyle: 'bg-fuchsia-600 text-white shadow-xs' },
     { name: 'Payments', href: '/event/finance/payments', icon: CreditCard, cardBg: 'bg-gradient-to-br from-[#FFEDD5] to-[#FFF7ED]', cardBorder: 'border-orange-300/60 hover:border-orange-400', textColor: 'text-orange-950', badgeStyle: 'bg-orange-600 text-white shadow-xs' },
     { name: 'Settlements', href: '/event/finance/settlements', icon: ArrowLeftRight, cardBg: 'bg-gradient-to-br from-[#DCFCE7] to-[#F0FDF4]', cardBorder: 'border-green-300/60 hover:border-green-400', textColor: 'text-green-950', badgeStyle: 'bg-green-600 text-white shadow-xs' },
     { name: 'Refunds', href: '/event/finance/refunds', icon: RotateCcw, cardBg: 'bg-gradient-to-br from-[#FFE4E6] to-[#FFF1F2]', cardBorder: 'border-rose-300/60 hover:border-rose-400', textColor: 'text-rose-950', badgeStyle: 'bg-rose-600 text-white shadow-xs' },
@@ -158,116 +159,126 @@ export default function BottomNavigation() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {allMenuLinks.map((item, idx) => {
-                  const Icon = item.icon;
-                  const active = isTabActive(item.href);
-                  return (
-                    <Link
-                      key={idx}
-                      href={item.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={`flex flex-col items-start p-3.5 rounded-2xl border transition-all active:scale-95 shadow-2xs ${
-                        active 
-                          ? 'bg-[#6F4E37] text-white border-[#6F4E37] shadow-md ring-2 ring-[#6F4E37]/30' 
-                          : `${item.cardBg} ${item.cardBorder} ${item.textColor} hover:shadow-xs`
-                      }`}
-                    >
-                      <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-2 font-bold ${
-                        active ? 'bg-white/25 text-white' : item.badgeStyle
-                      }`}>
-                        <Icon className="w-4 h-4 stroke-[2.2]" />
-                      </div>
-                      <span className="text-xs font-black truncate w-full">{item.name}</span>
-                    </Link>
-                  );
-                })}
-              </div>
+              {allMenuLinks.map((item, idx) => {
+                const Icon = item.icon;
+                const active = isTabActive(item.href);
+                const tourId = item.href === '/event/services' ? 'nav-services' :
+                               item.href === '/event/profile' ? 'nav-profile' :
+                               item.href === '/event/calendar' ? 'nav-calendar' :
+                               `nav-${item.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+                return (
+                  <Link
+                    key={idx}
+                    href={item.href}
+                    data-tour-id={tourId}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`flex flex-col items-start p-3.5 rounded-2xl border transition-all active:scale-95 shadow-2xs ${
+                      active 
+                        ? 'bg-[#6F4E37] text-white border-[#6F4E37] shadow-md ring-2 ring-[#6F4E37]/30' 
+                        : `${item.cardBg} ${item.cardBorder} ${item.textColor} hover:shadow-xs`
+                    }`}
+                  >
+                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-2 font-bold ${
+                      active ? 'bg-white/25 text-white' : item.badgeStyle
+                    }`}>
+                      <Icon className="w-4 h-4 stroke-[2.2]" />
+                    </div>
+                    <span className="text-xs font-black truncate w-full">{item.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
 
-              {/* Logout Button in Menu Drawer */}
-              <div className="pt-2 border-t border-[#F2EAE1]">
-                <button
-                  type="button"
-                  onClick={() => setIsLogoutModalOpen(true)}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 text-xs font-black transition-all active:scale-98 shadow-2xs"
-                >
-                  <LogOut className="w-4 h-4 stroke-[2.5]" />
-                  <span>Logout of Dashboard</span>
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+            {/* Logout Button in Menu Drawer */}
+            <div className="pt-2 border-t border-[#F2EAE1]">
+              <button
+                type="button"
+                onClick={() => setIsLogoutModalOpen(true)}
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 text-xs font-black transition-all active:scale-98 shadow-2xs"
+              >
+                <LogOut className="w-4 h-4 stroke-[2.5]" />
+                <span>Logout of Dashboard</span>
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
 
-      {/* Logout Confirmation Modal */}
-      <LogoutConfirmModal 
-        isOpen={isLogoutModalOpen}
-        onClose={() => setIsLogoutModalOpen(false)}
-        onConfirm={handleLogout}
-      />
+    {/* Logout Confirmation Modal */}
+    <LogoutConfirmModal 
+      isOpen={isLogoutModalOpen}
+      onClose={() => setIsLogoutModalOpen(false)}
+      onConfirm={handleLogout}
+    />
 
-      {/* BOTTOM NAVIGATION BAR FOR MOBILE & TABLET (<1024px) */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#E8DED5] px-4 py-2 lg:hidden shadow-lg select-none">
-        <div className="flex items-center justify-around max-w-lg mx-auto relative">
-          {mainTabs.map((tab, idx) => {
-            if (tab.isQuickAction) {
-              return (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => {
-                    setIsQuickActionsOpen(!isQuickActionsOpen);
-                    setIsMenuOpen(false);
-                  }}
-                  className="relative -top-5 flex flex-col items-center group"
-                >
-                  <div className="w-13 h-13 rounded-full bg-gradient-to-r from-[#6F4E37] to-[#4A3324] text-white flex items-center justify-center shadow-lg shadow-[#6F4E37]/30 border-4 border-white active:scale-95 transition-transform">
-                    <Plus className={`w-7 h-7 stroke-[2.5] transition-transform duration-300 ${isQuickActionsOpen ? 'rotate-45' : ''}`} />
-                  </div>
-                  <span className="text-[10px] font-black text-[#6F4E37] mt-0.5">Quick Action</span>
-                </button>
-              );
-            }
-
-            if (tab.isMenuToggle) {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => {
-                    setIsMenuOpen(!isMenuOpen);
-                    setIsQuickActionsOpen(false);
-                  }}
-                  className={`flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all ${
-                    isMenuOpen ? 'text-[#6F4E37]' : 'text-[#8C6D58] hover:text-[#6F4E37]'
-                  }`}
-                >
-                  <Icon className="w-5 h-5 stroke-[2]" />
-                  <span className="text-[10px] font-extrabold mt-1">Menu</span>
-                </button>
-              );
-            }
-
-            const Icon = tab.icon;
-            const active = isTabActive(tab.href);
-
+    {/* BOTTOM NAVIGATION BAR FOR MOBILE & TABLET (<1024px) */}
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#E8DED5] px-1.5 sm:px-4 py-1.5 sm:py-2 lg:hidden shadow-lg select-none">
+      <div className="flex items-center justify-around max-w-lg mx-auto relative">
+        {mainTabs.map((tab, idx) => {
+          if (tab.isQuickAction) {
             return (
-              <Link
+              <button
                 key={idx}
-                href={tab.href}
+                type="button"
                 onClick={() => {
+                  setIsQuickActionsOpen(!isQuickActionsOpen);
                   setIsMenuOpen(false);
+                }}
+                className="relative -top-4 sm:-top-5 flex flex-col items-center group shrink-0"
+              >
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-[#6F4E37] to-[#4A3324] text-white flex items-center justify-center shadow-lg shadow-[#6F4E37]/30 border-2 sm:border-4 border-white active:scale-95 transition-transform">
+                  <Plus className={`w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5] transition-transform duration-300 ${isQuickActionsOpen ? 'rotate-45' : ''}`} />
+                </div>
+                <span className="text-[9px] sm:text-[10px] font-black text-[#6F4E37] mt-0.5 truncate max-w-[65px] text-center">Quick Action</span>
+              </button>
+            );
+          }
+
+          if (tab.isMenuToggle) {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(!isMenuOpen);
                   setIsQuickActionsOpen(false);
                 }}
-                className={`flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all ${
-                  active ? 'text-[#6F4E37]' : 'text-[#8C6D58] hover:text-[#6F4E37]'
+                className={`flex flex-col items-center justify-center py-0.5 sm:py-1 px-1 sm:px-3 rounded-2xl transition-all shrink-0 ${
+                  isMenuOpen ? 'text-[#6F4E37]' : 'text-[#8C6D58] hover:text-[#6F4E37]'
                 }`}
               >
+                <Icon className="w-4.5 h-4.5 sm:w-5 sm:h-5 stroke-[2]" />
+                <span className="text-[9px] sm:text-[10px] font-extrabold mt-0.5">Menu</span>
+              </button>
+            );
+          }
+
+          const Icon = tab.icon;
+          const active = isTabActive(tab.href);
+          const tourId = tab.href === '/event/dashboard' ? 'nav-dashboard' :
+                         tab.href === '/event/bookings' ? 'nav-bookings' :
+                         tab.href === '/event/profile' ? 'nav-profile' :
+                         `nav-${tab.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
+          return (
+            <Link
+              key={idx}
+              href={tab.href}
+              data-tour-id={tourId}
+              onClick={() => {
+                setIsMenuOpen(false);
+                setIsQuickActionsOpen(false);
+              }}
+              className={`flex flex-col items-center justify-center py-0.5 sm:py-1 px-1 sm:px-3 rounded-2xl transition-all shrink-0 ${
+                active ? 'text-[#6F4E37]' : 'text-[#8C6D58] hover:text-[#6F4E37]'
+              }`}
+            >
                 <div className={`p-1 rounded-xl transition-all ${active ? 'bg-[#FFF8F0] text-[#6F4E37]' : ''}`}>
-                  <Icon className={`w-5 h-5 ${active ? 'stroke-[2.5]' : 'stroke-[2]'}`} />
+                  <Icon className={`w-4.5 h-4.5 sm:w-5 sm:h-5 ${active ? 'stroke-[2.5]' : 'stroke-[2]'}`} />
                 </div>
-                <span className={`text-[10px] tracking-tight mt-0.5 ${active ? 'font-black text-[#2C1810]' : 'font-semibold'}`}>
+                <span className={`text-[9px] sm:text-[10px] tracking-tight mt-0.5 ${active ? 'font-black text-[#2C1810]' : 'font-semibold'}`}>
                   {tab.name}
                 </span>
               </Link>

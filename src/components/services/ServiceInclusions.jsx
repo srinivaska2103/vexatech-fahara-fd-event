@@ -1,103 +1,639 @@
 'use client';
 
-import { Plus, X, Sparkles, CheckCircle2 } from 'lucide-react';
-import { useFieldArray } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import {
+  Check,
+  Plus,
+  Trash2,
+  Sparkles,
+  Layers,
+  ChevronRight,
+  ChevronLeft,
+  Users,
+  Tag,
+  Gift,
+  Music,
+  Camera,
+  Utensils,
+  Mic,
+  Home,
+  CheckCircle2,
+  Info
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const CARD_COLORS = [
-  { bg: 'bg-amber-50/80', border: 'border-amber-200/80', text: 'text-amber-900', badgeBg: 'bg-amber-500', focusRing: 'focus:border-amber-500 focus:ring-amber-500/20' },
-  { bg: 'bg-indigo-50/80', border: 'border-indigo-200/80', text: 'text-indigo-900', badgeBg: 'bg-indigo-500', focusRing: 'focus:border-indigo-500 focus:ring-indigo-500/20' },
-  { bg: 'bg-emerald-50/80', border: 'border-emerald-200/80', text: 'text-emerald-900', badgeBg: 'bg-emerald-500', focusRing: 'focus:border-emerald-500 focus:ring-emerald-500/20' },
-  { bg: 'bg-purple-50/80', border: 'border-purple-200/80', text: 'text-purple-900', badgeBg: 'bg-purple-500', focusRing: 'focus:border-purple-500 focus:ring-purple-500/20' },
-  { bg: 'bg-rose-50/80', border: 'border-rose-200/80', text: 'text-rose-900', badgeBg: 'bg-rose-500', focusRing: 'focus:border-rose-500 focus:ring-rose-500/20' },
-  { bg: 'bg-blue-50/80', border: 'border-blue-200/80', text: 'text-blue-900', badgeBg: 'bg-blue-500', focusRing: 'focus:border-blue-500 focus:ring-blue-500/20' },
+const cn = (...classes) => classes.filter(Boolean).join(' ');
+
+const WIZARD_STEPS = [
+  { id: 1, title: 'Basic Details', subtitle: 'Name & Pricing Model' },
+  { id: 2, title: 'Guest Capacity', subtitle: 'Min & Max Guests' },
+  { id: 3, title: 'Tier Pricing', subtitle: 'Basic, Standard & Premium Tiers' },
 ];
 
-export default function ServiceInclusions({ control, register, errors }) {
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'inclusions'
-  });
+const QUICK_PRESETS = [
+  { name: 'Food & Catering', icon: Utensils, pType: 'PER_GUEST', bP: '200', bD: 'Basic Veg Buffet & Drinks', sP: '500', sD: 'Multi-Cuisine Buffet & Cake', pP: '1000', pD: 'Full Live Counters & Premium Banquet' },
+  { name: 'Celebration Cake', icon: Gift, pType: 'FIXED', bP: '1000', bD: '1kg Classic Cake', sP: '2500', sD: '2kg Custom Theme Cake', pP: '5000', pD: '3-Tier Luxury Designer Cake' },
+  { name: 'Event Decoration', icon: Home, pType: 'FIXED', bP: '2500', bD: 'Balloon Arch & Welcome Board', sP: '6000', sD: 'Theme Backdrop & Floral Setup', pP: '12000', pD: 'Full Stage & Royal LED Decor' },
+  { name: 'Photography', icon: Camera, pType: 'FIXED', bP: '2000', bD: '2hr Digital Photos', sP: '5000', sD: '4hr HD Photo + Video', pP: '10000', pD: 'Cinematic Full Night Coverage' },
+  { name: 'DJ & Sound', icon: Music, pType: 'FIXED', bP: '3000', bD: 'Basic DJ & Speaker Setup', sP: '6000', sD: 'Pro DJ + Disco Lights', pP: '12000', pD: 'VIP DJ + LED Stage & Smoke' },
+  { name: 'Anchor / Host', icon: Mic, pType: 'FIXED', bP: '2000', bD: '2hr Host', sP: '4000', sD: '4hr Pro Anchor', pP: '8000', pD: 'Celebrity Emcee' },
+];
+
+export const ServiceInclusions = () => {
+  const { watch, setValue } = useFormContext();
+  const serviceInclusions = watch('inclusions') || [];
+
+  const [wizardStep, setWizardStep] = useState(1);
+
+  // Form state
+  const [incName, setIncName] = useState('');
+  const [pricingType, setPricingType] = useState('PER_GUEST');
+  const [minGuests, setMinGuests] = useState('10');
+  const [maxGuests, setMaxGuests] = useState('200');
+
+  const [basicPrice, setBasicPrice] = useState('100');
+  const [basicDesc, setBasicDesc] = useState('Basic menu & welcome drinks');
+  const [standardPrice, setStandardPrice] = useState('250');
+  const [standardDesc, setStandardDesc] = useState('Standard buffet & celebration cake');
+  const [premiumPrice, setPremiumPrice] = useState('400');
+  const [premiumDesc, setPremiumDesc] = useState('Full premium buffet & custom setup');
+
+  const applyPreset = (preset) => {
+    setIncName(preset.name);
+    if (preset.pType) setPricingType(preset.pType);
+    setBasicPrice(preset.bP);
+    setBasicDesc(preset.bD);
+    setStandardPrice(preset.sP);
+    setStandardDesc(preset.sD);
+    setPremiumPrice(preset.pP);
+    setPremiumDesc(preset.pD);
+  };
+
+  const handleNextWizardStep = () => {
+    if (wizardStep === 1 && !incName.trim()) {
+      import('react-hot-toast').then(m => m.default.error('Please enter a feature name'));
+      return;
+    }
+    if (wizardStep < WIZARD_STEPS.length) setWizardStep(s => s + 1);
+  };
+
+  const handlePrevWizardStep = () => {
+    if (wizardStep > 1) setWizardStep(s => s - 1);
+  };
+
+  const handleAddInclusion = () => {
+    if (!incName.trim()) {
+      import('react-hot-toast').then(m => m.default.error('Please enter a feature name'));
+      return;
+    }
+
+    const incId = `inc_${Date.now()}`;
+
+    const tiers = [
+      {
+        tier_id: `${incId}_basic`,
+        tier_name: 'BASIC',
+        description: basicDesc.trim() || 'Basic tier setup',
+        pricing_type: pricingType,
+        unit_price: basicPrice && !isNaN(Number(basicPrice)) ? Number(basicPrice) : 0,
+      },
+      {
+        tier_id: `${incId}_standard`,
+        tier_name: 'STANDARD',
+        description: standardDesc.trim() || 'Standard tier setup',
+        pricing_type: pricingType,
+        unit_price: standardPrice && !isNaN(Number(standardPrice)) ? Number(standardPrice) : 0,
+      },
+      {
+        tier_id: `${incId}_premium`,
+        tier_name: 'PREMIUM',
+        description: premiumDesc.trim() || 'Premium tier setup',
+        pricing_type: pricingType,
+        unit_price: premiumPrice && !isNaN(Number(premiumPrice)) ? Number(premiumPrice) : 0,
+      },
+    ];
+
+    const newInc = {
+      id: incId,
+      name: incName.trim(),
+      category: incName.trim(),
+      description: basicDesc.trim(),
+      pricing_type: pricingType,
+      unit_price: Number(basicPrice) || 0,
+      min_guests: Number(minGuests) || 0,
+      max_guests: Number(maxGuests) || 0,
+      basic_price: Number(basicPrice) || 0,
+      basic_desc: basicDesc,
+      standard_price: Number(standardPrice) || 0,
+      standard_desc: standardDesc,
+      premium_price: Number(premiumPrice) || 0,
+      premium_desc: premiumDesc,
+      tiers,
+      quantity: 1,
+      is_active: true,
+      display_order: serviceInclusions.length,
+    };
+
+    setValue('inclusions', [...serviceInclusions, newInc], { shouldDirty: true, shouldValidate: true });
+    import('react-hot-toast').then(m => m.default.success(`"${incName.trim()}" added successfully!`));
+
+    // Reset Form
+    setIncName('');
+    setPricingType('PER_GUEST');
+    setMinGuests('10');
+    setMaxGuests('200');
+    setBasicPrice('100');
+    setBasicDesc('Basic menu & welcome drinks');
+    setStandardPrice('250');
+    setStandardDesc('Standard buffet & celebration cake');
+    setPremiumPrice('400');
+    setPremiumDesc('Full premium buffet & custom setup');
+    setWizardStep(1);
+  };
+
+  const handleRemoveInclusion = (index) => {
+    setValue('inclusions', serviceInclusions.filter((_, i) => i !== index), { shouldDirty: true });
+  };
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between">
-        <div>
-          <label className="block text-xs font-black text-[#2C1810] uppercase tracking-wider">Service Inclusions Cards</label>
-          <p className="text-[11px] text-[#8C6D58] font-medium">Define key features and package highlights provided in this service.</p>
-        </div>
-        <button
-          type="button"
-          onClick={() => append({ value: '' })}
-          className="flex items-center gap-1.5 px-4 py-2 bg-[#FFF8F0] hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white border border-[#6F4E37]/20 hover:border-[#6F4E37] rounded-2xl text-xs font-black transition-all shadow-2xs active:scale-95 shrink-0"
-        >
-          <Plus className="w-4 h-4 stroke-[3]" />
-          <span>Add Inclusion</span>
-        </button>
-      </div>
-      
-      {/* Grid of Side-by-Side Colorful Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <AnimatePresence>
-          {fields.map((field, index) => {
-            const colorTheme = CARD_COLORS[index % CARD_COLORS.length];
-            return (
-              <motion.div
-                key={field.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.2 }}
-                className={`relative p-4 rounded-3xl border ${colorTheme.bg} ${colorTheme.border} shadow-2xs flex flex-col justify-between group transition-all duration-300`}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className={`w-6 h-6 rounded-full ${colorTheme.badgeBg} text-white flex items-center justify-center text-[10px] font-black shadow-xs`}>
-                      #{index + 1}
-                    </span>
-                    <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider">Inclusion Item</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => remove(index)}
-                    className="p-1.5 text-rose-500 hover:text-white hover:bg-rose-500 rounded-xl transition-all border border-transparent"
-                    title="Remove item"
-                  >
-                    <X className="w-4 h-4 stroke-[2.5]" />
-                  </button>
-                </div>
+    <div className="space-y-6 text-[#2C1810] max-w-5xl mx-auto">
 
-                <div className="space-y-1">
-                  <input
-                    {...register(`inclusions.${index}.value`)}
-                    className={`w-full bg-white border border-[#E8DED5] rounded-2xl px-3.5 py-2.5 text-xs font-bold text-[#2C1810] focus:outline-none transition-all ${colorTheme.focusRing}`}
-                    placeholder="e.g. 2 Hours DJ Setup, Unlimited Drinks"
-                  />
-                  {errors?.inclusions?.[index]?.value && (
-                    <p className="text-rose-600 text-[10px] font-extrabold mt-1">{errors.inclusions[index].value.message}</p>
-                  )}
-                </div>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
-
-        {fields.length === 0 && (
-          <div className="col-span-full py-12 px-4 text-center bg-[#FFFDF9] rounded-3xl border border-dashed border-[#E8DED5]">
-            <Sparkles className="w-8 h-8 text-[#6F4E37] mx-auto mb-2 opacity-60" />
-            <p className="text-xs font-bold text-[#2C1810] mb-1">No inclusions added yet</p>
-            <p className="text-[11px] text-[#8C6D58] font-medium mb-3">Click 'Add Inclusion' above to create colorful feature cards.</p>
-            <button
-              type="button"
-              onClick={() => append({ value: '' })}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#6F4E37] text-white rounded-2xl text-xs font-bold shadow-xs hover:bg-[#5C402D] transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Add Inclusion</span>
-            </button>
+      {/* ── Modern Section Header ── */}
+      <div className="bg-gradient-to-r from-white via-[#FFF8F0] to-[#FFF5EA] p-5 sm:p-6 rounded-3xl border border-[#DDB892]/60 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#6F4E37] to-[#A67B5B] text-white flex items-center justify-center shadow-md shrink-0">
+            <Layers className="w-6 h-6" />
           </div>
+          <div>
+            <h2 className="text-lg sm:text-xl font-extrabold text-[#2C1810] tracking-tight">
+              Package Features & Tiered Inclusions
+            </h2>
+            <p className="text-xs text-stone-500 font-medium mt-0.5">
+              Add features (e.g. Catering, Cake, Decor) and define Basic, Standard & Premium tier options.
+            </p>
+          </div>
+        </div>
+
+        {serviceInclusions.length > 0 && (
+          <span className="px-3.5 py-1.5 rounded-full bg-[#6F4E37] text-white text-xs font-extrabold shadow-2xs self-start sm:self-center shrink-0">
+            {serviceInclusions.length} Configured {serviceInclusions.length === 1 ? 'Feature' : 'Features'}
+          </span>
         )}
       </div>
+
+      {/* ── Main Step-by-Step Builder Box ── */}
+      <div className="bg-white rounded-3xl border border-[#DDB892]/60 shadow-xs overflow-hidden">
+        {/* Step Progress Navigation Bar */}
+        <div className="p-3 sm:p-5 bg-gradient-to-r from-[#FFF8F0] to-white border-b border-[#DDB892]/40">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-4 max-w-3xl mx-auto">
+            {WIZARD_STEPS.map((step) => {
+              const isActive = wizardStep === step.id;
+              const isCompleted = wizardStep > step.id;
+              return (
+                <button
+                  key={step.id}
+                  type="button"
+                  onClick={() => {
+                    if (step.id < wizardStep || (step.id === 2 && incName.trim())) {
+                      setWizardStep(step.id);
+                    }
+                  }}
+                  className={cn(
+                    'flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3 p-2 sm:p-3 rounded-2xl border transition-all text-center sm:text-left cursor-pointer',
+                    isActive
+                      ? 'bg-white border-[#6F4E37] shadow-md ring-2 ring-[#6F4E37]/15'
+                      : isCompleted
+                      ? 'bg-emerald-50/70 border-emerald-300 text-emerald-900'
+                      : 'bg-stone-50/70 border-stone-200/80 opacity-60'
+                  )}
+                >
+                  <div className={cn(
+                    'w-6 h-6 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center text-[10px] sm:text-xs font-black shrink-0 transition-transform',
+                    isActive
+                      ? 'bg-[#6F4E37] text-white scale-105'
+                      : isCompleted
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-stone-200 text-stone-600'
+                  )}>
+                    {isCompleted ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : step.id}
+                  </div>
+                  <div className="min-w-0">
+                    <span className="hidden sm:block text-[10px] font-black text-stone-400 uppercase tracking-wider">
+                      Step 0{step.id}
+                    </span>
+                    <h4 className={cn('text-[10px] sm:text-xs font-extrabold truncate', isActive ? 'text-[#6F4E37]' : 'text-[#2C1810]')}>
+                      {step.title}
+                    </h4>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Step Form Body */}
+        <div className="p-3.5 sm:p-7">
+          <AnimatePresence mode="wait">
+
+            {/* ── STEP 1: Feature Name & Presets ── */}
+            {wizardStep === 1 && (
+              <motion.div
+                key="step1"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-5"
+              >
+                {/* Presets Toolbar */}
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-extrabold text-[#6F4E37] uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                      Quick Feature Presets
+                    </label>
+                    <span className="text-[9px] sm:text-[10px] text-stone-400 font-bold">Click to auto-fill</span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
+                    {QUICK_PRESETS.map((preset) => {
+                      const Icon = preset.icon;
+                      const isSelected = incName === preset.name;
+                      return (
+                        <button
+                          key={preset.name}
+                          type="button"
+                          onClick={() => applyPreset(preset)}
+                          className={cn(
+                            'p-2 sm:p-2.5 rounded-2xl border text-center transition-all flex flex-col items-center gap-1 sm:gap-1.5 cursor-pointer shadow-2xs',
+                            isSelected
+                              ? 'bg-[#6F4E37] text-white border-[#6F4E37] shadow-sm'
+                              : 'bg-[#FFF8F0] hover:bg-[#FFF5EA] text-[#2C1810] border-[#DDB892]/70 hover:border-[#6F4E37]'
+                          )}
+                        >
+                          <Icon className={cn('w-3.5 h-3.5 sm:w-4 sm:h-4', isSelected ? 'text-amber-300' : 'text-[#6F4E37]')} />
+                          <span className="text-[10px] sm:text-[11px] font-extrabold leading-tight truncate w-full">{preset.name}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 pt-1">
+                  {/* Inclusion Name */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-extrabold text-[#2C1810] flex items-center gap-1">
+                      Inclusion / Feature Name <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <Tag className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6F4E37]" />
+                      <input
+                        type="text"
+                        value={incName}
+                        onChange={(e) => setIncName(e.target.value)}
+                        placeholder="e.g. Food & Catering, Celebration Cake"
+                        className="w-full h-10 sm:h-11 pl-10 pr-4 text-xs font-extrabold rounded-2xl border border-[#DDB892]/80 bg-[#FFF8F0] focus:bg-[#FFF5EA] focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/20 text-[#2C1810] transition-all shadow-2xs"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Pricing Model */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-extrabold text-[#2C1810]">
+                      Pricing Model <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                      {[
+                        { id: 'PER_GUEST', title: 'Per Guest Rate', desc: 'Price × guest count' },
+                        { id: 'FIXED', title: 'Fixed Amount', desc: 'Flat rate package' },
+                      ].map((model) => {
+                        const active = pricingType === model.id;
+                        return (
+                          <button
+                            key={model.id}
+                            type="button"
+                            onClick={() => setPricingType(model.id)}
+                            className={cn(
+                              'h-10 sm:h-11 px-2.5 sm:px-3 rounded-2xl border transition-all text-left flex flex-col justify-center cursor-pointer',
+                              active
+                                ? 'bg-[#6F4E37] text-white border-[#6F4E37] shadow-xs'
+                                : 'bg-[#FFF8F0] text-[#2C1810] border-[#DDB892]/70 hover:border-[#6F4E37]'
+                            )}
+                          >
+                            <span className="text-[11px] sm:text-xs font-extrabold leading-none truncate">{model.title}</span>
+                            <span className={cn('text-[9px] font-bold mt-0.5 truncate', active ? 'text-white/80' : 'text-stone-500')}>
+                              {model.desc}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* ── STEP 2: Guest Capacity Limits ── */}
+            {wizardStep === 2 && (
+              <motion.div
+                key="step2"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-4"
+              >
+                <div className="p-3 sm:p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-center gap-3">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0">
+                    <Users className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-black text-amber-900">Set Guest Range for "{incName}"</h4>
+                    <p className="text-[10px] sm:text-[11px] text-amber-800/80 font-medium">
+                      Define the minimum and maximum attendee limits permitted for this feature.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto pt-1">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-extrabold text-[#2C1810]">Minimum Guest Capacity</label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={minGuests}
+                      onChange={(e) => setMinGuests(e.target.value)}
+                      className="w-full h-10 sm:h-11 px-3.5 text-xs font-extrabold rounded-2xl border border-[#DDB892]/80 bg-[#FFF8F0] focus:bg-[#FFF5EA] focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/20 text-[#2C1810] shadow-2xs"
+                      placeholder="10"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-extrabold text-[#2C1810]">Maximum Guest Capacity</label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={maxGuests}
+                      onChange={(e) => setMaxGuests(e.target.value)}
+                      className="w-full h-10 sm:h-11 px-3.5 text-xs font-extrabold rounded-2xl border border-[#DDB892]/80 bg-[#FFF8F0] focus:bg-[#FFF5EA] focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/20 text-[#2C1810] shadow-2xs"
+                      placeholder="200"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* ── STEP 3: Basic, Standard & Premium Tier Pricing ── */}
+            {wizardStep === 3 && (
+              <motion.div
+                key="step3"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-xs font-extrabold text-[#2C1810] uppercase tracking-wider">
+                      Configure 3 Package Tiers for "{incName}"
+                    </h4>
+                    <p className="text-[10px] sm:text-[11px] text-stone-500 font-medium">
+                      Rates calculated as <span className="font-extrabold text-[#6F4E37]">{pricingType === 'PER_GUEST' ? '₹ Rate per Guest' : 'Fixed Flat Rate'}</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                  
+                  {/* BASIC TIER */}
+                  <div className="p-3.5 sm:p-4 rounded-3xl border border-stone-300 bg-stone-50/80 space-y-3 relative">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-black text-stone-800 uppercase tracking-wider">Basic Tier</span>
+                      <span className="px-2 py-0.5 rounded-full bg-stone-200 text-stone-800 text-[9px] font-black">Essential</span>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-stone-500 uppercase">Rate (₹)</label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 font-black text-xs text-stone-600">₹</span>
+                        <input
+                          type="number"
+                          value={basicPrice}
+                          onChange={(e) => setBasicPrice(e.target.value)}
+                          className="w-full h-9.5 pl-7 pr-3 text-xs font-extrabold rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-stone-500 uppercase">Description</label>
+                      <input
+                        type="text"
+                        value={basicDesc}
+                        onChange={(e) => setBasicDesc(e.target.value)}
+                        placeholder="Basic offering description"
+                        className="w-full h-9.5 px-3 text-xs font-semibold rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* STANDARD TIER */}
+                  <div className="p-3.5 sm:p-4 rounded-3xl border-2 border-amber-400 bg-amber-50/50 space-y-3 relative shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-black text-amber-900 uppercase tracking-wider">Standard Tier</span>
+                      <span className="px-2 py-0.5 rounded-full bg-amber-500 text-white text-[9px] font-black">Popular</span>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-amber-900/80 uppercase">Rate (₹)</label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 font-black text-xs text-amber-900">₹</span>
+                        <input
+                          type="number"
+                          value={standardPrice}
+                          onChange={(e) => setStandardPrice(e.target.value)}
+                          className="w-full h-9.5 pl-7 pr-3 text-xs font-extrabold rounded-xl border border-amber-300 bg-white focus:outline-none focus:border-amber-600 text-[#2C1810]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-amber-900/80 uppercase">Description</label>
+                      <input
+                        type="text"
+                        value={standardDesc}
+                        onChange={(e) => setStandardDesc(e.target.value)}
+                        placeholder="Standard offering description"
+                        className="w-full h-9.5 px-3 text-xs font-semibold rounded-xl border border-amber-300 bg-white focus:outline-none focus:border-amber-600 text-[#2C1810]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* PREMIUM TIER */}
+                  <div className="p-3.5 sm:p-4 rounded-3xl border border-[#DDB892] bg-[#FFF8F0] space-y-3 relative">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-black text-[#6F4E37] uppercase tracking-wider">Premium Tier</span>
+                      <span className="px-2 py-0.5 rounded-full bg-[#6F4E37] text-white text-[9px] font-black">VIP Deluxe</span>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-[#6F4E37]/80 uppercase">Rate (₹)</label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 font-black text-xs text-[#6F4E37]">₹</span>
+                        <input
+                          type="number"
+                          value={premiumPrice}
+                          onChange={(e) => setPremiumPrice(e.target.value)}
+                          className="w-full h-9.5 pl-7 pr-3 text-xs font-extrabold rounded-xl border border-[#DDB892] bg-white focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-[#6F4E37]/80 uppercase">Description</label>
+                      <input
+                        type="text"
+                        value={premiumDesc}
+                        onChange={(e) => setPremiumDesc(e.target.value)}
+                        placeholder="Premium offering description"
+                        className="w-full h-9.5 px-3 text-xs font-semibold rounded-xl border border-[#DDB892] bg-white focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                      />
+                    </div>
+                  </div>
+
+                </div>
+              </motion.div>
+            )}
+
+          </AnimatePresence>
+        </div>
+
+        {/* Wizard Footer Controls */}
+        <div className="p-3 sm:p-5 bg-stone-50/70 border-t border-[#DDB892]/40 flex items-center justify-between gap-1.5 sm:gap-3">
+          <button
+            type="button"
+            onClick={handlePrevWizardStep}
+            disabled={wizardStep === 1}
+            className="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl border border-stone-200 bg-white hover:bg-stone-50 text-[11px] sm:text-xs font-extrabold text-stone-700 flex items-center gap-1 sm:gap-1.5 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-2xs shrink-0"
+          >
+            <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Previous
+          </button>
+
+          <span className="text-[10px] sm:text-xs font-extrabold text-[#6F4E37] shrink-0">Step {wizardStep}/3</span>
+
+          {wizardStep < 3 ? (
+            <button
+              type="button"
+              onClick={handleNextWizardStep}
+              className="px-3 sm:px-5 py-2 sm:py-2.5 rounded-2xl bg-[#6F4E37] hover:bg-[#5D3F2B] text-white text-[11px] sm:text-xs font-extrabold flex items-center gap-1 sm:gap-1.5 transition-all active:scale-95 cursor-pointer shadow-xs shrink-0"
+            >
+              Next <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleAddInclusion}
+              className="px-3 sm:px-6 py-2 sm:py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-[11px] sm:text-xs font-extrabold flex items-center gap-1 sm:gap-2 transition-all active:scale-95 cursor-pointer shadow-sm shrink-0"
+            >
+              <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[3]" />
+              <span className="hidden sm:inline">Save Feature Inclusion</span>
+              <span className="sm:hidden">Save Feature</span>
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* ── Configured Package Features List ── */}
+      {serviceInclusions.length > 0 && (
+        <div className="space-y-4 pt-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs sm:text-sm font-extrabold text-[#2C1810] uppercase tracking-wider">
+              Configured Package Inclusions ({serviceInclusions.length})
+            </h3>
+          </div>
+
+          <div className="space-y-4">
+            {serviceInclusions.map((inc, index) => {
+              const isPerGuest = (inc.pricing_type || 'PER_GUEST') === 'PER_GUEST';
+              return (
+                <div
+                  key={inc.id || index}
+                  className="bg-white p-4 sm:p-5 rounded-3xl border border-[#DDB892]/70 shadow-2xs space-y-4 relative"
+                >
+                  <div className="flex items-start justify-between gap-3 border-b border-stone-100 pb-3">
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-[#FFF8F0] border border-[#DDB892]/60 text-[#6F4E37] flex items-center justify-center text-xs sm:text-sm font-extrabold shrink-0">
+                        {index + 1}
+                      </div>
+                      <div>
+                        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                          <h4 className="text-sm sm:text-base font-extrabold text-[#2C1810]">{inc.name}</h4>
+                          <span className="px-2 py-0.5 rounded-full bg-[#6F4E37]/10 text-[#6F4E37] text-[9px] sm:text-[10px] font-black uppercase">
+                            {isPerGuest ? 'Per Guest' : 'Fixed Rate'}
+                          </span>
+                        </div>
+                        {(inc.min_guests || inc.max_guests) && (
+                          <p className="text-[11px] sm:text-xs text-stone-500 font-medium mt-0.5">
+                            Capacity: {inc.min_guests} – {inc.max_guests} Guests
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveInclusion(index)}
+                      className="p-1.5 sm:p-2 rounded-xl text-rose-500 hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-colors cursor-pointer shrink-0"
+                      title="Remove Feature"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* 3 Tier Pricing Cards (Responsive Grid: 1 col on mobile 360px, 3 col on tablet+) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                    
+                    {/* Basic */}
+                    <div className="p-3 rounded-2xl bg-stone-50 border border-stone-200 space-y-1">
+                      <span className="text-[10px] font-black text-stone-500 uppercase">BASIC</span>
+                      <p className="text-sm sm:text-base font-extrabold text-[#2C1810]">
+                        ₹{Number(inc.basic_price || inc.unit_price || 0).toLocaleString('en-IN')}
+                        <span className="text-[11px] font-bold text-stone-500 ml-1">{isPerGuest ? '/guest' : 'fixed'}</span>
+                      </p>
+                      <p className="text-[11px] text-stone-600 font-medium line-clamp-2">{inc.basic_desc || 'Basic setup'}</p>
+                    </div>
+
+                    {/* Standard */}
+                    <div className="p-3 rounded-2xl bg-amber-50/80 border border-amber-300 space-y-1">
+                      <span className="text-[10px] font-black text-amber-800 uppercase">STANDARD</span>
+                      <p className="text-sm sm:text-base font-extrabold text-amber-950">
+                        ₹{Number(inc.standard_price || inc.unit_price || 0).toLocaleString('en-IN')}
+                        <span className="text-[11px] font-bold text-amber-800 ml-1">{isPerGuest ? '/guest' : 'fixed'}</span>
+                      </p>
+                      <p className="text-[11px] text-amber-900/80 font-medium line-clamp-2">{inc.standard_desc || 'Standard setup'}</p>
+                    </div>
+
+                    {/* Premium */}
+                    <div className="p-3 rounded-2xl bg-[#FFF8F0] border border-[#DDB892] space-y-1">
+                      <span className="text-[10px] font-black text-[#6F4E37] uppercase">PREMIUM</span>
+                      <p className="text-sm sm:text-base font-extrabold text-[#2C1810]">
+                        ₹{Number(inc.premium_price || inc.unit_price || 0).toLocaleString('en-IN')}
+                        <span className="text-[11px] font-bold text-[#6F4E37] ml-1">{isPerGuest ? '/guest' : 'fixed'}</span>
+                      </p>
+                      <p className="text-[11px] text-stone-600 font-medium line-clamp-2">{inc.premium_desc || 'Premium setup'}</p>
+                    </div>
+
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
     </div>
   );
-}
+};
+
+export default ServiceInclusions;

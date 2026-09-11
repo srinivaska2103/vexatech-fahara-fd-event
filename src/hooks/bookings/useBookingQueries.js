@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from '@/lib/axios';
 
 const fetchBookings = async (filters) => {
@@ -26,3 +26,19 @@ export const useGetBookingDetails = (id) => {
     enabled: !!id,
   });
 };
+
+export const useUpdateBookingStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, status }) => {
+      const { data } = await axios.patch(`/bookings/${id}/status`, { status });
+      return data?.data || data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['bookings']);
+      queryClient.invalidateQueries(['dashboard_data']);
+      queryClient.invalidateQueries(['booking']);
+    },
+  });
+};
+

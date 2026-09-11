@@ -1,43 +1,73 @@
-import { User, Phone, Mail } from 'lucide-react';
+import { User, Phone, Mail, Copy, CheckCircle2, ShieldCheck } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function CustomerInformationCard({ booking }) {
   if (!booking) return null;
 
+  const name = booking.customer_name || booking.users?.name || 'Guest Customer';
+  const phone = booking.customer_phone || booking.users?.phone_number || booking.users?.phone || '';
+  const email = booking.customer_email || booking.users?.email || '';
+
   return (
-    <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden h-full">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[50px] -z-10" />
-      
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-primary shrink-0 shadow-inner border border-white/10">
-          <User className="w-6 h-6" />
-        </div>
-        <div>
-          <h2 className="text-xl font-bold text-text tracking-tight">Customer Information</h2>
-          <p className="text-sm text-text/60 mt-0.5">Contact details and identity</p>
+    <div className="bg-white rounded-3xl border border-stone-200/80 p-6 md:p-7 shadow-xs hover:shadow-sm transition-all space-y-6 relative overflow-hidden text-[#2C1810]">
+      <div className="flex items-center justify-between pb-4 border-b border-stone-100">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#6F4E37] to-[#A67B5B] text-white flex items-center justify-center font-black text-sm shadow-md shadow-[#6F4E37]/20 shrink-0">
+            {name.charAt(0).toUpperCase()}
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-black text-[#2C1810] tracking-tight">{name}</h2>
+              <span className="inline-flex items-center gap-1 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <ShieldCheck size={11} /> Verified Customer
+              </span>
+            </div>
+            <p className="text-xs text-stone-500 font-medium">Customer contact details & identity</p>
+          </div>
         </div>
       </div>
 
-      <div className="space-y-4 relative z-10">
-        <div>
-          <p className="text-xs font-semibold text-text/50 uppercase tracking-wider mb-1">Full Name</p>
-          <p className="font-bold text-text bg-background/50 px-4 py-2.5 rounded-xl border border-white/5 backdrop-blur-sm">
-            {booking.customer_name || booking.users?.name || 'Guest User'}
-          </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Email */}
+        <div className="p-3.5 rounded-2xl bg-[#FFF8F0]/70 border border-[#DDB892]/40 flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <span className="text-[10px] font-extrabold text-[#6F4E37] uppercase tracking-wider block mb-0.5 flex items-center gap-1">
+              <Mail size={12} /> Email Address
+            </span>
+            <p className="text-xs font-black text-[#2C1810] truncate">{email || 'Not Provided'}</p>
+          </div>
+          {email && (
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard.writeText(email);
+                toast.success('Email copied to clipboard!');
+              }}
+              className="p-1.5 rounded-xl bg-white border border-stone-200 hover:bg-[#6F4E37] text-stone-500 hover:text-white transition-all shadow-2xs cursor-pointer shrink-0"
+              title="Copy Email"
+            >
+              <Copy size={13} />
+            </button>
+          )}
         </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <p className="text-xs font-semibold text-text/50 uppercase tracking-wider mb-1 flex items-center gap-1"><Phone className="w-3 h-3"/> Phone</p>
-            <p className="font-semibold text-text/80 bg-background/50 px-4 py-2.5 rounded-xl border border-white/5 backdrop-blur-sm">
-              {booking.customer_phone || booking.users?.phone_number || booking.users?.phone || 'Not Provided'}
-            </p>
+
+        {/* Phone */}
+        <div className="p-3.5 rounded-2xl bg-[#FFF8F0]/70 border border-[#DDB892]/40 flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <span className="text-[10px] font-extrabold text-[#6F4E37] uppercase tracking-wider block mb-0.5 flex items-center gap-1">
+              <Phone size={12} /> Phone Number
+            </span>
+            <p className="text-xs font-black text-[#2C1810] truncate">{phone || 'Not Provided'}</p>
           </div>
-          <div>
-            <p className="text-xs font-semibold text-text/50 uppercase tracking-wider mb-1 flex items-center gap-1"><Mail className="w-3 h-3"/> Email</p>
-            <p className="font-semibold text-text/80 bg-background/50 px-4 py-2.5 rounded-xl border border-white/5 backdrop-blur-sm break-all">
-              {booking.customer_email || booking.users?.email || 'Not Provided'}
-            </p>
-          </div>
+          {phone && (
+            <a
+              href={`tel:${phone}`}
+              className="p-1.5 rounded-xl bg-[#6F4E37] text-white hover:bg-[#4A2C11] transition-all shadow-2xs cursor-pointer shrink-0"
+              title="Call Customer"
+            >
+              <Phone size={13} />
+            </a>
+          )}
         </div>
       </div>
     </div>

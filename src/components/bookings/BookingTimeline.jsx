@@ -1,7 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Check, Circle } from 'lucide-react';
+import { Check, Clock, Calendar } from 'lucide-react';
 
 export default function BookingTimeline({ booking }) {
   if (!booking) return null;
@@ -9,7 +8,8 @@ export default function BookingTimeline({ booking }) {
   const getStatusIndex = (status) => {
     switch (status?.toUpperCase()) {
       case 'PENDING': return 0;
-      case 'ACCEPTED': return 1;
+      case 'ACCEPTED':
+      case 'CONFIRMED': return 1;
       case 'ASSIGNED': return 2;
       case 'IN_PROGRESS': return 3;
       case 'COMPLETED': return 4;
@@ -28,39 +28,41 @@ export default function BookingTimeline({ booking }) {
   ];
 
   return (
-    <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full">
-      <h2 className="text-xl font-bold text-text tracking-tight mb-8">Booking Timeline</h2>
+    <div className="bg-white rounded-3xl border border-stone-200/80 p-6 md:p-7 shadow-xs text-[#2C1810] h-full space-y-6">
+      <div className="flex items-center gap-3.5 pb-4 border-b border-stone-100">
+        <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-800 border border-amber-200 flex items-center justify-center font-black text-sm shrink-0">
+          <Clock size={18} />
+        </div>
+        <div>
+          <h2 className="text-base font-black text-[#2C1810] tracking-tight">Booking Timeline</h2>
+          <p className="text-xs text-stone-500 font-medium">Real-time status progression</p>
+        </div>
+      </div>
 
-      <div className="relative border-l-2 border-border/50 ml-4 space-y-8">
+      <div className="relative border-l-2 border-stone-200 ml-3.5 space-y-6">
         {steps.map((step, idx) => {
           const isCompleted = currentIndex >= idx;
-          const isCurrent = currentIndex === idx;
 
           return (
-            <div key={idx} className="relative pl-8">
-              {/* Line active fill */}
-              {isCompleted && idx < steps.length - 1 && (
-                <div className="absolute left-[-2px] top-6 w-[2px] h-full bg-primary/40 -z-10" />
-              )}
-              
+            <div key={idx} className="relative pl-6">
               <div 
-                className={`absolute left-[-11px] top-1 w-5 h-5 rounded-full flex items-center justify-center transition-colors duration-500
-                  ${isCompleted ? 'bg-primary' : 'bg-background border-2 border-border/50'}
-                `}
+                className={`absolute left-[-9px] top-0.5 w-4 h-4 rounded-full flex items-center justify-center transition-all ${
+                  isCompleted ? 'bg-[#6F4E37] text-white shadow-2xs' : 'bg-stone-100 border border-stone-300 text-stone-400'
+                }`}
               >
-                {isCompleted ? <Check className="w-3 h-3 text-white" /> : <Circle className="w-2 h-2 text-border/50" fill="currentColor" />}
+                {isCompleted ? <Check size={10} className="stroke-[3]" /> : <span className="w-1.5 h-1.5 rounded-full bg-stone-300" />}
               </div>
 
               <div>
-                <h4 className={`text-sm font-bold transition-colors ${isCompleted ? 'text-text' : 'text-text/40'}`}>
+                <h4 className={`text-xs font-black transition-colors ${isCompleted ? 'text-[#2C1810]' : 'text-stone-400'}`}>
                   {step.label}
                 </h4>
                 {step.date ? (
-                  <p className="text-xs font-medium text-text/50 mt-1">
-                    {new Date(step.date).toLocaleDateString()} at {new Date(step.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                  <p className="text-[11px] font-bold text-[#6F4E37] mt-0.5">
+                    {new Date(step.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} at {new Date(step.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 ) : (
-                  <p className="text-xs font-medium text-text/30 mt-1">Pending</p>
+                  <p className="text-[10px] font-medium text-stone-400 mt-0.5">Pending</p>
                 )}
               </div>
             </div>

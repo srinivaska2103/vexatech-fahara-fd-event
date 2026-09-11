@@ -13,20 +13,30 @@ const fetchEventServices = async () => {
   return response.data?.data || response.data || [];
 };
 
+const fetchReviewSummary = async () => {
+  try {
+    const response = await axiosInstance.get(API_ENDPOINTS.REVIEWS.SUMMARY);
+    return response.data?.data || response.data || null;
+  } catch (e) {
+    return null;
+  }
+};
+
 export const useDashboardQueries = () => {
   return useQuery({
     queryKey: ['dashboard_data'],
     queryFn: async () => {
-      const [bookings, services] = await Promise.all([
+      const [bookings, services, reviewSummary] = await Promise.all([
         fetchDashboardBookings(),
-        fetchEventServices()
+        fetchEventServices(),
+        fetchReviewSummary()
       ]);
-      return { bookings, services };
+      return { bookings, services, reviewSummary };
     },
     // Refetch immediately
     staleTime: 0,
-    select: ({ bookings, services }) => {
-      console.log('DASHBOARD DATA:', { bookings, services });
+    select: ({ bookings, services, reviewSummary }) => {
+      console.log('DASHBOARD DATA:', { bookings, services, reviewSummary });
       // Safety check if it's not an array
       const data = Array.isArray(bookings) ? bookings : [];
       const servicesData = Array.isArray(services) ? services : [];
@@ -41,10 +51,9 @@ export const useDashboardQueries = () => {
       let todaysEvents = 0;
       
       const upcoming = [];
-      const recent = [];
       
       data.forEach(booking => {
-        const amount = Number(booking.amount || booking.total_amount || booking.cafe_amount || booking.event_service_amount || booking.subtotal || 0);
+        const amount = Number(booking.amount || booking.total_amount || booking.event_service_amount || booking.cafe_amount || booking.subtotal || 0);
         const bookingDate = new Date(booking.date || booking.booking_date);
         
         const status = (booking.status || '').toUpperCase();
@@ -96,7 +105,7 @@ export const useDashboardQueries = () => {
       sevenDaysAgo.setDate(now.getDate() - 7);
 
       data.forEach(booking => {
-        const amount = Number(booking.amount || booking.total_amount || booking.cafe_amount || booking.event_service_amount || booking.subtotal || 0);
+        const amount = Number(booking.amount || booking.total_amount || booking.event_service_amount || booking.cafe_amount || booking.subtotal || 0);
         const bookingDate = new Date(booking.date || booking.booking_date || booking.createdAt);
         const status = (booking.status || '').toUpperCase();
 
@@ -109,6 +118,9 @@ export const useDashboardQueries = () => {
         }
       });
 
+      // Average rating from reviewSummary or fallback
+      const avgRating = reviewSummary?.averageRating || reviewSummary?.average_rating || (reviewSummary?.reviews && reviewSummary.reviews.length > 0 ? (reviewSummary.reviews.reduce((acc, r) => acc + (r.rating || 0), 0) / reviewSummary.reviews.length).toFixed(1) : 4.8);
+
       return {
         rawBookings: data,
         stats: {
@@ -120,7 +132,8 @@ export const useDashboardQueries = () => {
           cancelledEvents,
           todaysEvents,
           activeServices: servicesData.filter(s => s.status === 'ACTIVE').length,
-          totalCustomers: new Set(data.map(b => b.user_id || b.customer_id)).size,
+          totalCustomers: new Set(data.map(b => b.customerEmail || b.customer_id || b.user_id)).size,
+          averageRating: Number(avgRating),
         },
         weeklyRevenue: weeklyData,
         upcomingEvents: upcoming.slice(0, 5),
@@ -131,3 +144,4 @@ export const useDashboardQueries = () => {
     }
   });
 };
+

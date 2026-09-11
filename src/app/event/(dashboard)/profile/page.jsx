@@ -93,11 +93,12 @@ export default function ProfilePage() {
           if (found) {
             const formatTime = (dateStr) => {
               if (!dateStr) return "";
-              if (dateStr.includes("T")) {
-                const date = new Date(dateStr);
+              const strVal = String(dateStr);
+              if (strVal.includes("T")) {
+                const date = new Date(strVal);
                 return `${date.getUTCHours().toString().padStart(2, '0')}:${date.getUTCMinutes().toString().padStart(2, '0')}`;
               }
-              return dateStr;
+              return strVal;
             };
             return {
               dayOfWeek: defaultDay.dayOfWeek,
@@ -398,7 +399,7 @@ export default function ProfilePage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-black text-[#2C1810] uppercase tracking-wider mb-2">Established Year</label>
                     <input 
@@ -428,44 +429,50 @@ export default function ProfilePage() {
                     {fields.map((field, index) => {
                       const isClosed = watch(`working_hours.${index}.isClosed`);
                       return (
-                        <div key={field.id} className="flex items-center gap-4 bg-[#FFFDF9] p-3.5 rounded-2xl border border-[#E8DED5]">
-                          <div className="w-28 shrink-0">
-                            <input type="hidden" {...register(`working_hours.${index}.dayOfWeek`)} />
-                            <span className="text-xs font-extrabold text-[#2C1810] uppercase tracking-wide">{field.dayOfWeek}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="checkbox"
-                              {...register(`working_hours.${index}.isClosed`)}
-                              className="w-4 h-4 text-[#6F4E37] rounded border-gray-300 focus:ring-[#6F4E37]"
-                            />
-                            <span className="text-xs text-[#8C6D58] font-bold">Closed</span>
+                        <div key={field.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#FFFDF9] p-3 sm:p-3.5 rounded-2xl border border-[#E8DED5]">
+                          <div className="flex items-center justify-between sm:w-28 shrink-0">
+                            <div>
+                              <input type="hidden" {...register(`working_hours.${index}.dayOfWeek`)} />
+                              <span className="text-xs font-extrabold text-[#2C1810] uppercase tracking-wide">{field.dayOfWeek}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="checkbox"
+                                {...register(`working_hours.${index}.isClosed`)}
+                                className="w-4 h-4 text-[#6F4E37] rounded border-gray-300 focus:ring-[#6F4E37]"
+                              />
+                              <span className="text-xs text-[#8C6D58] font-bold">Closed</span>
+                            </div>
                           </div>
                           {!isClosed && (
-                            <div className="flex flex-1 items-center gap-2 justify-end">
-                              <Controller
-                                control={control}
-                                name={`working_hours.${index}.openTime`}
-                                render={({ field: { value, onChange } }) => (
-                                  <ModernTimePicker 
-                                    value={value} 
-                                    onChange={onChange} 
-                                    placeholder="Open time" 
-                                  />
-                                )}
-                              />
-                              <span className="text-[10px] font-black text-[#8C6D58] uppercase">to</span>
-                              <Controller
-                                control={control}
-                                name={`working_hours.${index}.closeTime`}
-                                render={({ field: { value, onChange } }) => (
-                                  <ModernTimePicker 
-                                    value={value} 
-                                    onChange={onChange} 
-                                    placeholder="Close time" 
-                                  />
-                                )}
-                              />
+                            <div className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
+                              <div className="flex-1 sm:flex-initial min-w-0">
+                                <Controller
+                                  control={control}
+                                  name={`working_hours.${index}.openTime`}
+                                  render={({ field: { value, onChange } }) => (
+                                    <ModernTimePicker 
+                                      value={value} 
+                                      onChange={onChange} 
+                                      placeholder="Open time" 
+                                    />
+                                  )}
+                                />
+                              </div>
+                              <span className="text-[10px] font-black text-[#8C6D58] uppercase shrink-0">to</span>
+                              <div className="flex-1 sm:flex-initial min-w-0">
+                                <Controller
+                                  control={control}
+                                  name={`working_hours.${index}.closeTime`}
+                                  render={({ field: { value, onChange } }) => (
+                                    <ModernTimePicker 
+                                      value={value} 
+                                      onChange={onChange} 
+                                      placeholder="Close time" 
+                                    />
+                                  )}
+                                />
+                              </div>
                             </div>
                           )}
                         </div>
