@@ -1,8 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '@/lib/axios';
 import { API_ENDPOINTS } from '@/constants/api';
+import { useSubscriptionStore } from '@/store/subscriptionStore';
 
 export const useNotifications = (filters) => {
+  const isSubActive = useSubscriptionStore((state) => state.isActive);
+
   return useQuery({
     queryKey: ['notifications', filters],
     queryFn: async () => {
@@ -11,16 +14,21 @@ export const useNotifications = (filters) => {
         const data = res.data?.data?.notifications || res.data?.notifications || res.data?.data || res.data || [];
         return Array.isArray(data) ? data : [];
       } catch (error) {
+        if (error.response?.status === 403) {
+          return [];
+        }
         console.error('NOTIFICATIONS ERR:', error);
         return [];
       }
     },
+    enabled: isSubActive,
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
 };
 
 export const useActivityHistory = (filters) => {
+  const isSubActive = useSubscriptionStore((state) => state.isActive);
   return useQuery({
     queryKey: ['activity-history', filters],
     queryFn: async () => {
@@ -31,10 +39,12 @@ export const useActivityHistory = (filters) => {
         return [];
       }
     },
+    enabled: isSubActive,
   });
 };
 
 export const useNotificationPreferences = () => {
+  const isSubActive = useSubscriptionStore((state) => state.isActive);
   return useQuery({
     queryKey: ['notification-preferences'],
     queryFn: async () => {
@@ -55,6 +65,7 @@ export const useNotificationPreferences = () => {
         };
       }
     },
+    enabled: isSubActive,
   });
 };
 

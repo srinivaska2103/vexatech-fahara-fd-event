@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
+import { useSubscriptionStore } from '@/store/subscriptionStore';
 import { useDashboardQueries } from '@/hooks/dashboard/useDashboardQueries';
 import LogoutConfirmModal from './LogoutConfirmModal';
 import { 
@@ -11,7 +12,7 @@ import {
   CalendarDays, Users, Star, CreditCard, Landmark, RotateCcw, 
   Wallet, BarChart3, Bell, Settings, LogOut, PanelLeftClose, 
   PanelLeftOpen, X, ChevronRight, ChevronDown, User, LifeBuoy, Sparkles,
-  ArrowLeftRight, ShieldCheck, HelpCircle, Store, CornerDownRight, Megaphone
+  ArrowLeftRight, ShieldCheck, HelpCircle, Store, CornerDownRight, Megaphone, Lock
 } from 'lucide-react';
 
 const NAV_GROUPS = [
@@ -45,10 +46,11 @@ const NAV_GROUPS = [
   {
     group: 'SYSTEM',
     items: [
+      { name: 'Subscription', href: '/event/subscription', icon: Sparkles, color: 'text-amber-600', bg: 'bg-amber-100/70', isUnlockedAlways: true },
       { name: 'Event Management', href: '/event/profile', icon: Store, color: 'text-indigo-600', bg: 'bg-indigo-100/70' },
       { name: 'Notifications', href: '/event/notifications', icon: Bell, color: 'text-rose-600', bg: 'bg-rose-100/70' },
       { name: 'Settings', href: '/event/settings', icon: Settings, color: 'text-slate-600', bg: 'bg-slate-200/80' },
-      { name: 'Help & Support', href: '/event/support', icon: HelpCircle, color: 'text-teal-600', bg: 'bg-teal-100/70' },
+      { name: 'Help & Support', href: '/event/support', icon: HelpCircle, color: 'text-teal-600', bg: 'bg-teal-100/70', isUnlockedAlways: true },
     ]
   }
 ];
@@ -59,6 +61,15 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
   const logout = useAuthStore((state) => state.logout);
   const { user } = useAuthStore();
   const { data } = useDashboardQueries();
+  const { isActive: isSubActive, fetchSubscription } = useSubscriptionStore();
+
+  useEffect(() => {
+    fetchSubscription();
+  }, [fetchSubscription]);
+
+  const isItemUnlocked = (item) => {
+    return isSubActive || item.isUnlockedAlways;
+  };
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -209,6 +220,8 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                       {group.items.map((item) => {
                         const active = isItemActive(item.href);
                         const Icon = item.icon;
+                        const isLocked = !isItemUnlocked(item);
+                        const targetHref = isLocked ? '/event/subscription' : item.href;
                         const showBadge = item.name === 'Notifications' && notificationCount > 0;
                         const tourId = item.href === '/event/services' ? 'nav-services' :
                                        item.href === '/event/profile' ? 'nav-profile' :
@@ -218,7 +231,7 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                         return (
                           <div key={item.name} className="relative group/item">
                             <Link
-                              href={item.href}
+                              href={targetHref}
                               data-tour-id={tourId}
                               className={`
                                 relative flex items-center min-h-[34px] rounded-xl transition-all duration-200 ease-out cursor-pointer
@@ -226,6 +239,8 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                                 ${
                                   active
                                     ? 'bg-gradient-to-r from-[#6F4E37] to-[#4A3225] text-white font-extrabold shadow-md shadow-[#6F4E37]/20 scale-[1.01]'
+                                    : isLocked
+                                    ? 'text-[#4A3225]/50 hover:bg-amber-50/50 hover:text-amber-800 font-medium'
                                     : 'text-[#4A3225]/85 hover:bg-[#FFF8F0] hover:text-[#6F4E37] hover:translate-x-0.5 font-bold border border-transparent hover:border-[#6F4E37]/15'
                                 }
                               `}
@@ -259,18 +274,23 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                                     {item.name}
                                   </span>
                                   <div className="flex items-center gap-1">
+                                    {isLocked && (
+                                      <Lock className="w-3 h-3 text-amber-600 shrink-0" />
+                                    )}
                                     {showBadge && (
                                       <span className="px-1.5 py-0.5 text-[8.5px] font-black rounded-full bg-[#6F4E37] text-white animate-pulse">
                                         {notificationCount}
                                       </span>
                                     )}
-                                    <ChevronRight 
-                                      className={`w-3 h-3 transition-all duration-200 ${
-                                        active 
-                                          ? 'text-white/80 translate-x-0.5 opacity-100' 
-                                          : 'text-[#8C6D58]/50 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 group-hover/item:text-[#6F4E37]'
-                                      }`} 
-                                    />
+                                    {!isLocked && (
+                                      <ChevronRight 
+                                        className={`w-3 h-3 transition-all duration-200 ${
+                                          active 
+                                            ? 'text-white/80 translate-x-0.5 opacity-100' 
+                                            : 'text-[#8C6D58]/50 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 group-hover/item:text-[#6F4E37]'
+                                        }`} 
+                                      />
+                                    )}
                                   </div>
                                 </div>
                               )}

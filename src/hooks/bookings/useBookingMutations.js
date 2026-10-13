@@ -6,7 +6,7 @@ export const useAcceptBooking = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id) => {
-      const { data } = await axios.post(`/api/bookings/${id}/accept`);
+      const { data } = await axios.post(`/bookings/${id}/accept`);
       return data;
     },
     onSuccess: (data, id) => {
@@ -14,7 +14,9 @@ export const useAcceptBooking = () => {
       queryClient.invalidateQueries({ queryKey: ['booking', id] });
       toast.success('Booking accepted successfully.');
     },
-    onError: () => toast.error('Failed to accept booking.'),
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || 'Failed to accept booking.');
+    },
   });
 };
 
@@ -22,7 +24,7 @@ export const useRejectBooking = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, reason }) => {
-      const { data } = await axios.post(`/api/bookings/${id}/reject`, { reason });
+      const { data } = await axios.post(`/bookings/${id}/reject`, { reason });
       return data;
     },
     onSuccess: (data, { id }) => {
@@ -30,7 +32,9 @@ export const useRejectBooking = () => {
       queryClient.invalidateQueries({ queryKey: ['booking', id] });
       toast.success('Booking rejected.');
     },
-    onError: () => toast.error('Failed to reject booking.'),
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || 'Failed to reject booking.');
+    },
   });
 };
 
@@ -38,7 +42,7 @@ export const useCancelBooking = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, reason }) => {
-      const { data } = await axios.post(`/api/bookings/${id}/cancel`, { reason });
+      const { data } = await axios.post(`/bookings/${id}/cancel`, { reason });
       return data;
     },
     onSuccess: (data, { id }) => {

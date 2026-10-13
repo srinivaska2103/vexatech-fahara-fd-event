@@ -12,12 +12,18 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { useGetProfileQuery, useToggleServiceAvailabilityMutation } from '@/hooks/profile/useProfileMutations';
+
 export default function DashboardHeader({ onMenuClick }) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuthStore();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   
+  const { data: profileData } = useGetProfileQuery();
+  const { mutate: toggleAvailability, isPending: isToggling } = useToggleServiceAvailabilityMutation();
+  const isAvailable = profileData?.is_active ?? true;
+
   const profileRef = useRef(null);
 
   // Close dropdown on outside click
@@ -80,6 +86,38 @@ export default function DashboardHeader({ onMenuClick }) {
       <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto">
 
         
+        {/* Service Availability Toggle Button */}
+        <button
+          type="button"
+          onClick={() => toggleAvailability(!isAvailable)}
+          disabled={isToggling}
+          title={isAvailable ? "Click to Pause Services (Hide from Users)" : "Click to Make Services Available (Show to Users)"}
+          className={`flex items-center gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border transition-all duration-200 shadow-2xs cursor-pointer select-none ${
+            isAvailable 
+              ? 'bg-emerald-50/80 border-emerald-300 text-emerald-800 hover:bg-emerald-100/80' 
+              : 'bg-rose-50/80 border-rose-300 text-rose-800 hover:bg-rose-100/80'
+          }`}
+        >
+          {/* Animated Status Dot */}
+          <span className="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5 shrink-0">
+            {isAvailable && (
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            )}
+            <span className={`relative inline-flex rounded-full h-full w-full ${isAvailable ? 'bg-emerald-500' : 'bg-rose-500'}`} />
+          </span>
+
+          <span className="text-[11px] sm:text-xs font-black tracking-tight">
+            {isAvailable ? 'Services Live' : 'Services Paused'}
+          </span>
+
+          {/* Mini pill status indicator */}
+          <span className={`hidden sm:inline-block text-[9px] font-black uppercase px-1.5 py-0.2 rounded-md ${
+            isAvailable ? 'bg-emerald-200/60 text-emerald-900' : 'bg-rose-200/60 text-rose-900'
+          }`}>
+            {isAvailable ? 'Visible' : 'Hidden'}
+          </span>
+        </button>
+
         {/* Home Navigation Button */}
         <Link
           href="/event/dashboard"

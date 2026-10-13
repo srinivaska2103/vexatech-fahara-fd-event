@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { CheckCircle, Eye, XCircle, Inbox, Calendar, User, IndianRupee, ChevronRight } from 'lucide-react';
 import BookingStatusBadge from './BookingStatusBadge';
+import { useBookingStatusStore } from '@/store/bookingStatusStore';
 
 export default function BookingTable({ bookings, isLoading, onApprove, onReject }) {
   const router = useRouter();
+  const statusStore = useBookingStatusStore();
 
   if (isLoading) {
     return (
@@ -49,7 +51,7 @@ export default function BookingTable({ bookings, isLoading, onApprove, onReject 
               <th className="px-6 py-4">Assigned Venue</th>
               <th className="px-6 py-4">Date & Schedule</th>
               <th className="px-6 py-4">Guests</th>
-              <th className="px-6 py-4">Total Amount</th>
+              <th className="px-6 py-4">Event Earnings</th>
               <th className="px-6 py-4">Status</th>
               <th className="px-6 py-4 text-right">View Action</th>
             </tr>
@@ -116,7 +118,7 @@ export default function BookingTable({ bookings, isLoading, onApprove, onReject 
                 <td className="px-6 py-4 align-middle">
                   <div className="flex items-center font-black text-sm text-[#2C1810]">
                     <IndianRupee className="w-3.5 h-3.5 text-[#6F4E37] stroke-[2.5]" />
-                    <span>{Number(booking.total || booking.amount || 0).toLocaleString('en-IN')}</span>
+                    <span>{Number(booking.event_service_amount !== undefined && booking.event_service_amount !== null ? booking.event_service_amount : (booking.amount || 0)).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
                 </td>
 
@@ -125,17 +127,45 @@ export default function BookingTable({ bookings, isLoading, onApprove, onReject 
                 </td>
 
                 <td className="px-6 py-4 align-middle text-right">
-                  <button 
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      router.push(`/event/bookings/${booking.id}`);
-                    }}
-                    className="p-2 rounded-xl bg-[#FFF8F0] hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white border border-[#6F4E37]/20 transition-all shadow-2xs"
-                    title="View Details"
-                  >
-                    <ChevronRight className="w-4 h-4 stroke-[2.5]" />
-                  </button>
+                  <div className="flex items-center justify-end gap-1.5">
+                    {String(booking.status || booking.booking_status || 'PENDING').toUpperCase() === 'PENDING' && (
+                      <>
+                        <button 
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            statusStore.openModal('accept', booking.id);
+                          }}
+                          className="p-1.5 rounded-xl text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700 transition-colors cursor-pointer"
+                          title="Accept Booking"
+                        >
+                          <CheckCircle className="w-5 h-5 stroke-[2.2]" />
+                        </button>
+                        <button 
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            statusStore.openModal('reject', booking.id);
+                          }}
+                          className="p-1.5 rounded-xl text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition-colors cursor-pointer"
+                          title="Reject Booking"
+                        >
+                          <XCircle className="w-5 h-5 stroke-[2.2]" />
+                        </button>
+                      </>
+                    )}
+                    <button 
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(`/event/bookings/${booking.id}`);
+                      }}
+                      className="p-2 rounded-xl bg-[#FFF8F0] hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white border border-[#6F4E37]/20 transition-all shadow-2xs cursor-pointer"
+                      title="View Details"
+                    >
+                      <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+                    </button>
+                  </div>
                 </td>
               </motion.tr>
             ))}

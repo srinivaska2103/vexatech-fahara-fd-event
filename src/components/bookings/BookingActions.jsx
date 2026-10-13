@@ -12,80 +12,103 @@ export default function BookingActions({ booking }) {
 
   if (!booking) return null;
 
+  const currentStatus = String(booking.booking_status || booking.status || 'PENDING').toUpperCase();
+
   return (
-    <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full">
-      <h2 className="text-xl font-bold text-text tracking-tight mb-6">Booking Actions</h2>
+    <div className="bg-white rounded-3xl border border-stone-200/80 p-6 md:p-7 shadow-xs space-y-5 text-[#2C1810]">
+      <div className="flex items-center justify-between pb-4 border-b border-stone-100">
+        <div>
+          <h2 className="text-base font-black text-[#2C1810] tracking-tight">Booking Actions</h2>
+          <p className="text-xs text-stone-500 font-medium">Manage confirmation & fulfillment</p>
+        </div>
+        <span className="text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider bg-stone-100 text-stone-600 border border-stone-200">
+          {currentStatus}
+        </span>
+      </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+      <div className="space-y-3">
         {/* Pending Actions */}
-        {booking.status === 'pending' && (
-          <>
+        {currentStatus === 'PENDING' && (
+          <div className="flex flex-col sm:flex-row gap-3">
             <button 
+              type="button"
               onClick={() => statusStore.openModal('accept', booking.id)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-2xl transition-all shadow-xs hover:shadow-md cursor-pointer"
             >
-              <Check className="w-5 h-5" /> Accept Booking
+              <Check className="w-4 h-4" /> Accept Booking
             </button>
             <button 
+              type="button"
               onClick={() => statusStore.openModal('reject', booking.id)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-100 hover:bg-red-200 text-red-700 font-bold rounded-xl transition-all"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-extrabold text-xs rounded-2xl transition-all cursor-pointer"
             >
-              <X className="w-5 h-5" /> Reject Booking
+              <X className="w-4 h-4" /> Reject Booking
             </button>
-          </>
+          </div>
         )}
 
         {/* Post-Acceptance Actions */}
-        {['accepted', 'assigned'].includes(booking.status) && (
-          <>
+        {['CONFIRMED', 'ACCEPTED', 'ASSIGNED'].includes(currentStatus) && (
+          <div className="space-y-2.5">
+            <div className="flex items-center gap-2 p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-800 text-xs font-bold">
+              <CheckCircle className="w-4 h-4 shrink-0 text-emerald-600" />
+              <span>Booking is confirmed! Customer & venue have been notified.</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <button 
+                type="button"
+                onClick={() => assignmentStore.openModal('assignStaff', booking.id)}
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#FFF8F0] hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white border border-[#DDB892]/60 font-black text-xs rounded-2xl transition-all cursor-pointer"
+              >
+                <Users className="w-4 h-4" /> Assign Staff
+              </button>
+              <button 
+                type="button"
+                onClick={() => assignmentStore.openModal('assignLeader', booking.id)}
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#FFF8F0] hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white border border-[#DDB892]/60 font-black text-xs rounded-2xl transition-all cursor-pointer"
+              >
+                <UserPlus className="w-4 h-4" /> Assign Leader
+              </button>
+            </div>
             <button 
-              onClick={() => assignmentStore.openModal('assignStaff', booking.id)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              type="button"
+              onClick={() => updateStatus.mutate({ id: booking.id, status: 'IN_PROGRESS' })}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#6F4E37] hover:bg-[#5C3D2E] text-white font-extrabold text-xs rounded-2xl transition-all shadow-xs cursor-pointer"
             >
-              <Users className="w-5 h-5" /> Assign Staff
+              <PlayCircle className="w-4 h-4" /> Mark In Progress
             </button>
-            <button 
-              onClick={() => assignmentStore.openModal('assignLeader', booking.id)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl transition-all"
-            >
-              <UserPlus className="w-5 h-5" /> Assign Team Leader
-            </button>
-            <button 
-              onClick={() => updateStatus.mutate({ id: booking.id, status: 'in_progress' })}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 mt-2"
-            >
-              <PlayCircle className="w-5 h-5" /> Mark In Progress
-            </button>
-          </>
+          </div>
         )}
 
         {/* In Progress Actions */}
-        {booking.status === 'in_progress' && (
+        {currentStatus === 'IN_PROGRESS' && (
           <button 
-            onClick={() => updateStatus.mutate({ id: booking.id, status: 'completed' })}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            type="button"
+            onClick={() => updateStatus.mutate({ id: booking.id, status: 'COMPLETED' })}
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-2xl transition-all shadow-xs cursor-pointer"
           >
-            <CheckCircle className="w-5 h-5" /> Mark Completed
+            <CheckCircle className="w-4 h-4" /> Mark Completed
           </button>
         )}
 
         {/* General Actions */}
-        {!['cancelled', 'rejected', 'completed'].includes(booking.status) && (
-          <>
-            <hr className="my-2 border-border/50" />
+        {!['CANCELLED', 'REJECTED', 'COMPLETED'].includes(currentStatus) && (
+          <div className="pt-2 border-t border-stone-100 flex items-center gap-2.5">
             <button 
+              type="button"
               onClick={() => statusStore.openModal('reschedule', booking.id)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-surface border border-border hover:bg-background text-text font-bold rounded-xl transition-all"
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 font-extrabold text-xs rounded-xl transition-all cursor-pointer"
             >
-              <Calendar className="w-5 h-5 text-primary" /> Reschedule
+              <Calendar className="w-3.5 h-3.5 text-[#6F4E37]" /> Reschedule
             </button>
             <button 
+              type="button"
               onClick={() => statusStore.openModal('cancel', booking.id)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-surface border border-red-200 hover:bg-red-50 text-red-600 font-bold rounded-xl transition-all"
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 font-extrabold text-xs rounded-xl transition-all cursor-pointer"
             >
-              <X className="w-5 h-5" /> Cancel Booking
+              <X className="w-3.5 h-3.5" /> Cancel
             </button>
-          </>
+          </div>
         )}
       </div>
     </div>

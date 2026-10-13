@@ -3,14 +3,23 @@ import axiosInstance from '@/lib/axios';
 import { API_ENDPOINTS } from '@/constants/api';
 
 const fetchDashboardBookings = async () => {
-  // Using cafe-bookings as the primary data source for EVENT_MANAGER
-  const response = await axiosInstance.get(API_ENDPOINTS.BOOKINGS.CAFE_BOOKINGS);
-  return response.data?.data || response.data || [];
+  try {
+    const response = await axiosInstance.get(API_ENDPOINTS.BOOKINGS.CAFE_BOOKINGS);
+    return response.data?.data || response.data || [];
+  } catch (e) {
+    if (e.response?.status === 403) return [];
+    throw e;
+  }
 };
 
 const fetchEventServices = async () => {
-  const response = await axiosInstance.get(API_ENDPOINTS.EVENT_SERVICES.LIST);
-  return response.data?.data || response.data || [];
+  try {
+    const response = await axiosInstance.get(API_ENDPOINTS.EVENT_SERVICES.LIST);
+    return response.data?.data || response.data || [];
+  } catch (e) {
+    if (e.response?.status === 403) return [];
+    throw e;
+  }
 };
 
 const fetchReviewSummary = async () => {

@@ -13,6 +13,13 @@ import EventChecklist from '@/components/bookings/EventChecklist';
 import InternalNotes from '@/components/bookings/InternalNotes';
 import BookingStatusDropdown from '@/components/bookings/BookingStatusDropdown';
 import IncludedServicesCard from '@/components/bookings/IncludedServicesCard';
+import BookingActions from '@/components/bookings/BookingActions';
+import AcceptBookingModal from '@/components/bookings/AcceptBookingModal';
+import RejectBookingModal from '@/components/bookings/RejectBookingModal';
+import CancelBookingModal from '@/components/bookings/CancelBookingModal';
+import RescheduleModal from '@/components/bookings/RescheduleModal';
+import AssignStaffModal from '@/components/bookings/AssignStaffModal';
+import AssignLeaderModal from '@/components/bookings/AssignLeaderModal';
 
 // Note: In Next.js 15, page params is a Promise
 function BookingDetailsContent({ id }) {
@@ -94,19 +101,13 @@ function BookingDetailsContent({ id }) {
 
         {/* Sidebar Column (1/3 width) */}
         <div className="flex flex-col gap-6">
+          <BookingActions booking={booking} />
           <BookingTimeline booking={booking} />
         </div>
       </div>
     </div>
   );
 }
-
-import AcceptBookingModal from '@/components/bookings/AcceptBookingModal';
-import RejectBookingModal from '@/components/bookings/RejectBookingModal';
-import CancelBookingModal from '@/components/bookings/CancelBookingModal';
-import RescheduleModal from '@/components/bookings/RescheduleModal';
-import AssignStaffModal from '@/components/bookings/AssignStaffModal';
-import AssignLeaderModal from '@/components/bookings/AssignLeaderModal';
 
 export default function BookingDetailsPage({ params }) {
   const { id } = use(params);

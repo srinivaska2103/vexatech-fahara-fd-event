@@ -6,9 +6,12 @@ export default function IncludedServicesCard({ booking }) {
   const bookingData = booking.data || booking;
   const allItems = bookingData.booking_items || bookingData.bookingItems || [];
 
-  // Filter strictly for event inclusions provided by EVENT manager (exclude CAFE provider items)
+  // Find package base item
+  const packageItem = allItems.find((it) => it.item_type === 'PACKAGE' && (it.provider_type === 'EVENT' || !it.provider_type)) || bookingData.event_services;
+
+  // Filter strictly for event inclusions (exclude PACKAGE and CAFE items)
   const eventInclusions = allItems.filter(
-    (it) => (it.provider_type === 'EVENT' || it.item_type === 'EVENT_INCLUSION') && it.item_type !== 'CAFE_CHARGE' && it.provider_type !== 'CAFE'
+    (it) => it.item_type !== 'PACKAGE' && (it.provider_type === 'EVENT' || it.item_type === 'EVENT_INCLUSION') && it.item_type !== 'CAFE_CHARGE' && it.provider_type !== 'CAFE'
   );
 
   // Fallback to booking.inclusions JSON field
@@ -52,8 +55,6 @@ export default function IncludedServicesCard({ booking }) {
           amount: Number(it.amount || it.price || it.unit_price || it.unitPrice || 0),
         };
       });
-
-  const packageItem = allItems.find((it) => it.item_type === 'PACKAGE' && (it.provider_type === 'EVENT' || !it.provider_type)) || bookingData.event_services;
 
   if (displayInclusions.length === 0 && !packageItem) return null;
 
@@ -103,10 +104,6 @@ export default function IncludedServicesCard({ booking }) {
         {displayInclusions.map((inc, idx) => {
           const tierKey = String(inc.tierName || inc.tierLevel || '').toUpperCase();
           const colors = getTierColors(tierKey);
-          const isPerGuest = String(inc.pricingType || '').toUpperCase() === 'PER_GUEST';
-          const computedAmount = isPerGuest
-            ? (inc.unitPrice * Number(guestCount)).toFixed(2)
-            : inc.amount > 0 ? inc.amount.toFixed(2) : (inc.unitPrice * inc.quantity).toFixed(2);
 
           return (
             <div key={inc.tierId || idx} className={`p-4 rounded-2xl border ${colors.bg} ${colors.border} flex items-start gap-4`}>
@@ -121,20 +118,18 @@ export default function IncludedServicesCard({ booking }) {
                       {tierKey}
                     </span>
                   )}
-                  <span className="text-[10px] font-bold text-stone-400 bg-white border border-stone-200 px-2 py-0.5 rounded-md uppercase">
-                    {inc.pricingType}
+                  {inc.pricingType && (
+                    <span className="text-[10px] font-bold text-stone-400 bg-white border border-stone-200 px-2 py-0.5 rounded-md uppercase">
+                      {inc.pricingType}
+                    </span>
+                  )}
+                  <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 ml-auto">
+                    INCLUDED
                   </span>
                 </div>
                 {inc.description && (
                   <p className="text-xs text-stone-500 font-medium leading-relaxed">{inc.description}</p>
                 )}
-                <div className="text-xs font-bold text-stone-600 flex items-center gap-2 pt-1">
-                  <span>Unit Price: <strong className="text-[#2C1810]">₹{inc.unitPrice.toFixed(2)}</strong></span>
-                  {isPerGuest && (
-                    <span className="text-stone-400">× <strong>{guestCount} guests</strong></span>
-                  )}
-                  <span className="text-[#6F4E37] font-black ml-auto text-sm">= ₹{computedAmount}</span>
-                </div>
               </div>
             </div>
           );

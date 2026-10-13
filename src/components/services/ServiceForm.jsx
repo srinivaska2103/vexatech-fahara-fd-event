@@ -1,93 +1,199 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useForm, FormProvider, Controller } from 'react-hook-form';
+import React, { useState, useEffect } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useRouter } from 'next/navigation';
-import { Save, Loader2, ChevronRight, ChevronLeft, Check, Layers, Image as ImageIcon, Sparkles } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { 
+  ArrowLeft,
+  ArrowRight,
+  ChevronRight, 
+  ChevronLeft, 
+  Check, 
+  Eye, 
+  Cake, 
+  Heart, 
+  Briefcase, 
+  Camera, 
+  Music, 
+  Utensils, 
+  PartyPopper,
+  Sparkles,
+  CheckCircle2,
+  Package,
+  Plus,
+  Edit2,
+  Trash2,
+  Clock,
+  Users,
+  Info,
+  Sliders,
+  ListChecks,
+  Globe,
+  FileText,
+  Save
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ServiceCategorySelect from './ServiceCategorySelect';
-import ServiceGalleryUploader from './ServiceGalleryUploader';
-import ServiceInclusions from './ServiceInclusions';
+import ServiceCard from './ServiceCard';
+import { InclusionModal } from './InclusionModal';
 import { useCreateServiceMutation, useUpdateServiceMutation } from '@/hooks/services/useServicesMutations';
+import toast from 'react-hot-toast';
 
-const serviceSchema = z.object({
-  service_name: z.string().min(2, 'Service name is required'),
-  category: z.string().min(2, 'Category is required'),
-  description: z.string().optional(),
-  price: z.preprocess((val) => Number(val || 0), z.number().optional()),
-  gallery: z.array(z.string()).optional(),
-  inclusions: z.array(z.any()).optional(),
-});
+const EVENT_TYPES = [
+  { label: 'Birthday', icon: Cake, desc: 'Parties, bash & cake setups', color: 'text-amber-600', bg: 'bg-amber-100', border: 'border-amber-300' },
+  { label: 'Anniversary', icon: Heart, desc: 'Couples & romantic dinners', color: 'text-rose-600', bg: 'bg-rose-100', border: 'border-rose-300' },
+  { label: 'Corporate Meeting', icon: Briefcase, desc: 'Meetings, Wi-Fi & tea/coffee', color: 'text-indigo-600', bg: 'bg-indigo-100', border: 'border-indigo-300' },
+  { label: 'Date Night', icon: Heart, desc: 'Romantic candlelight dates', color: 'text-pink-600', bg: 'bg-pink-100', border: 'border-pink-300' },
+  { label: 'Party', icon: PartyPopper, desc: 'General group celebrations', color: 'text-purple-600', bg: 'bg-purple-100', border: 'border-purple-300' },
+  { label: 'Wedding', icon: PartyPopper, desc: 'Receptions & grand functions', color: 'text-emerald-600', bg: 'bg-emerald-100', border: 'border-emerald-300' },
+  { label: 'Engagement', icon: Heart, desc: 'Rings & intimate gatherings', color: 'text-cyan-600', bg: 'bg-cyan-100', border: 'border-cyan-300' },
+  { label: 'Photoshoot', icon: Camera, desc: 'Studio space & lighting setup', color: 'text-fuchsia-600', bg: 'bg-fuchsia-100', border: 'border-fuchsia-300' },
+  { label: 'Music & DJ', icon: Music, desc: 'Sound, lights & live DJ', color: 'text-blue-600', bg: 'bg-blue-100', border: 'border-blue-300' },
+  { label: 'Catering', icon: Utensils, desc: 'Buffet, snacks & drinks', color: 'text-teal-600', bg: 'bg-teal-100', border: 'border-teal-300' },
+  { label: 'Decoration', icon: PartyPopper, desc: 'Balloons, flowers & LED setup', color: 'text-orange-600', bg: 'bg-orange-100', border: 'border-orange-300' },
+];
+
+const QUICK_PRICE_PRESETS = [999, 1499, 2499, 3999, 4999, 7999];
+const QUICK_GUEST_PRESETS = [2, 5, 10, 15, 20, 30, 50];
+const QUICK_DURATION_PRESETS = [
+  { value: 90, unit: 'Minutes', label: '90 Mins' },
+  { value: 2, unit: 'Hours', label: '2 Hours' },
+  { value: 3, unit: 'Hours', label: '3 Hours' },
+  { value: 4, unit: 'Hours', label: '4 Hours' },
+];
 
 const STEPS = [
-  { id: 1, title: 'Basic Details', subtitle: 'Name & category', icon: Layers },
-  { id: 2, title: 'Service Inclusions', subtitle: 'What is included', icon: Sparkles },
-  { id: 3, title: 'Media & Gallery', subtitle: 'Photos & catalog images', icon: ImageIcon },
+  { id: 1, title: 'Event Profile', icon: Info, desc: 'Event Category & Name' },
+  { id: 2, title: 'Rates & Capacity', icon: Sliders, desc: 'Price, Guests & Duration' },
+  { id: 3, title: 'Inclusions', icon: ListChecks, desc: 'Custom Features & Services' },
+  { id: 4, title: 'Review & Publish', icon: Eye, desc: 'Live Preview & Save' },
 ];
+
+const packageSchema = z.object({
+  service_name: z.string().min(2, 'Package name is required'),
+  category: z.string().min(2, 'Category is required'),
+  description: z.string().optional(),
+  price: z.preprocess((val) => Number(val || 0), z.number().min(0, 'Price must be 0 or more')),
+  max_guests: z.preprocess((val) => Number(val || 10), z.number().min(1, 'At least 1 guest')),
+  duration_value: z.preprocess((val) => Number(val || 1), z.number().min(1, 'At least 1 duration value')),
+  duration_unit: z.string().default('Hours'),
+  status: z.string().default('PUBLISHED'),
+});
 
 export default function ServiceForm({ initialData = null }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const paramCategory = searchParams ? searchParams.get('category') : null;
+
   const isEditing = !!initialData;
   const [currentStep, setCurrentStep] = useState(1);
-  
+
   const createMutation = useCreateServiceMutation();
   const updateMutation = useUpdateServiceMutation(initialData?.id);
   const isSaving = createMutation.isPending || updateMutation.isPending;
 
-  let initialDesc = initialData?.description || '';
+  const [inclusions, setInclusions] = useState([]);
+  const [isInclusionModalOpen, setIsInclusionModalOpen] = useState(false);
+  const [editingInclusion, setEditingInclusion] = useState(null);
 
+  // Form initialization
   const methods = useForm({
-    resolver: zodResolver(serviceSchema),
+    resolver: zodResolver(packageSchema),
     defaultValues: {
+      category: initialData?.category || paramCategory || 'Birthday',
       service_name: initialData?.service_name || '',
-      category: initialData?.category || '',
-      description: initialDesc,
-      price: initialData?.price ? Number(initialData.price) : 0,
-      gallery: Array.isArray(initialData?.gallery) ? initialData.gallery : [],
-      // inclusions stored as rich tiered objects; legacy string arrays are treated as plain inclusions
-      inclusions: Array.isArray(initialData?.inclusions)
-        ? initialData.inclusions.map(inc => (typeof inc === 'string' ? { id: null, name: inc } : inc))
-        : [],
+      price: initialData?.price !== undefined && initialData?.price !== null ? initialData.price : '',
+      max_guests: initialData?.max_guests || initialData?.guests || 10,
+      duration_value: initialData?.duration_hours || initialData?.duration_value || 2,
+      duration_unit: initialData?.duration_unit || 'Hours',
+      description: initialData?.description || 'Custom tailored event celebration package for your guests.',
+      status: initialData?.status || 'PUBLISHED',
     }
   });
 
-  const { register, handleSubmit, control, trigger, setValue, watch, formState: { errors } } = methods;
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = methods;
 
-  const handleNextStep = async () => {
+  // Real-time watches for live preview
+  const watchedCategory = watch('category');
+  const watchedName = watch('service_name');
+  const watchedPrice = watch('price');
+  const watchedMaxGuests = watch('max_guests');
+  const watchedDurationValue = watch('duration_value');
+  const watchedDurationUnit = watch('duration_unit');
+  const watchedDescription = watch('description');
+  const watchedStatus = watch('status');
+
+  // Load initial inclusions
+  useEffect(() => {
+    let incList = initialData?.inclusions;
+    if (typeof incList === 'string') {
+      try { incList = JSON.parse(incList); } catch (e) { incList = []; }
+    }
+    if (Array.isArray(incList) && incList.length > 0) {
+      setInclusions(incList.map((inc, i) => (
+        typeof inc === 'string' ? { id: `inc_${i}`, name: inc, quantity: 1, unit: 'Item' } : inc
+      )));
+    } else {
+      setInclusions([
+        { id: 'inc_1', name: 'Food & Catering', quantity: 1, unit: 'Buffet' },
+        { id: 'inc_2', name: 'Celebration Cake', quantity: 1, unit: '1 Cake' }
+      ]);
+    }
+  }, [initialData]);
+
+  // Inclusion Handlers
+  const handleSaveInclusion = (incData) => {
+    if (editingInclusion) {
+      setInclusions(prev => prev.map(item => item.id === editingInclusion.id ? incData : item));
+    } else {
+      setInclusions(prev => [...prev, incData]);
+    }
+    setEditingInclusion(null);
+  };
+
+  const handleRemoveInclusion = (id) => {
+    setInclusions(prev => prev.filter(item => item.id !== id));
+  };
+
+  const progressPercent = Math.round((currentStep / STEPS.length) * 100);
+
+  const nextStep = () => {
     if (currentStep === 1) {
-      const isValid = await trigger(['service_name', 'category']);
-      if (!isValid) return;
-    }
-    if (currentStep < STEPS.length) {
-      setCurrentStep(prev => prev + 1);
-    }
-  };
-
-  const handlePrevStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(prev => prev - 1);
-    }
-  };
-
-  const onSubmit = (data) => {
-    // Serialize inclusions as the tiered rich array (backend handles pricing from tiers[])
-    const inclusionsPayload = (data.inclusions || []).map(inc => {
-      // If it's still a legacy { value: string } shape, convert
-      if (inc && !inc.tiers && typeof inc.value === 'string') {
-        return { name: inc.value, id: inc.id || null };
+      if (!watchedName || !watchedName.trim()) {
+        toast.error("Please enter a Package Name before proceeding.");
+        return;
       }
-      return inc;
-    });
+    }
+    if (currentStep < 4) setCurrentStep(prev => prev + 1);
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) setCurrentStep(prev => prev - 1);
+  };
+
+  const onSubmit = (formData) => {
+    if (!formData.service_name || !formData.service_name.trim()) {
+      toast.error("Package Name is required.");
+      setCurrentStep(1);
+      return;
+    }
+
+    const durationVal = Number(formData.duration_value) || 0;
+    const durationUnit = formData.duration_unit || 'Hours';
+    const durationHours = durationUnit === 'Minutes' ? Number((durationVal / 60).toFixed(2)) : durationVal;
 
     const payload = {
-      service_name: data.service_name,
-      category: data.category,
-      price: Number(data.price),
-      description: data.description,
-      gallery: data.gallery || [],
-      inclusions: inclusionsPayload,
+      service_name: formData.service_name,
+      category: formData.category || 'Birthday',
+      price: Number(formData.price) || 0,
+      max_guests: formData.max_guests ? Number(formData.max_guests) : null,
+      duration_value: durationVal,
+      duration_unit: durationUnit,
+      duration_hours: durationHours,
+      description: formData.description,
+      status: formData.status || 'PUBLISHED',
+      inclusions: inclusions,
     };
 
     if (isEditing) {
@@ -101,229 +207,559 @@ export default function ServiceForm({ initialData = null }) {
     }
   };
 
+  // Preview object matching ServiceCard format
+  const livePreviewEvent = {
+    id: initialData?.id || 'preview',
+    category: watchedCategory || 'Birthday',
+    service_name: watchedName || 'Package Name',
+    price: Number(watchedPrice) || 0,
+    max_guests: watchedMaxGuests || null,
+    duration_hours: watchedDurationUnit === 'Minutes' ? Number((Number(watchedDurationValue || 0) / 60).toFixed(1)) : Number(watchedDurationValue || 1),
+    duration_unit: watchedDurationUnit || 'Hours',
+    description: watchedDescription || 'Package description preview...',
+    inclusions: inclusions,
+    status: watchedStatus || 'PUBLISHED',
+  };
+
   return (
-    <div className="space-y-4 sm:space-y-6 select-none">
-      
-      {/* STEP PROGRESS TABS */}
-      <div className="bg-white border border-[#E8DED5] rounded-2xl p-3 sm:p-5 shadow-xs">
-        <div className="flex items-stretch gap-2">
-          {STEPS.map((step, idx) => {
-            const isActive = currentStep === step.id;
-            const isCompleted = currentStep > step.id;
-
-            return (
-              <React.Fragment key={step.id}>
-                <button
-                  type="button"
-                  onClick={() => setCurrentStep(step.id)}
-                  className={`flex items-center gap-2 px-2 py-2.5 sm:px-3 rounded-xl border text-left transition-all duration-300 flex-1 min-w-0 ${
-                    isActive 
-                      ? 'bg-[#FFF8F0] border-[#6F4E37] shadow-sm ring-1 ring-[#6F4E37]/20' 
-                      : isCompleted 
-                      ? 'bg-[#FFFDF9] border-[#E8DED5] hover:border-[#6F4E37]/40' 
-                      : 'bg-white border-[#F2EAE1] opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-black transition-colors ${
-                    isActive 
-                      ? 'bg-[#6F4E37] text-white' 
-                      : isCompleted 
-                      ? 'bg-emerald-500 text-white' 
-                      : 'bg-[#FFF8F0] text-[#8C6D58] border border-[#6F4E37]/15'
-                  }`}>
-                    {isCompleted ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : step.id}
-                  </div>
-                  <div className="min-w-0 hidden xs:block sm:block">
-                    <span className={`text-[10px] sm:text-xs font-black truncate block ${isActive ? 'text-[#2C1810]' : 'text-[#6F4E37]'}`}>
-                      {step.title}
-                    </span>
-                    <p className="text-[9px] text-[#8C6D58] font-medium truncate mt-0.5 hidden sm:block">{step.subtitle}</p>
-                  </div>
-                </button>
-                {idx < STEPS.length - 1 && (
-                  <div className={`w-px self-stretch my-1 transition-colors ${currentStep > step.id ? 'bg-emerald-300' : 'bg-[#E8DED5]'}`} />
-                )}
-              </React.Fragment>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* STEP FORM CONTAINER */}
-      <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <AnimatePresence mode="wait">
-          
-          {/* STEP 1: BASIC INFORMATION */}
-          {currentStep === 1 && (
-            <motion.div
-              key="step-1"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25 }}
-              className="bg-white border border-[#E8DED5] rounded-2xl p-4 sm:p-6 shadow-xs space-y-5"
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-[#2C1810] font-sans select-none">
+        
+        {/* Top Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => router.push('/event/services')}
+              className="w-10 h-10 rounded-2xl bg-white border border-[#E8DED5] flex items-center justify-center text-stone-700 hover:bg-stone-50 transition-colors shadow-2xs cursor-pointer"
             >
-              <div className="flex items-center justify-between border-b border-[#F2EAE1] pb-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#FFF8F0] border border-[#6F4E37]/20 flex items-center justify-center text-[#6F4E37] shrink-0">
-                    <Layers className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
-                  </div>
-                  <div className="min-w-0">
-                    <h2 className="text-sm sm:text-base font-black text-[#2C1810] leading-tight">Basic Information</h2>
-                    <p className="text-[10px] text-[#8C6D58] font-medium hidden sm:block">Service name, category, and overview.</p>
-                  </div>
-                </div>
-                <span className="text-[10px] font-extrabold text-[#6F4E37] bg-[#FFF8F0] px-2.5 py-1 rounded-full border border-[#6F4E37]/20 shrink-0">
-                  1 / 3
-                </span>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-[10px] font-black text-[#2C1810] uppercase tracking-wider mb-1.5">Service Name *</label>
-                  <input 
-                    {...register('service_name')}
-                    className={`w-full bg-[#FFFDF9] border ${errors.service_name ? 'border-rose-500' : 'border-[#E8DED5]'} rounded-xl px-3 py-2.5 text-sm font-semibold focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/15 transition-all`}
-                    placeholder="e.g. Premium Wedding Photography"
-                  />
-                  {errors.service_name && <p className="text-rose-600 text-xs font-bold mt-1">{errors.service_name.message}</p>}
-                </div>
-
-                <div>
-                  <Controller
-                    name="category"
-                    control={control}
-                    render={({ field }) => (
-                      <ServiceCategorySelect 
-                        value={field.value} 
-                        onChange={field.onChange} 
-                        error={errors.category} 
-                      />
-                    )}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[10px] font-black text-[#2C1810] uppercase tracking-wider mb-1.5">Description</label>
-                  <textarea 
-                    {...register('description')}
-                    rows={3}
-                    className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-xl px-3 py-2.5 text-sm font-medium focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/15 transition-all resize-none"
-                    placeholder="Describe what this service covers, duration, and key deliverables..."
-                  />
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* STEP 2: INCLUSIONS & FEATURES */}
-          {currentStep === 2 && (
-            <motion.div
-              key="step-2"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25 }}
-              className="bg-white border border-[#E8DED5] rounded-3xl p-6 sm:p-8 shadow-xs space-y-6"
-            >
-              <div className="flex items-center justify-between border-b border-[#F2EAE1] pb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-[#FFF8F0] border border-[#6F4E37]/20 flex items-center justify-center text-[#6F4E37]">
-                    <Sparkles className="w-5 h-5 stroke-[2.2]" />
-                  </div>
-                  <div>
-                    <h2 className="text-lg font-black text-[#2C1810]">Service Inclusions</h2>
-                    <p className="text-xs text-[#8C6D58] font-medium">Add key items or package highlights provided with this service.</p>
-                  </div>
-                </div>
-                <span className="text-xs font-extrabold text-[#6F4E37] bg-[#FFF8F0] px-3 py-1 rounded-full border border-[#6F4E37]/20">
-                  Step 2 of 3
-                </span>
-              </div>
-
-              <ServiceInclusions />
-            </motion.div>
-          )}
-
-          {/* STEP 3: MEDIA & GALLERY */}
-          {currentStep === 3 && (
-            <motion.div
-              key="step-3"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25 }}
-              className="bg-white border border-[#E8DED5] rounded-3xl p-6 sm:p-8 shadow-xs space-y-6"
-            >
-              <div className="flex items-center justify-between border-b border-[#F2EAE1] pb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-[#FFF8F0] border border-[#6F4E37]/20 flex items-center justify-center text-[#6F4E37]">
-                    <ImageIcon className="w-5 h-5 stroke-[2.2]" />
-                  </div>
-                  <div>
-                    <h2 className="text-lg font-black text-[#2C1810]">Media & Catalog Photos</h2>
-                    <p className="text-xs text-[#8C6D58] font-medium">Upload portfolio photos and sample work for your service.</p>
-                  </div>
-                </div>
-                <span className="text-xs font-extrabold text-[#6F4E37] bg-[#FFF8F0] px-3 py-1 rounded-full border border-[#6F4E37]/20">
-                  Step 3 of 3
-                </span>
-              </div>
-
-              <Controller
-                name="gallery"
-                control={control}
-                render={({ field }) => (
-                  <ServiceGalleryUploader 
-                    value={field.value} 
-                    onChange={field.onChange} 
-                    error={errors.gallery} 
-                  />
-                )}
-              />
-            </motion.div>
-          )}
-
-        </AnimatePresence>
-
-        {/* STEPPER NAVIGATION FOOTER */}
-        <div className="flex justify-between items-center bg-white border border-[#E8DED5] rounded-3xl p-3 sm:p-5 shadow-xs">
-          <button
-            type="button"
-            onClick={handlePrevStep}
-            disabled={currentStep === 1}
-            className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-2xl font-bold text-xs sm:text-sm border border-[#E8DED5] text-[#2C1810] hover:bg-[#FFF8F0] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 shrink-0"
-          >
-            <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>Previous</span>
-          </button>
-
-          <div className="flex items-center gap-2 shrink-0">
-            {currentStep < STEPS.length ? (
-              <button
-                type="button"
-                onClick={handleNextStep}
-                className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#6F4E37] hover:bg-[#5C402D] text-white rounded-2xl font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 shadow-md shadow-[#6F4E37]/20 active:scale-95 shrink-0"
-              >
-                <span>Next Step</span>
-                <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              </button>
-            ) : (
-              <button
-                type="submit"
-                disabled={isSaving}
-                className="px-4 sm:px-6 py-2 sm:py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-bold text-xs sm:text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5 shadow-md shadow-emerald-600/20 active:scale-95 shrink-0"
-              >
-                {isSaving ? <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" /> : <Save className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
-                <span>{isEditing ? 'Save Changes' : 'Publish Service'}</span>
-              </button>
-            )}
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#2C1810] tracking-tight">
+                {isEditing ? 'Edit Event Package' : 'Create Custom Event Package'}
+              </h1>
+              <p className="text-xs sm:text-sm text-stone-500 font-medium">
+                Build a custom package with flexible pricing, guest limits, duration, and inclusions.
+              </p>
+            </div>
           </div>
         </div>
 
+        {/* Wizard Stepper Progress Bar (Screenshot 1, 2, 3 Header) */}
+        <div className="bg-white p-4 sm:p-6 rounded-2xl border border-[#E8DED5] shadow-2xs space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-black text-[#6F4E37] uppercase tracking-wider">
+              Step {currentStep} of {STEPS.length} — {STEPS[currentStep - 1].title}
+            </span>
+            <span className="text-xs font-bold text-[#2C1810]/60">
+              {progressPercent}% Completed
+            </span>
+          </div>
+
+          {/* Animated Progress Bar */}
+          <div className="w-full h-2 bg-[#FFF8F0] rounded-full overflow-hidden border border-[#E8DED5]/60">
+            <motion.div 
+              className="h-full bg-[#6F4E37] rounded-full"
+              initial={{ width: '25%' }}
+              animate={{ width: `${progressPercent}%` }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
+
+          {/* Stepper Tab Buttons */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+            {STEPS.map((step) => {
+              const isCompleted = currentStep > step.id;
+              const isCurrent = currentStep === step.id;
+              const StepIcon = step.icon;
+
+              return (
+                <button
+                  key={step.id}
+                  type="button"
+                  onClick={() => setCurrentStep(step.id)}
+                  className={`p-3 rounded-xl border text-left transition-all cursor-pointer flex items-start gap-2.5 ${
+                    isCurrent 
+                      ? "bg-[#FFF8F0] border-[#6F4E37] ring-1 ring-[#6F4E37]/20 shadow-2xs" 
+                      : isCompleted 
+                        ? "bg-emerald-50/60 border-emerald-200 text-emerald-800" 
+                        : "bg-white border-[#E8DED5] opacity-70 hover:opacity-100"
+                  }`}
+                >
+                  <div className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-extrabold shrink-0 mt-0.5 ${
+                    isCurrent 
+                      ? "bg-[#6F4E37] text-white" 
+                      : isCompleted 
+                        ? "bg-emerald-600 text-white" 
+                        : "bg-[#FFF8F0] text-[#2C1810]/50"
+                  }`}>
+                    {isCompleted ? <Check className="w-3.5 h-3.5" /> : step.id}
+                  </div>
+
+                  <div className="min-w-0">
+                    <p className={`text-xs font-bold truncate ${isCurrent ? "text-[#6F4E37]" : "text-[#2C1810]"}`}>
+                      {step.title}
+                    </p>
+                    <p className="text-[10px] text-[#2C1810]/50 truncate hidden sm:block">{step.desc}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Two-Column Layout: Form Steps on Left, Live Card Preview on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          {/* Main Form Step Area (7 Cols on desktop) */}
+          <div className="lg:col-span-7 space-y-6">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStep}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E8DED5] shadow-2xs space-y-6"
+              >
+                
+                {/* ── STEP 1: EVENT PROFILE ── */}
+                {currentStep === 1 && (
+                  <div className="space-y-5">
+                    <div className="pb-3 border-b border-[#E8DED5]">
+                      <h3 className="text-base font-black text-[#2C1810]">1. Event Profile</h3>
+                      <p className="text-xs text-[#2C1810]/70 mt-0.5">Select your choice of event category and package details.</p>
+                    </div>
+
+                    {/* Event Category Interactive Card Grid */}
+                    <div>
+                      <label className="text-xs font-bold text-[#2C1810] mb-2 block">Choose Event Category *</label>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-64 overflow-y-auto custom-scrollbar p-1">
+                        {EVENT_TYPES.map((type) => {
+                          const Icon = type.icon;
+                          const isSelected = watchedCategory === type.label;
+                          return (
+                            <button
+                              key={type.label}
+                              type="button"
+                              onClick={() => setValue('category', type.label, { shouldValidate: true })}
+                              className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between space-y-2.5 shadow-2xs group hover:-translate-y-0.5 ${
+                                isSelected
+                                  ? "bg-gradient-to-br from-[#6F4E37] to-[#452718] text-white border-[#6F4E37] shadow-md"
+                                  : "bg-white border-stone-200/90 hover:bg-[#FFF8F0] hover:border-[#6F4E37]/40 text-[#2C1810]"
+                              }`}
+                            >
+                              <div className="flex items-center justify-between w-full">
+                                <div className={`w-9 h-9 rounded-xl flex items-center justify-center border shadow-2xs transition-transform group-hover:scale-110 shrink-0 ${
+                                  isSelected
+                                    ? "bg-white/20 border-white/30 text-white"
+                                    : `${type.bg} ${type.color} ${type.border}`
+                                }`}>
+                                  <Icon className="w-4.5 h-4.5 stroke-[2.5]" />
+                                </div>
+
+                                {isSelected && (
+                                  <div className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-2xs">
+                                    <Check className="w-3 h-3 stroke-[3]" />
+                                  </div>
+                                )}
+                              </div>
+
+                              <div>
+                                <p className="text-xs font-black leading-snug tracking-tight">{type.label}</p>
+                                <p className={`text-[10px] mt-0.5 line-clamp-1 font-medium ${isSelected ? "text-white/80" : "text-stone-500"}`}>
+                                  {type.desc}
+                                </p>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Package Name */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-[#2C1810]" htmlFor="package_name">Package Name *</label>
+                      <input
+                        id="package_name"
+                        {...register('service_name')}
+                        placeholder="e.g. Birthday Basic Package"
+                        className="w-full h-11 px-3.5 text-xs font-bold rounded-xl border border-[#E8DED5] focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                      />
+                      {errors.service_name && <p className="mt-1 text-[10px] text-rose-600">{errors.service_name.message}</p>}
+                    </div>
+                  </div>
+                )}
+
+                {/* ── STEP 2: RATES, CAPACITY & DURATION (Screenshot 1) ── */}
+                {currentStep === 2 && (
+                  <div className="space-y-5">
+                    <div className="pb-3 border-b border-[#E8DED5]">
+                      <h3 className="text-base font-black text-[#2C1810]">2. Rates, Capacity & Duration</h3>
+                      <p className="text-xs text-[#2C1810]/70 mt-0.5">Set custom package pricing, maximum guest limits, and duration.</p>
+                    </div>
+
+                    {/* Price Input & Quick Presets */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-[#2C1810]" htmlFor="price">Package Price (₹) *</label>
+                      <div className="relative mt-1">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#6F4E37] font-black text-sm">
+                          ₹
+                        </div>
+                        <input
+                          id="price"
+                          type="number"
+                          min="0"
+                          {...register('price')}
+                          placeholder="2499"
+                          className="w-full pl-8 pr-4 h-11 text-sm font-black rounded-xl border border-[#E8DED5] focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                        />
+                      </div>
+
+                      {/* Price Preset Chips (Screenshot 1) */}
+                      <div className="flex flex-wrap items-center gap-2 mt-2.5">
+                        <span className="text-[10px] font-black text-[#6F4E37] uppercase tracking-wider mr-1 flex items-center gap-1">
+                          <Sparkles className="w-3 h-3 text-amber-500" />
+                          PRESETS:
+                        </span>
+                        {QUICK_PRICE_PRESETS.map((pr) => {
+                          const isSelected = Number(watchedPrice) === pr;
+                          return (
+                            <button
+                              key={pr}
+                              type="button"
+                              onClick={() => setValue('price', pr, { shouldValidate: true })}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all border cursor-pointer flex items-center gap-1 shadow-2xs hover:-translate-y-0.5 ${
+                                isSelected
+                                  ? "bg-gradient-to-r from-amber-600 to-orange-600 text-white border-amber-600 shadow-md"
+                                  : "bg-amber-50/70 text-amber-900 border-amber-200/80 hover:bg-amber-100 hover:border-amber-300"
+                              }`}
+                            >
+                              <span>₹{pr}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Maximum Guests Input & Quick Presets (Screenshot 1) */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-[#2C1810]" htmlFor="max_guests">Maximum Guests / Members</label>
+                      <div className="relative mt-1">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#6F4E37]">
+                          <Users className="w-4 h-4" />
+                        </div>
+                        <input
+                          id="max_guests"
+                          type="number"
+                          min="1"
+                          {...register('max_guests')}
+                          placeholder="e.g. 10"
+                          className="w-full pl-9 pr-4 h-11 text-xs font-bold rounded-xl border border-[#E8DED5] focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                        />
+                      </div>
+
+                      {/* Guest Presets (Screenshot 1) */}
+                      <div className="flex flex-wrap items-center gap-2 mt-2.5">
+                        <span className="text-[10px] font-black text-[#6F4E37] uppercase tracking-wider mr-1 flex items-center gap-1">
+                          <Users className="w-3 h-3 text-emerald-600" />
+                          GUESTS:
+                        </span>
+                        {QUICK_GUEST_PRESETS.map((g) => {
+                          const isSelected = Number(watchedMaxGuests) === g;
+                          return (
+                            <button
+                              key={g}
+                              type="button"
+                              onClick={() => setValue('max_guests', g, { shouldValidate: true })}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all border cursor-pointer flex items-center gap-1 shadow-2xs hover:-translate-y-0.5 ${
+                                isSelected
+                                  ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-emerald-600 shadow-md"
+                                  : "bg-emerald-50/70 text-emerald-900 border-emerald-200/80 hover:bg-emerald-100 hover:border-emerald-300"
+                              }`}
+                            >
+                              <span>{g} Guests</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Duration Value & Unit Toggle (Screenshot 1) */}
+                    <div className="space-y-1.5">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-xs font-bold text-[#2C1810]" htmlFor="duration_value">Duration Value</label>
+                          <div className="relative mt-1">
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#6F4E37]">
+                              <Clock className="w-4 h-4" />
+                            </div>
+                            <input
+                              id="duration_value"
+                              type="number"
+                              min="1"
+                              {...register('duration_value')}
+                              placeholder="e.g. 2 or 90"
+                              className="w-full pl-9 pr-4 h-11 text-xs font-bold rounded-xl border border-[#E8DED5] focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-bold text-[#2C1810]">Duration Unit</label>
+                          <div className="flex items-center gap-1.5 mt-1 p-1 bg-[#FFF8F0] rounded-xl border border-[#E8DED5] h-11">
+                            {['Hours', 'Minutes'].map((unit) => {
+                              const isSelected = watchedDurationUnit === unit;
+                              return (
+                                <button
+                                  key={unit}
+                                  type="button"
+                                  onClick={() => setValue('duration_unit', unit)}
+                                  className={`flex-1 h-full rounded-lg text-xs font-extrabold transition-all cursor-pointer text-center flex items-center justify-center ${
+                                    isSelected
+                                      ? "bg-[#6F4E37] text-white shadow-2xs"
+                                      : "text-[#2C1810]/70 hover:bg-[#E8DED5]"
+                                  }`}
+                                >
+                                  {unit}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Quick Duration Presets (Screenshot 1) */}
+                      <div className="flex flex-wrap items-center gap-2 mt-2.5">
+                        <span className="text-[10px] font-black text-[#6F4E37] uppercase tracking-wider mr-1 flex items-center gap-1">
+                          <Clock className="w-3 h-3 text-cyan-600" />
+                          DURATION:
+                        </span>
+                        {QUICK_DURATION_PRESETS.map((dur) => {
+                          const isSelected = Number(watchedDurationValue) === dur.value && watchedDurationUnit === dur.unit;
+                          return (
+                            <button
+                              key={dur.label}
+                              type="button"
+                              onClick={() => {
+                                setValue('duration_value', dur.value);
+                                setValue('duration_unit', dur.unit);
+                              }}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all border cursor-pointer flex items-center gap-1 shadow-2xs hover:-translate-y-0.5 ${
+                                isSelected
+                                  ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white border-cyan-600 shadow-md"
+                                  : "bg-cyan-50/70 text-cyan-900 border-cyan-200/80 hover:bg-cyan-100 hover:border-cyan-300"
+                              }`}
+                            >
+                              <span>{dur.label}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-[#2C1810]" htmlFor="description">Package Description *</label>
+                      <textarea
+                        id="description"
+                        rows={3}
+                        {...register('description')}
+                        placeholder="Describe what makes this custom package special for your customers..."
+                        className="w-full mt-1 p-3.5 rounded-xl border border-[#E8DED5] text-xs font-medium focus:border-[#6F4E37] focus:outline-none resize-none leading-relaxed text-[#2C1810]"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* ── STEP 3: CUSTOM INCLUSIONS (Screenshot 2) ── */}
+                {currentStep === 3 && (
+                  <div className="space-y-5">
+                    <div className="pb-3 border-b border-[#E8DED5] flex items-center justify-between">
+                      <div>
+                        <h3 className="text-base font-black text-[#2C1810]">3. Custom Inclusions</h3>
+                        <p className="text-xs text-[#2C1810]/70 mt-0.5">Add items included in this package (Cake, Food, Setup, etc.).</p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingInclusion(null);
+                          setIsInclusionModalOpen(true);
+                        }}
+                        className="py-2 px-4 rounded-xl bg-[#6F4E37] hover:bg-[#5D3F2B] text-white text-xs font-extrabold flex items-center gap-1.5 shadow-2xs shrink-0 cursor-pointer"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                        <span>+ Add Inclusion</span>
+                      </button>
+                    </div>
+
+                    {/* Empty or Configured Inclusions List (Screenshot 2) */}
+                    {inclusions.length === 0 ? (
+                      <div className="p-8 rounded-2xl border border-dashed border-[#E8DED5] bg-[#FFF8F0]/40 text-center space-y-2">
+                        <Package className="w-8 h-8 text-[#6F4E37] mx-auto opacity-70" />
+                        <h4 className="text-xs font-black text-[#2C1810]">No Custom Inclusions Added</h4>
+                        <p className="text-xs text-[#2C1810]/60 max-w-xs mx-auto">
+                          Click "+ Add Inclusion" above to add custom items such as 1 Kg Cake, Table Setup, Welcome Drinks, etc.
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {inclusions.map((inc, index) => (
+                          <div key={inc.id || index} className="p-3.5 rounded-xl border border-[#E8DED5] bg-white shadow-2xs flex items-start justify-between gap-2.5">
+                            <div className="space-y-1">
+                              <p className="text-xs font-black text-[#2C1810] flex items-center gap-1.5">
+                                <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                                <span>{inc.name || inc.inclusion_name}</span>
+                              </p>
+                              {inc.description && (
+                                <p className="text-[11px] text-[#2C1810]/60 line-clamp-2 pl-5">{inc.description}</p>
+                              )}
+                              <p className="text-[10px] font-extrabold text-[#6F4E37] pl-5">
+                                Qty: {inc.quantity} {inc.unit}
+                              </p>
+                            </div>
+
+                            <div className="flex items-center gap-1 shrink-0">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setEditingInclusion(inc);
+                                  setIsInclusionModalOpen(true);
+                                }}
+                                className="p-1.5 rounded-lg text-[#2C1810]/60 hover:text-[#6F4E37] hover:bg-[#FFF8F0] cursor-pointer"
+                                title="Edit Inclusion"
+                              >
+                                <Edit2 className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveInclusion(inc.id)}
+                                className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50 cursor-pointer"
+                                title="Remove Inclusion"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* ── STEP 4: REVIEW & PUBLISH (Screenshot 3) ── */}
+                {currentStep === 4 && (
+                  <div className="space-y-5">
+                    <div className="pb-3 border-b border-[#E8DED5]">
+                      <h3 className="text-base font-black text-[#2C1810]">4. Final Review & Status</h3>
+                      <p className="text-xs text-[#2C1810]/70 mt-0.5">Review package details and set listing status before saving.</p>
+                    </div>
+
+                    {/* Listing Status Toggle (Screenshot 3) */}
+                    <div className="p-4 rounded-xl border border-[#E8DED5] bg-[#FFF8F0]/40 space-y-2">
+                      <label className="text-xs font-black text-[#2C1810]">Listing Status</label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setValue('status', 'PUBLISHED')}
+                          className={`p-3 rounded-xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                            watchedStatus === 'PUBLISHED' || watchedStatus === 'ACTIVE'
+                              ? "bg-emerald-600 text-white border-emerald-600 shadow-2xs"
+                              : "bg-white text-[#2C1810] border-[#E8DED5] hover:border-emerald-500"
+                          }`}
+                        >
+                          <Globe className="w-4 h-4 shrink-0" />
+                          <div>
+                            <p className="text-xs font-extrabold">Publish (Active)</p>
+                            <p className="text-[10px] opacity-80">Visible to diners</p>
+                          </div>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setValue('status', 'DRAFT')}
+                          className={`p-3 rounded-xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                            watchedStatus === 'DRAFT'
+                              ? "bg-amber-600 text-white border-amber-600 shadow-2xs"
+                              : "bg-white text-[#2C1810] border-[#E8DED5] hover:border-amber-500"
+                          }`}
+                        >
+                          <FileText className="w-4 h-4 shrink-0" />
+                          <div>
+                            <p className="text-xs font-extrabold">Save Draft</p>
+                            <p className="text-[10px] opacity-80">Hidden mode</p>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step Controls Navigation Bar */}
+                <div className="pt-4 border-t border-[#E8DED5] flex items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    disabled={currentStep === 1}
+                    onClick={prevStep}
+                    className="py-2.5 px-4 rounded-xl border border-[#E8DED5] bg-white hover:bg-stone-50 text-xs font-bold text-[#2C1810] flex items-center gap-1.5 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>Previous Step</span>
+                  </button>
+
+                  {currentStep < 4 ? (
+                    <button
+                      type="button"
+                      onClick={nextStep}
+                      className="py-2.5 px-6 rounded-xl bg-[#6F4E37] hover:bg-[#5D3F2B] text-white text-xs font-extrabold flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                    >
+                      <span>Next Step</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      disabled={isSaving}
+                      className="py-2.5 px-6 rounded-xl bg-[#6F4E37] hover:bg-[#5D3F2B] text-white text-xs font-extrabold shadow-2xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                    >
+                      <Save className="w-4 h-4" />
+                      <span>{isSaving ? 'Saving Package...' : (isEditing ? 'Update Package' : 'Create Package')}</span>
+                    </button>
+                  )}
+                </div>
+
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Live Package Preview (5 Cols on desktop, sticky) */}
+          <div className="lg:col-span-5 lg:sticky lg:top-6 space-y-3">
+            <div className="flex items-center gap-2 px-1">
+              <Eye className="w-4 h-4 text-[#6F4E37]" />
+              <h4 className="text-xs font-black uppercase tracking-wider text-[#6F4E37]">
+                Live Package Card Preview
+              </h4>
+            </div>
+
+            <ServiceCard service={livePreviewEvent} />
+          </div>
+
+        </div>
+
+        {/* Add / Edit Inclusion Modal */}
+        <InclusionModal
+          isOpen={isInclusionModalOpen}
+          onClose={() => {
+            setIsInclusionModalOpen(false);
+            setEditingInclusion(null);
+          }}
+          onSave={handleSaveInclusion}
+          initialData={editingInclusion}
+        />
+
       </form>
-      </FormProvider>
-    </div>
+    </FormProvider>
   );
 }

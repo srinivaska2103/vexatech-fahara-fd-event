@@ -12,27 +12,22 @@ export default function EditServicePage({ params }) {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#4A2E1D]" />
       </div>
     );
   }
 
   if (isError || !service) {
     return (
-      <div className="bg-red-50 text-red-500 p-6 rounded-2xl text-center border border-red-100">
-        <h2 className="text-lg font-bold mb-2">Service Not Found</h2>
-        <p>The service you are trying to edit does not exist or you don't have permission to view it.</p>
+      <div className="bg-rose-50 text-rose-600 p-6 rounded-3xl text-center border border-rose-200 font-sans">
+        <h2 className="text-lg font-bold mb-1">Package Not Found</h2>
+        <p className="text-xs">The package you are trying to edit does not exist or has been removed.</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-text">Edit Service</h1>
-        <p className="text-sm text-text/60 mt-1">Update details for {service.service_name}</p>
-      </div>
-      
+    <div className="max-w-7xl mx-auto space-y-6 select-none">
       <ServiceForm initialData={service} />
     </div>
   );

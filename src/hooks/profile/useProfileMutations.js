@@ -72,18 +72,25 @@ export const useUploadImageMutation = () => {
   });
 };
 
-export const useUploadMultipleImagesMutation = () => {
+export const useToggleServiceAvailabilityMutation = () => {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (files) => {
-      const formData = new FormData();
-      Array.from(files).forEach(file => {
-        formData.append('images', file);
-      });
-      const res = await axiosInstance.post(API_ENDPOINTS.UPLOADS.MULTIPLE, formData);
-      return res.data?.urls || res.data?.imageUrls || [];
+    mutationFn: async (isActive) => {
+      const res = await axiosInstance.patch('/event-profiles/me/availability', { is_active: isActive });
+      return res.data;
+    },
+    onSuccess: (data) => {
+      const isAvailable = data?.data?.is_active ?? data?.is_available ?? true;
+      toast.success(
+        isAvailable 
+          ? 'Event services are now LIVE & AVAILABLE to customers' 
+          : 'Event services are now PAUSED / UNAVAILABLE to customers'
+      );
+      queryClient.invalidateQueries({ queryKey: ['company_profile'] });
+      queryClient.invalidateQueries({ queryKey: ['services'] });
     },
     onError: (error) => {
-      toast.error('Multiple images upload failed');
+      toast.error(error.response?.data?.message || 'Failed to update service availability status');
     }
   });
 };

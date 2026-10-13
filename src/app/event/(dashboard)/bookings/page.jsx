@@ -3,6 +3,8 @@
 import { useGetBookings } from '@/hooks/bookings/useBookingQueries';
 import { useBookingFilterStore } from '@/store/bookingFilterStore';
 import BookingTable from '@/components/bookings/BookingTable';
+import AcceptBookingModal from '@/components/bookings/AcceptBookingModal';
+import RejectBookingModal from '@/components/bookings/RejectBookingModal';
 import { Suspense, useState } from 'react';
 import { 
   Download, Search, Sparkles, Calendar, Clock, CheckCircle2, 
@@ -299,6 +301,9 @@ function BookingsDashboard() {
         <BookingTable bookings={bookings} isLoading={isLoading} />
       )}
 
+      {/* Action Modals */}
+      <AcceptBookingModal />
+      <RejectBookingModal />
     </div>
   );
 }

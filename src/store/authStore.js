@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { STORAGE_KEYS } from '@/constants/storageKeys';
+import { useSubscriptionStore } from './subscriptionStore';
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -7,6 +8,9 @@ export const useAuthStore = create((set) => ({
   isLoading: true,
   
   setAuth: (user, token, refreshToken) => {
+    try {
+      useSubscriptionStore.getState().resetSubscription();
+    } catch (e) {}
     if (typeof window !== 'undefined') {
       if (token) localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, token);
       if (refreshToken) localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, refreshToken);
@@ -16,6 +20,9 @@ export const useAuthStore = create((set) => ({
   },
   
   logout: () => {
+    try {
+      useSubscriptionStore.getState().resetSubscription();
+    } catch (e) {}
     if (typeof window !== 'undefined') {
       localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
       localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);

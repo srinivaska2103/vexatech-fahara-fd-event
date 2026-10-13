@@ -93,5 +93,14 @@ export const API_ENDPOINTS = {
     PAYMENT_ACCOUNT: '/event-profiles/me/payment-account',
     UPDATE_BANK: '/event-profiles/me/payment-account',
     VERIFY_ACCOUNT: '/event-profiles/me/payment-account',
+  },
+  SUBSCRIPTION: {
+    STATUS: '/subscriptions/status',
+    PLANS: '/subscriptions/plans',
+    CREATE: '/subscriptions/event-manager/create',
+    VERIFY: '/subscriptions/verify',
+    CANCEL: '/subscriptions/cancel',
+    REACTIVATE: '/subscriptions/reactivate',
   }
 };
+
