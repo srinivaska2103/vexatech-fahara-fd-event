@@ -433,19 +433,24 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                       {group.items.map((item) => {
                         const active = isItemActive(item.href);
                         const Icon = item.icon;
+                        const isLocked = !isItemUnlocked(item);
+                        const targetHref = isLocked ? '/event/subscription' : item.href;
+                        const showBadge = item.name === 'Notifications' && notificationCount > 0;
 
                         return (
                           <Link
                             key={item.name}
-                            href={item.href}
+                            href={targetHref}
                             data-tour-id={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                             onClick={onClose}
                             className={`
-                              relative min-h-[68px] p-3 rounded-2xl border transition-all duration-200
-                              flex flex-col justify-between items-start active:scale-[0.97] touch-manipulation
+                              relative min-h-[84px] p-2.5 rounded-2xl border transition-all duration-200
+                              flex flex-col justify-between items-start active:scale-[0.97] touch-manipulation overflow-hidden
                               ${
                                 active
                                   ? 'bg-[#6F4E37] text-white border-[#6F4E37] shadow-md shadow-[#6F4E37]/20'
+                                  : isLocked
+                                  ? 'bg-amber-50/40 border-[#E8DED5] text-[#2C1810]/70 hover:border-amber-400/50'
                                   : 'bg-white border-[#E8DED5] text-[#2C1810] hover:border-[#6F4E37]/40 hover:bg-[#FFF8F0]'
                               }
                             `}
@@ -460,12 +465,22 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                                 <Icon className="w-4 h-4 stroke-[2]" />
                               </div>
 
-                              {active && (
-                                <span className="w-2 h-2 rounded-full bg-white animate-pulse shadow-2xs" />
-                              )}
+                              <div className="flex items-center gap-1">
+                                {isLocked && (
+                                  <Lock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                                )}
+                                {showBadge && (
+                                  <span className="px-1.5 py-0.5 text-[8.5px] font-black rounded-full bg-[#6F4E37] text-white animate-pulse">
+                                    {notificationCount}
+                                  </span>
+                                )}
+                                {active && (
+                                  <span className="w-2 h-2 rounded-full bg-white animate-pulse shadow-2xs" />
+                                )}
+                              </div>
                             </div>
 
-                            <span className="text-xs font-black tracking-tight truncate w-full">
+                            <span className="text-[11px] font-extrabold tracking-tight leading-snug line-clamp-2 break-words w-full">
                               {item.name}
                             </span>
                           </Link>

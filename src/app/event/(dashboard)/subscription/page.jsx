@@ -330,34 +330,34 @@ export default function EventSubscriptionPage() {
   }, [unlockedModules, selectedCategory]);
 
   return (
-    <div className="max-w-6xl mx-auto py-6 sm:py-8 px-4 sm:px-6 space-y-8 text-[#2C1810]">
+    <div className="max-w-6xl mx-auto py-3 sm:py-8 px-2 sm:px-6 space-y-4 sm:space-y-8 text-[#2C1810]">
       {/* 1. Header Banner using Fahara Brand Tokens */}
-      <div className="relative bg-gradient-to-br from-[#FFF8F0] via-[#FAF0E6] to-[#F5E6D3] text-[#2C1810] p-6 sm:p-10 rounded-3xl shadow-md border border-[#E8DED5] overflow-hidden">
+      <div className="relative bg-gradient-to-br from-[#FFF8F0] via-[#FAF0E6] to-[#F5E6D3] text-[#2C1810] p-3.5 sm:p-10 rounded-2xl sm:rounded-3xl shadow-md border border-[#E8DED5] overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-[#A67B5B]/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-[#6F4E37]/10 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="relative z-10 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#6F4E37]/10 text-[#6F4E37] text-xs font-black uppercase tracking-wider border border-[#6F4E37]/20 shadow-2xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#6F4E37]" />
+        <div className="relative z-10 space-y-2 sm:space-y-3">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-[#6F4E37]/10 text-[#6F4E37] text-[9.5px] sm:text-xs font-black uppercase tracking-wider border border-[#6F4E37]/20 shadow-2xs">
+            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#6F4E37]" />
             <span>Fahara Event Partner</span>
           </div>
 
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="space-y-1.5">
-              <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-[#2C1810] leading-tight">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-6">
+            <div className="space-y-1">
+              <h1 className="text-lg sm:text-4xl font-black tracking-tight text-[#2C1810] leading-tight">
                 Grow Your Business With Fahara
               </h1>
-              <p className="text-[#6F4E37]/90 text-xs sm:text-sm max-w-2xl font-medium leading-relaxed">
+              <p className="text-[#6F4E37]/90 text-[10.5px] sm:text-sm max-w-2xl font-medium leading-relaxed">
                 Discover Fahara's partner tools and activate your subscription to access your business dashboard.
               </p>
             </div>
 
             {isActive && (
-              <div className="bg-emerald-500/10 border border-emerald-500/30 px-4 py-2.5 rounded-2xl flex items-center gap-2.5 shrink-0">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse" />
+              <div className="bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-2xl flex items-center gap-2 shrink-0 self-start sm:self-auto">
+                <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-600 animate-pulse shrink-0" />
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-800 block">Status</span>
-                  <span className="text-xs font-black text-emerald-950 tracking-wide">ACTIVE & VERIFIED</span>
+                  <span className="text-[8.5px] sm:text-[10px] uppercase tracking-wider font-extrabold text-emerald-800 block">Status</span>
+                  <span className="text-[10px] sm:text-xs font-black text-emerald-950 tracking-wide">ACTIVE & VERIFIED</span>
                 </div>
               </div>
             )}
@@ -367,7 +367,7 @@ export default function EventSubscriptionPage() {
 
       {/* Alert Notification */}
       {msg && (
-        <div className={`p-4 rounded-2xl border text-xs sm:text-sm font-bold flex items-center gap-3 shadow-xs ${
+        <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border text-xs sm:text-sm font-bold flex items-center gap-2 sm:gap-3 shadow-xs ${
           msg.type === 'success' ? 'bg-emerald-50 text-emerald-900 border-emerald-200' : 'bg-rose-50 text-rose-800 border-rose-200'
         }`}>
           {msg.type === 'success' ? <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> : <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />}
@@ -377,16 +377,16 @@ export default function EventSubscriptionPage() {
 
       {/* Inactive Notice Banner when subscription not active */}
       {!isActive && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#FFF8F0] border border-[#E8DED5] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#6F4E37]/10 text-[#6F4E37] flex items-center justify-center shrink-0 border border-[#DDB892]">
+        <div className="p-3.5 sm:p-5 rounded-2xl bg-[#FFF8F0] border border-[#E8DED5] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+          <div className="flex items-start gap-2.5 sm:gap-3">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#6F4E37]/10 text-[#6F4E37] flex items-center justify-center shrink-0 border border-[#DDB892]">
               <Lock className="w-4 h-4" />
             </div>
             <div>
               <h2 className="text-xs sm:text-sm font-extrabold text-[#2C1810]">
                 {status === 'EXPIRED' ? 'Subscription Expired' : (status === 'CANCELLED' ? 'Subscription Cancelled' : 'Active Subscription Required')}
               </h2>
-              <p className="text-[11px] sm:text-xs text-stone-600 font-medium mt-0.5 leading-relaxed">
+              <p className="text-[10.5px] sm:text-xs text-stone-600 font-medium mt-0.5 leading-relaxed">
                 An active subscription is required to unlock your Event Manager dashboard, custom services, client inquiries, and package bookings. Your profile, services, and past bookings remain fully preserved.
               </p>
             </div>
@@ -394,7 +394,7 @@ export default function EventSubscriptionPage() {
           <button
             onClick={handleSubscribe}
             disabled={submitting}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#6F4E37] hover:bg-[#593E2B] text-white text-xs font-black shadow-sm transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 shrink-0"
+            className="w-full sm:w-auto px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-[#6F4E37] hover:bg-[#593E2B] text-white text-xs font-black shadow-sm transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 shrink-0"
           >
             {submitting ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <CreditCard className="w-3.5 h-3.5" />}
             <span>{status === 'EXPIRED' ? `Renew for ₹${currentPlanPrice}/month` : `Subscribe for ₹${currentPlanPrice}/month`}</span>
@@ -404,31 +404,31 @@ export default function EventSubscriptionPage() {
 
       {/* 2. Active Subscription Details View */}
       {isActive && subscription && (
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E8DED5]">
+        <div className="bg-white border border-[#E8DED5] rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 shadow-sm space-y-4 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-3.5 sm:pb-6 border-b border-[#E8DED5]">
             <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="px-3 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-black uppercase tracking-wider border border-emerald-300">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9.5px] sm:text-[11px] font-black uppercase tracking-wider border border-emerald-300">
                   Active Subscription
                 </span>
-                <span className="px-3 py-0.5 rounded-full bg-[#FFF8F0] text-[#6F4E37] text-[11px] font-bold border border-[#DDB892]">
+                <span className="px-2 py-0.5 rounded-full bg-[#FFF8F0] text-[#6F4E37] text-[9.5px] sm:text-[11px] font-bold border border-[#DDB892]">
                   Event Partner
                 </span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-black text-[#2C1810] tracking-tight">
+              <h2 className="text-base sm:text-2xl font-black text-[#2C1810] tracking-tight">
                 {subscription.planName || 'FAHARA EVENT PARTNER'}
               </h2>
-              <p className="text-xs text-stone-500 font-medium">
+              <p className="text-[10px] sm:text-xs text-stone-500 font-medium">
                 Recurring monthly event partner subscription
               </p>
             </div>
 
-            <div className="bg-[#FFF8F0] p-4 rounded-2xl border border-[#E8DED5] text-right min-w-[140px]">
-              <div className="text-2xl sm:text-3xl font-black text-[#6F4E37]">
+            <div className="bg-[#FFF8F0] p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-[#E8DED5] text-left sm:text-right min-w-[120px] flex sm:flex-col items-center sm:items-end justify-between sm:justify-start">
+              <div className="text-lg sm:text-3xl font-black text-[#6F4E37]">
                 ₹{subscription.price || currentPlanPrice}
-                <span className="text-xs font-bold text-stone-500"> / month</span>
+                <span className="text-[10px] sm:text-xs font-bold text-stone-500"> / month</span>
               </div>
-              <span className="text-[10px] font-bold text-emerald-700 block mt-0.5">
+              <span className="text-[9.5px] sm:text-[10px] font-bold text-emerald-700 block sm:mt-0.5">
                 {subscription.cancelAtPeriodEnd ? 'Cancels at Period End' : 'Renews Monthly'}
               </span>
             </div>

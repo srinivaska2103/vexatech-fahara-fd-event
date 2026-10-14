@@ -4,6 +4,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import { useSendMessage } from '@/hooks/notifications/useNotificationQueries';
 import { useCustomerList } from '@/hooks/customers/useCustomerQueries';
+import { useGetProfileQuery } from '@/hooks/profile/useProfileMutations';
+import { useAuthStore } from '@/store/authStore';
 import { RecipientSelector } from '@/components/notifications/RecipientSelector';
 import { MessageEditor } from '@/components/notifications/MessageEditor';
 import { ArrowLeft, Send, FileText, CheckCircle2, Info, Loader2 } from 'lucide-react';
@@ -13,6 +15,10 @@ import toast from 'react-hot-toast';
 function ComposeFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const user = useAuthStore(state => state.user);
+  const { data: profile } = useGetProfileQuery();
+
+  const managerName = profile?.company_name || user?.business_name || user?.name || 'Saritha Events';
   
   const initialSubject = searchParams.get('subject') || '';
   const initialContent = searchParams.get('content') || '';
@@ -139,7 +145,13 @@ function ComposeFormContent() {
         </div>
 
         {/* Editor Section */}
-        <MessageEditor register={register} errors={errors} watch={watch} setValue={setValue} />
+        <MessageEditor 
+          register={register} 
+          errors={errors} 
+          watch={watch} 
+          setValue={setValue} 
+          managerName={managerName}
+        />
 
         {/* Actions Footer */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-stone-200/60">

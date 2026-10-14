@@ -39,6 +39,7 @@ export default function BottomNavigation() {
   // Professional colorful navigation items (Complete Event Manager suite)
   const allMenuLinks = [
     { name: 'Dashboard', href: '/event/dashboard', icon: LayoutGrid, cardBg: 'bg-gradient-to-br from-[#FAF3E0] to-[#FFF8F0]', cardBorder: 'border-amber-300/60 hover:border-amber-400', textColor: 'text-[#4A2C11]', badgeStyle: 'bg-[#6F4E37] text-white shadow-xs' },
+    { name: 'Subscription', href: '/event/subscription', icon: Sparkles, cardBg: 'bg-gradient-to-br from-[#FEF3C7] to-[#FFFBEB]', cardBorder: 'border-amber-400/70 hover:border-amber-500', textColor: 'text-amber-950', badgeStyle: 'bg-amber-600 text-white shadow-xs' },
     { name: 'Company Profile', href: '/event/profile', icon: Building2, cardBg: 'bg-gradient-to-br from-[#F3E8FF] to-[#FAF5FF]', cardBorder: 'border-purple-300/60 hover:border-purple-400', textColor: 'text-purple-950', badgeStyle: 'bg-purple-600 text-white shadow-xs' },
     { name: 'Services', href: '/event/services', icon: PackageCheck, cardBg: 'bg-gradient-to-br from-[#E0F2FE] to-[#F0F9FF]', cardBorder: 'border-sky-300/60 hover:border-sky-400', textColor: 'text-sky-950', badgeStyle: 'bg-sky-600 text-white shadow-xs' },
     { name: 'Bookings', href: '/event/bookings', icon: CalendarCheck2, cardBg: 'bg-gradient-to-br from-[#D1FAE5] to-[#ECFDF5]', cardBorder: 'border-emerald-300/60 hover:border-emerald-400', textColor: 'text-emerald-950', badgeStyle: 'bg-emerald-600 text-white shadow-xs' },

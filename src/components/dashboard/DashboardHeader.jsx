@@ -53,12 +53,12 @@ export default function DashboardHeader({ onMenuClick }) {
     .toUpperCase() || 'SK';
 
   return (
-    <header className="h-16 bg-[#FFFDFB] border-b border-[#E8DED5] flex items-center justify-between px-3 sm:px-6 z-30 shadow-2xs select-none font-sans relative">
+    <header className="h-14 sm:h-16 bg-[#FFFDFB] border-b border-[#E8DED5] flex items-center justify-between px-2 sm:px-6 z-30 shadow-2xs select-none font-sans relative">
       
       {/* Left: Fahara Logo & Brand Block (Shown on mobile/tablet, hidden on desktop lg:hidden) */}
-      <div className="flex items-center gap-2.5 sm:gap-4 shrink-0 lg:hidden">
-        <Link href="/event/dashboard" className="flex items-center gap-2.5 group cursor-pointer shrink-0">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl border border-[#E8DED5] bg-[#FFF8F0] flex items-center justify-center p-0.5 shadow-2xs group-hover:border-[#6F4E37]/50 transition-all overflow-hidden">
+      <div className="flex items-center gap-1.5 sm:gap-4 shrink-0 lg:hidden">
+        <Link href="/event/dashboard" className="flex items-center gap-2 group cursor-pointer shrink-0">
+          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-xl border border-[#E8DED5] bg-[#FFF8F0] flex items-center justify-center p-0.5 shadow-2xs group-hover:border-[#6F4E37]/50 transition-all overflow-hidden shrink-0">
             <img 
               src="/fahara-logo.jpeg" 
               alt="Fahara Logo" 
@@ -67,15 +67,15 @@ export default function DashboardHeader({ onMenuClick }) {
                 e.target.onerror = null;
                 e.target.style.display = 'none';
                 e.target.parentElement.innerText = 'F';
-                e.target.parentElement.className = 'w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#5D3A29] text-white font-black flex items-center justify-center text-xs shadow-2xs';
+                e.target.parentElement.className = 'w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-[#5D3A29] text-white font-black flex items-center justify-center text-xs shadow-2xs';
               }}
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-xs sm:text-sm font-extrabold text-[#2C1810] tracking-tight leading-none group-hover:text-[#6F4E37] transition-colors">
+            <span className="text-[11px] sm:text-sm font-extrabold text-[#2C1810] tracking-tight leading-none group-hover:text-[#6F4E37] transition-colors">
               Fahara
             </span>
-            <span className="text-[8px] sm:text-[9px] font-black text-[#8C6D58] uppercase tracking-wider block mt-0.5 leading-none">
+            <span className="text-[7.5px] sm:text-[9px] font-black text-[#8C6D58] uppercase tracking-wider block mt-0.5 leading-none">
               VENUE PARTNER
             </span>
           </div>
@@ -83,16 +83,15 @@ export default function DashboardHeader({ onMenuClick }) {
       </div>
 
       {/* Right: Home, Notifications & User Profile Pill (Aligned right with ml-auto) */}
-      <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto">
+      <div className="flex items-center gap-1 sm:gap-3 shrink-0 ml-auto">
 
-        
         {/* Service Availability Toggle Button */}
         <button
           type="button"
           onClick={() => toggleAvailability(!isAvailable)}
           disabled={isToggling}
           title={isAvailable ? "Click to Pause Services (Hide from Users)" : "Click to Make Services Available (Show to Users)"}
-          className={`flex items-center gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border transition-all duration-200 shadow-2xs cursor-pointer select-none ${
+          className={`flex items-center gap-1 sm:gap-2 px-1.5 sm:px-3 py-1 sm:py-1.5 rounded-full border transition-all duration-200 shadow-2xs cursor-pointer select-none shrink-0 ${
             isAvailable 
               ? 'bg-emerald-50/80 border-emerald-300 text-emerald-800 hover:bg-emerald-100/80' 
               : 'bg-rose-50/80 border-rose-300 text-rose-800 hover:bg-rose-100/80'
@@ -106,8 +105,8 @@ export default function DashboardHeader({ onMenuClick }) {
             <span className={`relative inline-flex rounded-full h-full w-full ${isAvailable ? 'bg-emerald-500' : 'bg-rose-500'}`} />
           </span>
 
-          <span className="text-[11px] sm:text-xs font-black tracking-tight">
-            {isAvailable ? 'Services Live' : 'Services Paused'}
+          <span className="text-[9.5px] sm:text-xs font-black tracking-tight whitespace-nowrap">
+            {isAvailable ? 'Live' : 'Paused'}
           </span>
 
           {/* Mini pill status indicator */}
@@ -122,27 +121,27 @@ export default function DashboardHeader({ onMenuClick }) {
         <Link
           href="/event/dashboard"
           title="Home Dashboard"
-          className={`flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full border transition-all shadow-2xs cursor-pointer ${
+          className={`hidden sm:flex items-center justify-center w-7 h-7 sm:w-9 sm:h-9 rounded-full border transition-all shadow-2xs cursor-pointer ${
             pathname === '/event/dashboard'
               ? 'border-[#E8DED5] bg-[#FFF8F0] text-[#2C1810] shadow-xs'
               : 'border-[#EFE6DD] bg-[#FFFBF7] text-[#6F4E37] hover:bg-[#FFF8F0] hover:border-[#6F4E37]/30'
           }`}
         >
-          <Home className="w-4 h-4 text-[#6F4E37]" />
+          <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#6F4E37]" />
         </Link>
 
         {/* Notification Bell Pill */}
         <NotificationDropdown />
 
         {/* Vertical Divider */}
-        <div className="w-px h-5 sm:h-6 bg-[#E8DED5] mx-0.5" />
+        <div className="w-px h-3.5 sm:h-6 bg-[#E8DED5] mx-0.5 shrink-0" />
 
         {/* User Profile Pill Trigger */}
-        <div className="relative" ref={profileRef}>
+        <div className="relative shrink-0" ref={profileRef}>
           <button 
             type="button"
             onClick={() => setIsProfileOpen(!isProfileOpen)}
-            className="flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1 rounded-full border border-[#E8DED5] bg-[#FFFBF7] hover:bg-[#FFF8F0] hover:border-[#6F4E37]/40 transition-all shadow-2xs active:scale-98 cursor-pointer"
+            className="flex items-center gap-1 sm:gap-2.5 p-0.5 sm:px-3 sm:py-1 rounded-full border border-[#E8DED5] bg-[#FFFBF7] hover:bg-[#FFF8F0] hover:border-[#6F4E37]/40 transition-all shadow-2xs active:scale-98 cursor-pointer"
           >
             {/* Text Block (Name & Role - Visible on md+ screens) */}
             <div className="hidden md:flex flex-col items-start min-w-0 text-left">
@@ -160,7 +159,7 @@ export default function DashboardHeader({ onMenuClick }) {
             </div>
 
             {/* Chevron Icon */}
-            <ChevronDown className={`w-3.5 h-3.5 text-[#8C6D58] shrink-0 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`hidden sm:block w-3.5 h-3.5 text-[#8C6D58] shrink-0 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
           </button>
 
           {/* Profile Dropdown Popover */}
