@@ -22,7 +22,7 @@ const NAV_GROUPS = [
       { name: 'Dashboard', href: '/event/dashboard', icon: LayoutGrid, color: 'text-amber-600', bg: 'bg-amber-100/70' },
       { name: 'Services & Packages', href: '/event/services', icon: PackageCheck, color: 'text-rose-600', bg: 'bg-rose-100/70' },
       { name: 'Bookings', href: '/event/bookings', icon: CalendarCheck2, color: 'text-emerald-600', bg: 'bg-emerald-100/70' },
-      { name: 'Events', href: '/event/calendar', icon: CalendarDays, color: 'text-[#6F4E37]', bg: 'bg-amber-100/70' },
+      { name: 'Availability Calendar', href: '/event/calendar', icon: CalendarDays, color: 'text-[#6F4E37]', bg: 'bg-amber-100/70' },
     ]
   },
   {

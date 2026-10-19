@@ -1,35 +1,80 @@
 'use client';
 
+import { useState } from 'react';
 import CalendarToolbar from '@/components/calendar/CalendarToolbar';
 import MonthlyCalendar from '@/components/calendar/MonthlyCalendar';
 import WeeklyCalendar from '@/components/calendar/WeeklyCalendar';
 import DailySchedule from '@/components/calendar/DailySchedule';
+import CalendarLegend from '@/components/calendar/CalendarLegend';
+import AvailabilitySummaryCards from '@/components/calendar/AvailabilitySummaryCards';
+import AvailabilityBlockModal from '@/components/calendar/AvailabilityBlockModal';
+import BlockedDatesCard from '@/components/calendar/BlockedDatesCard';
 import { useCalendarStore } from '@/store/useCalendarStore';
-import { useCalendarEvents } from '@/hooks/calendar/useCalendarQueries';
-import { Loader2, Calendar as CalendarIcon, Sparkles } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { 
+  useEventManagerAvailability, 
+  useEventManagerSummary, 
+  useCalendarEvents 
+} from '@/hooks/calendar/useCalendarQueries';
+import { 
+  Loader2, 
+  Calendar as CalendarIcon, 
+  Sparkles, 
+  Plus, 
+  Package, 
+  Coffee, 
+  LayoutList 
+} from 'lucide-react';
+import { format } from 'date-fns';
 
 export default function CalendarPage() {
-  const { view, filters } = useCalendarStore();
-  const { data: events, isLoading, error } = useCalendarEvents(filters);
+  const { view, filters, selectedDate, openCreateBlockModal } = useCalendarStore();
+  
+  const { data: availabilityData, isLoading: isAvailLoading, error: availError } = useEventManagerAvailability();
+  const { data: summary, isLoading: isSummaryLoading } = useEventManagerSummary();
+  const { data: events, isLoading: isEventsLoading } = useCalendarEvents(filters);
+
+  const isLoading = isAvailLoading || isEventsLoading;
+  const services = availabilityData?.services || [];
+  const venues = availabilityData?.venues || [];
 
   return (
-    <div className="space-y-6 sm:space-y-8 select-none">
+    <div className="space-y-6 sm:space-y-8 select-none pb-12">
       
-      {/* Top Banner Header */}
+      {/* Top Banner Header with fahra palette */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white border border-[#E8DED5] rounded-3xl p-6 sm:p-7 shadow-xs relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-[#6F4E37]/10 via-[#A67B5B]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#6F4E37]/15 via-[#A67B5B]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#FFF8F0] text-[#6F4E37] border border-[#6F4E37]/20 uppercase tracking-widest flex items-center gap-1">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#FFF8F0] text-[#6F4E37] border border-[#6F4E37]/20 uppercase tracking-widest flex items-center gap-1 shadow-2xs">
               <CalendarIcon className="w-3 h-3" />
-              Interactive Schedule
+              Event Operations Hub
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-[#2C1810] tracking-tight">Event Calendar</h1>
-          <p className="text-xs sm:text-sm text-[#8C6D58] font-semibold mt-1">Track upcoming hall bookings, vendor slots, and event dates.</p>
+          <h1 className="text-2xl sm:text-3xl font-black text-[#2C1810] tracking-tight">
+            Event Manager Availability Calendar
+          </h1>
+          <p className="text-xs sm:text-sm text-[#8C6D58] font-semibold mt-1 max-w-xl">
+            Schedule private events, configure buffers, manage capacity limits, coordinate with cafes & venues, and eliminate double bookings.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2 relative z-10">
+          <button
+            type="button"
+            onClick={() => openCreateBlockModal()}
+            className="px-5 py-3 bg-[#6F4E37] hover:bg-[#2C1810] text-white text-xs font-black rounded-2xl transition-all shadow-xs flex items-center gap-2 active:scale-95"
+          >
+            <Plus className="w-4 h-4 stroke-[3]" />
+            Add Block
+          </button>
         </div>
       </div>
+
+      {/* KPI Summary Cards & Quick Action Ribbon */}
+      <AvailabilitySummaryCards summary={summary} />
+
+      {/* Legend & Filter Controls */}
+      <CalendarLegend />
 
       {/* Toolbar Controls */}
       <CalendarToolbar />
@@ -39,21 +84,33 @@ export default function CalendarPage() {
         {isLoading ? (
           <div className="bg-white border border-[#E8DED5] rounded-3xl py-24 flex flex-col items-center justify-center text-[#8C6D58] gap-3 shadow-xs">
             <Loader2 className="w-8 h-8 animate-spin text-[#6F4E37]" />
-            <p className="text-xs font-black text-[#2C1810]">Loading event schedule...</p>
-          </div>
-        ) : error ? (
-          <div className="bg-rose-50 border border-rose-200 rounded-3xl py-12 px-6 flex flex-col items-center justify-center text-center">
-            <p className="text-sm font-black text-rose-700">Failed to load calendar events.</p>
-            <p className="text-xs text-rose-600/80 mt-1 font-semibold">Please check your server connection.</p>
+            <p className="text-xs font-black text-[#2C1810]">Loading availability calendar & bookings...</p>
           </div>
         ) : (
-          <div className="w-full flex-1 flex flex-col">
-            {view === 'month' && <MonthlyCalendar events={events || []} />}
+          <div className="w-full flex-1 flex flex-col space-y-6">
+            {view === 'month' && (
+              <>
+                <MonthlyCalendar events={events || []} />
+                
+                {/* On Mobile & Desktop: Selected Day Event Schedule Below Month Grid */}
+                <div className="pt-2">
+                  <DailySchedule events={events || []} />
+                </div>
+              </>
+            )}
+
             {view === 'week' && <WeeklyCalendar events={events || []} />}
+            
             {(view === 'day' || view === 'agenda') && <DailySchedule events={events || []} />}
           </div>
         )}
       </div>
+
+      {/* Quick Blocked Dates List */}
+      <BlockedDatesCard />
+
+      {/* Modal for Creating & Editing Availability Blocks */}
+      <AvailabilityBlockModal services={services} venues={venues} />
 
     </div>
   );

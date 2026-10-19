@@ -36,25 +36,25 @@ export default function BottomNavigation() {
     { name: 'Settlements', href: '/event/finance/settlements', icon: ArrowLeftRight, color: 'bg-indigo-500' },
   ];
 
-  // Professional colorful navigation items (Complete Event Manager suite)
+  // Cohesive Fahara theme-based navigation items with curated icons
   const allMenuLinks = [
-    { name: 'Dashboard', href: '/event/dashboard', icon: LayoutGrid, cardBg: 'bg-gradient-to-br from-[#FAF3E0] to-[#FFF8F0]', cardBorder: 'border-amber-300/60 hover:border-amber-400', textColor: 'text-[#4A2C11]', badgeStyle: 'bg-[#6F4E37] text-white shadow-xs' },
-    { name: 'Subscription', href: '/event/subscription', icon: Sparkles, cardBg: 'bg-gradient-to-br from-[#FEF3C7] to-[#FFFBEB]', cardBorder: 'border-amber-400/70 hover:border-amber-500', textColor: 'text-amber-950', badgeStyle: 'bg-amber-600 text-white shadow-xs' },
-    { name: 'Company Profile', href: '/event/profile', icon: Building2, cardBg: 'bg-gradient-to-br from-[#F3E8FF] to-[#FAF5FF]', cardBorder: 'border-purple-300/60 hover:border-purple-400', textColor: 'text-purple-950', badgeStyle: 'bg-purple-600 text-white shadow-xs' },
-    { name: 'Services', href: '/event/services', icon: PackageCheck, cardBg: 'bg-gradient-to-br from-[#E0F2FE] to-[#F0F9FF]', cardBorder: 'border-sky-300/60 hover:border-sky-400', textColor: 'text-sky-950', badgeStyle: 'bg-sky-600 text-white shadow-xs' },
-    { name: 'Bookings', href: '/event/bookings', icon: CalendarCheck2, cardBg: 'bg-gradient-to-br from-[#D1FAE5] to-[#ECFDF5]', cardBorder: 'border-emerald-300/60 hover:border-emerald-400', textColor: 'text-emerald-950', badgeStyle: 'bg-emerald-600 text-white shadow-xs' },
-    { name: 'Events Calendar', href: '/event/calendar', icon: CalendarDays, cardBg: 'bg-gradient-to-br from-[#CCFBF1] to-[#F0FDFA]', cardBorder: 'border-teal-300/60 hover:border-teal-400', textColor: 'text-teal-950', badgeStyle: 'bg-teal-600 text-white shadow-xs' },
-    { name: 'Customers', href: '/event/customers', icon: Users, cardBg: 'bg-gradient-to-br from-[#FCE7F3] to-[#FDF2F8]', cardBorder: 'border-pink-300/60 hover:border-pink-400', textColor: 'text-pink-950', badgeStyle: 'bg-pink-600 text-white shadow-xs' },
-    { name: 'Reviews', href: '/event/reviews', icon: Star, cardBg: 'bg-gradient-to-br from-[#FEF3C7] to-[#FFFBEB]', cardBorder: 'border-amber-300/60 hover:border-amber-400', textColor: 'text-amber-950', badgeStyle: 'bg-amber-500 text-white shadow-xs' },
-    { name: 'Campaigns', href: '/event/campaigns', icon: Megaphone, cardBg: 'bg-gradient-to-br from-[#FAE8FF] to-[#FDF4FF]', cardBorder: 'border-fuchsia-300/60 hover:border-fuchsia-400', textColor: 'text-fuchsia-950', badgeStyle: 'bg-fuchsia-600 text-white shadow-xs' },
-    { name: 'Payments', href: '/event/finance/payments', icon: CreditCard, cardBg: 'bg-gradient-to-br from-[#FFEDD5] to-[#FFF7ED]', cardBorder: 'border-orange-300/60 hover:border-orange-400', textColor: 'text-orange-950', badgeStyle: 'bg-orange-600 text-white shadow-xs' },
-    { name: 'Settlements', href: '/event/finance/settlements', icon: ArrowLeftRight, cardBg: 'bg-gradient-to-br from-[#DCFCE7] to-[#F0FDF4]', cardBorder: 'border-green-300/60 hover:border-green-400', textColor: 'text-green-950', badgeStyle: 'bg-green-600 text-white shadow-xs' },
-    { name: 'Refunds', href: '/event/finance/refunds', icon: RotateCcw, cardBg: 'bg-gradient-to-br from-[#FFE4E6] to-[#FFF1F2]', cardBorder: 'border-rose-300/60 hover:border-rose-400', textColor: 'text-rose-950', badgeStyle: 'bg-rose-600 text-white shadow-xs' },
-    { name: 'Payment Account', href: '/event/finance/payment-account', icon: ShieldCheck, cardBg: 'bg-gradient-to-br from-[#DBEAFE] to-[#EFF6FF]', cardBorder: 'border-blue-300/60 hover:border-blue-400', textColor: 'text-blue-950', badgeStyle: 'bg-blue-600 text-white shadow-xs' },
-    { name: 'Analytics', href: '/event/analytics', icon: BarChart3, cardBg: 'bg-gradient-to-br from-[#E0E7FF] to-[#EEF2FF]', cardBorder: 'border-indigo-300/60 hover:border-indigo-400', textColor: 'text-indigo-950', badgeStyle: 'bg-indigo-600 text-white shadow-xs' },
-    { name: 'Notifications', href: '/event/notifications', icon: Bell, cardBg: 'bg-gradient-to-br from-[#FEE2E2] to-[#FEF2F2]', cardBorder: 'border-red-300/60 hover:border-red-400', textColor: 'text-red-950', badgeStyle: 'bg-red-600 text-white shadow-xs' },
-    { name: 'Settings', href: '/event/settings', icon: Settings, cardBg: 'bg-gradient-to-br from-[#F1F5F9] to-[#F8FAFC]', cardBorder: 'border-slate-300/60 hover:border-slate-400', textColor: 'text-slate-900', badgeStyle: 'bg-slate-800 text-white shadow-xs' },
-    { name: 'Help & Support', href: '/event/support', icon: LifeBuoy, cardBg: 'bg-gradient-to-br from-[#E0F2FE] to-[#F0FDFA]', cardBorder: 'border-teal-300/60 hover:border-teal-400', textColor: 'text-teal-950', badgeStyle: 'bg-teal-700 text-white shadow-xs' },
+    { name: 'Dashboard', href: '/event/dashboard', icon: LayoutGrid, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#6F4E37] text-white shadow-2xs' },
+    { name: 'Subscription', href: '/event/subscription', icon: Sparkles, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#8C6239] text-amber-100 shadow-2xs' },
+    { name: 'Company Profile', href: '/event/profile', icon: Building2, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#5D3A29] text-[#FFF8F0] shadow-2xs' },
+    { name: 'Services & Packages', href: '/event/services', icon: PackageCheck, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#A67B5B] text-white shadow-2xs' },
+    { name: 'Bookings', href: '/event/bookings', icon: CalendarCheck2, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#6F4E37] text-white shadow-2xs' },
+    { name: 'Events Calendar', href: '/event/calendar', icon: CalendarDays, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#7C5036] text-amber-50 shadow-2xs' },
+    { name: 'Customers', href: '/event/customers', icon: Users, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#8B5E3C] text-white shadow-2xs' },
+    { name: 'Reviews', href: '/event/reviews', icon: Star, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#A47148] text-amber-100 shadow-2xs' },
+    { name: 'Campaigns', href: '/event/campaigns', icon: Megaphone, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#6F4E37] text-white shadow-2xs' },
+    { name: 'Payments', href: '/event/finance/payments', icon: CreditCard, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#5D3A29] text-[#FFF8F0] shadow-2xs' },
+    { name: 'Settlements', href: '/event/finance/settlements', icon: ArrowLeftRight, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#7C5036] text-white shadow-2xs' },
+    { name: 'Refunds', href: '/event/finance/refunds', icon: RotateCcw, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#9C6644] text-white shadow-2xs' },
+    { name: 'Payment Account', href: '/event/finance/payment-account', icon: ShieldCheck, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#4A2C11] text-amber-100 shadow-2xs' },
+    { name: 'Analytics', href: '/event/analytics', icon: BarChart3, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#8C6239] text-white shadow-2xs' },
+    { name: 'Notifications', href: '/event/notifications', icon: Bell, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#A67B5B] text-white shadow-2xs' },
+    { name: 'Settings', href: '/event/settings', icon: Settings, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#5D3A29] text-white shadow-2xs' },
+    { name: 'Help & Support', href: '/event/support', icon: LifeBuoy, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#6F4E37] text-white shadow-2xs' },
   ];
 
   const handleLogout = () => {
@@ -144,22 +144,24 @@ export default function BottomNavigation() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 120 }}
               transition={{ type: 'spring', damping: 25, stiffness: 280 }}
-              className="relative w-full bg-white border-t border-[#E8DED5] rounded-t-3xl p-6 shadow-2xl z-10 max-h-[80vh] overflow-y-auto space-y-5"
+              className="relative w-full max-w-lg mx-auto bg-white border-t border-[#E8DED5] rounded-t-3xl p-4 xs:p-5 sm:p-6 shadow-2xl z-10 max-h-[85vh] overflow-y-auto space-y-4 xs:space-y-5"
             >
               <div className="flex items-center justify-between border-b border-[#F2EAE1] pb-3">
                 <div>
-                  <h3 className="text-base font-black text-[#2C1810]">Full Navigation Menu</h3>
-                  <p className="text-[11px] text-[#8C6D58] font-semibold">Access all event manager features</p>
+                  <h3 className="text-sm xs:text-base font-black text-[#2C1810]">Full Navigation Menu</h3>
+                  <p className="text-[10px] xs:text-[11px] text-[#8C6D58] font-semibold">Access all event manager features</p>
                 </div>
                 <button 
                   onClick={() => setIsMenuOpen(false)}
-                  className="p-2 rounded-xl text-[#8C6D58] hover:bg-[#FFF8F0] border border-[#E8DED5]"
+                  className="p-1.5 xs:p-2 rounded-xl text-[#8C6D58] hover:bg-[#FFF8F0] border border-[#E8DED5] active:scale-95 transition-all"
+                  aria-label="Close Navigation Menu"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4 xs:w-5 xs:h-5" />
                 </button>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {/* Responsive Grid: 2 columns on 360px mobile, 3 columns on tablet */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 xs:gap-2.5 sm:gap-3">
               {allMenuLinks.map((item, idx) => {
                 const Icon = item.icon;
                 const active = isTabActive(item.href);
@@ -173,18 +175,18 @@ export default function BottomNavigation() {
                     href={item.href}
                     data-tour-id={tourId}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`flex flex-col items-start p-3.5 rounded-2xl border transition-all active:scale-95 shadow-2xs ${
+                    className={`flex flex-col items-start p-2.5 xs:p-3 sm:p-3.5 rounded-xl xs:rounded-2xl border transition-all active:scale-95 shadow-2xs ${
                       active 
-                        ? 'bg-[#6F4E37] text-white border-[#6F4E37] shadow-md ring-2 ring-[#6F4E37]/30' 
+                        ? 'bg-[#6F4E37] text-white border-[#6F4E37] shadow-sm ring-2 ring-[#6F4E37]/30' 
                         : `${item.cardBg} ${item.cardBorder} ${item.textColor} hover:shadow-xs`
                     }`}
                   >
-                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-2 font-bold ${
+                    <div className={`w-7 h-7 xs:w-8 xs:h-8 rounded-lg xs:rounded-xl flex items-center justify-center mb-1.5 xs:mb-2 font-bold ${
                       active ? 'bg-white/25 text-white' : item.badgeStyle
                     }`}>
-                      <Icon className="w-4 h-4 stroke-[2.2]" />
+                      <Icon className="w-3.5 h-3.5 xs:w-4 xs:h-4 stroke-[2.2]" />
                     </div>
-                    <span className="text-xs font-black truncate w-full">{item.name}</span>
+                    <span className="text-[11px] xs:text-xs font-black truncate w-full tracking-tight">{item.name}</span>
                   </Link>
                 );
               })}

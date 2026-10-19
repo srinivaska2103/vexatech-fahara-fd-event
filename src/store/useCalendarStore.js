@@ -3,19 +3,42 @@ import { addMonths, subMonths, addWeeks, subWeeks, addDays, subDays } from 'date
 
 export const useCalendarStore = create((set, get) => ({
   currentDate: new Date(),
+  selectedDate: new Date(),
   view: 'month', // 'month', 'week', 'day', 'agenda'
   filters: {
-    status: 'all', // 'all', 'PENDING', 'CONFIRMED', 'CANCELLED'
+    status: 'all', // 'all', 'AVAILABLE', 'BOOKED', 'BLOCKED', 'CONFIRMED', 'PENDING', 'PRIVATE'
     service: 'all',
     searchQuery: '',
   },
   selectedEvent: null,
+  isBlockModalOpen: false,
+  editingBlock: null,
+  defaultBlockDate: null,
 
   // Actions
   setView: (view) => set({ view }),
   setCurrentDate: (date) => set({ currentDate: date }),
+  setSelectedDate: (date) => set({ selectedDate: date }),
   setSelectedEvent: (event) => set({ selectedEvent: event }),
   
+  openCreateBlockModal: (initialDate = null) => set({
+    isBlockModalOpen: true,
+    editingBlock: null,
+    defaultBlockDate: initialDate || get().selectedDate || new Date()
+  }),
+
+  openEditBlockModal: (block) => set({
+    isBlockModalOpen: true,
+    editingBlock: block,
+    defaultBlockDate: new Date(block.start_at || block.startAt)
+  }),
+
+  closeBlockModal: () => set({
+    isBlockModalOpen: false,
+    editingBlock: null,
+    defaultBlockDate: null
+  }),
+
   setFilters: (newFilters) => set((state) => ({
     filters: { ...state.filters, ...newFilters }
   })),
@@ -34,5 +57,8 @@ export const useCalendarStore = create((set, get) => ({
     else if (view === 'day' || view === 'agenda') set({ currentDate: subDays(currentDate, 1) });
   },
 
-  today: () => set({ currentDate: new Date() }),
+  today: () => {
+    const now = new Date();
+    set({ currentDate: now, selectedDate: now });
+  },
 }));

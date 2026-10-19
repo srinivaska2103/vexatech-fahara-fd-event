@@ -39,9 +39,11 @@ export const API_ENDPOINTS = {
     DELETE: (id) => `/event-services/${id}`
   },
   CALENDAR: {
-    EVENTS: '/calendar/events',
-    HOLIDAYS: '/calendar/holidays',
-    BLOCKED_DATES: '/calendar/blocked-dates',
+    AVAILABILITY: '/event-managers/availability',
+    SUMMARY: '/event-managers/availability/summary',
+    BLOCKS: '/event-managers/availability/blocks',
+    BLOCK_DETAIL: (blockId) => `/event-managers/availability/blocks/${blockId}`,
+    BOOKINGS: '/event-managers/bookings/calendar',
   },
   NOTIFICATIONS: {
     LIST: '/notifications',

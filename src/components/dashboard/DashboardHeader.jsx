@@ -13,6 +13,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { useGetProfileQuery, useToggleServiceAvailabilityMutation } from '@/hooks/profile/useProfileMutations';
+import SubscriptionBadge from '@/components/dashboard/SubscriptionBadge';
 
 export default function DashboardHeader({ onMenuClick }) {
   const pathname = usePathname();
@@ -53,12 +54,12 @@ export default function DashboardHeader({ onMenuClick }) {
     .toUpperCase() || 'SK';
 
   return (
-    <header className="h-14 sm:h-16 bg-[#FFFDFB] border-b border-[#E8DED5] flex items-center justify-between px-2 sm:px-6 z-30 shadow-2xs select-none font-sans relative">
+    <header className="h-14 sm:h-16 bg-[#FFFDFB] border-b border-[#E8DED5] flex items-center justify-between px-1.5 xs:px-2.5 sm:px-6 z-30 shadow-2xs select-none font-sans relative">
       
       {/* Left: Fahara Logo & Brand Block (Shown on mobile/tablet, hidden on desktop lg:hidden) */}
-      <div className="flex items-center gap-1.5 sm:gap-4 shrink-0 lg:hidden">
-        <Link href="/event/dashboard" className="flex items-center gap-2 group cursor-pointer shrink-0">
-          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-xl border border-[#E8DED5] bg-[#FFF8F0] flex items-center justify-center p-0.5 shadow-2xs group-hover:border-[#6F4E37]/50 transition-all overflow-hidden shrink-0">
+      <div className="flex items-center gap-1 xs:gap-1.5 sm:gap-4 shrink-0 lg:hidden">
+        <Link href="/event/dashboard" className="flex items-center gap-1.5 xs:gap-2 group cursor-pointer shrink-0">
+          <div className="w-6 h-6 xs:w-7 xs:h-7 sm:w-9 sm:h-9 rounded-xl border border-[#E8DED5] bg-[#FFF8F0] flex items-center justify-center p-0.5 shadow-2xs group-hover:border-[#6F4E37]/50 transition-all overflow-hidden shrink-0">
             <img 
               src="/fahara-logo.jpeg" 
               alt="Fahara Logo" 
@@ -67,23 +68,26 @@ export default function DashboardHeader({ onMenuClick }) {
                 e.target.onerror = null;
                 e.target.style.display = 'none';
                 e.target.parentElement.innerText = 'F';
-                e.target.parentElement.className = 'w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-[#5D3A29] text-white font-black flex items-center justify-center text-xs shadow-2xs';
+                e.target.parentElement.className = 'w-6 h-6 xs:w-7 xs:h-7 sm:w-9 sm:h-9 rounded-xl bg-[#5D3A29] text-white font-black flex items-center justify-center text-[10px] sm:text-xs shadow-2xs';
               }}
             />
           </div>
-          <div className="flex flex-col">
-            <span className="text-[11px] sm:text-sm font-extrabold text-[#2C1810] tracking-tight leading-none group-hover:text-[#6F4E37] transition-colors">
+          <div className="hidden min-[340px]:flex flex-col">
+            <span className="text-[10px] xs:text-[11px] sm:text-sm font-extrabold text-[#2C1810] tracking-tight leading-none group-hover:text-[#6F4E37] transition-colors">
               Fahara
             </span>
-            <span className="text-[7.5px] sm:text-[9px] font-black text-[#8C6D58] uppercase tracking-wider block mt-0.5 leading-none">
+            <span className="text-[6.5px] xs:text-[7.5px] sm:text-[9px] font-black text-[#8C6D58] uppercase tracking-wider block mt-0.5 leading-none">
               VENUE PARTNER
             </span>
           </div>
         </Link>
       </div>
 
-      {/* Right: Home, Notifications & User Profile Pill (Aligned right with ml-auto) */}
-      <div className="flex items-center gap-1 sm:gap-3 shrink-0 ml-auto">
+      {/* Right: Subscription Badge, Service Status, Home, Notifications & User Profile Pill */}
+      <div className="flex items-center gap-1 xs:gap-1.5 sm:gap-3 shrink-0 ml-auto">
+
+        {/* Subscription Expiry Countdown Badge */}
+        <SubscriptionBadge />
 
         {/* Service Availability Toggle Button */}
         <button
@@ -105,7 +109,7 @@ export default function DashboardHeader({ onMenuClick }) {
             <span className={`relative inline-flex rounded-full h-full w-full ${isAvailable ? 'bg-emerald-500' : 'bg-rose-500'}`} />
           </span>
 
-          <span className="text-[9.5px] sm:text-xs font-black tracking-tight whitespace-nowrap">
+          <span className="text-[9px] xs:text-[9.5px] sm:text-xs font-black tracking-tight whitespace-nowrap">
             {isAvailable ? 'Live' : 'Paused'}
           </span>
 
@@ -134,7 +138,7 @@ export default function DashboardHeader({ onMenuClick }) {
         <NotificationDropdown />
 
         {/* Vertical Divider */}
-        <div className="w-px h-3.5 sm:h-6 bg-[#E8DED5] mx-0.5 shrink-0" />
+        <div className="w-px h-3.5 sm:h-6 bg-[#E8DED5] mx-0.5 shrink-0 hidden min-[360px]:block" />
 
         {/* User Profile Pill Trigger */}
         <div className="relative shrink-0" ref={profileRef}>

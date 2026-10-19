@@ -1,109 +1,162 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
-import { ChevronDown, Check } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { ChevronDown, Check, Search } from 'lucide-react';
 
-export const CustomSelect = ({ 
-  options = [], 
-  value, 
-  onChange, 
-  placeholder = 'Select option...', 
+export default function CustomSelect({
+  value,
+  onChange,
+  options = [],
+  placeholder = 'Select an option',
+  icon: Icon,
+  searchable = false,
   className = '',
-  icon: Icon
-}) => {
+  badge = null
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const dropdownRef = useRef(null);
 
+  const selectedOption = options.find((opt) => String(opt.value) === String(value));
+
+  // Close dropdown on outside click
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
+        setSearchTerm('');
       }
-    };
+    }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSelect = (optionValue) => {
-    onChange(optionValue);
-    setIsOpen(false);
-  };
-
-  const getOptionLabel = (opt) => {
-    if (typeof opt === 'object' && opt !== null) return opt.label;
-    return opt;
-  };
-
-  const getOptionValue = (opt) => {
-    if (typeof opt === 'object' && opt !== null) return opt.value;
-    return opt;
-  };
-
-  const selectedOption = options.find(opt => getOptionValue(opt) === value);
-  const displayLabel = selectedOption ? getOptionLabel(selectedOption) : (value || placeholder);
+  const filteredOptions = searchable && searchTerm.trim()
+    ? options.filter((opt) => 
+        (opt.label || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (opt.sublabel || '').toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : options;
 
   return (
-    <div ref={containerRef} className={`relative select-none ${className}`}>
+    <div className={`relative ${className}`} ref={dropdownRef}>
       {/* Trigger Button */}
       <button
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className={`w-full h-10 px-3.5 rounded-2xl border transition-all duration-200 flex items-center justify-between text-xs font-bold cursor-pointer shadow-2xs ${
+        onClick={() => setIsOpen((prev) => !prev)}
+        className={`w-full bg-[#FFFDF9] border transition-all duration-200 rounded-2xl px-3.5 py-2.5 text-left flex items-center justify-between gap-2 shadow-xs group ${
           isOpen
-            ? 'border-[#6F4E37] ring-2 ring-[#6F4E37]/20 bg-[#FFF5EA] text-[#2C1810]'
-            : value 
-              ? 'border-[#6F4E37]/60 bg-amber-50/60 hover:bg-[#FFF5EA] text-[#6F4E37]' 
-              : 'border-[#DDB892]/80 bg-[#FFF8F0] hover:bg-[#FFF5EA] text-[#2C1810] hover:border-[#6F4E37]'
+            ? 'border-[#6F4E37] ring-2 ring-[#6F4E37]/15 shadow-sm'
+            : 'border-[#E8DED5] hover:border-[#DDB892] hover:bg-white'
         }`}
       >
-        <div className="flex items-center gap-2 truncate">
-          {Icon && <Icon className="w-3.5 h-3.5 text-[#6F4E37] shrink-0" />}
-          <span className="truncate">{displayLabel}</span>
+        <div className="flex items-center gap-2.5 min-w-0">
+          {Icon && (
+            <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+              isOpen ? 'bg-[#6F4E37] text-white' : 'bg-[#FFF8F0] text-[#6F4E37]'
+            }`}>
+              <Icon className="w-3.5 h-3.5" />
+            </div>
+          )}
+          <div className="min-w-0 flex flex-col">
+            <span className="text-xs font-bold text-[#2C1810] truncate">
+              {selectedOption ? selectedOption.label : <span className="text-[#8C6D58]/60 font-normal">{placeholder}</span>}
+            </span>
+            {selectedOption?.sublabel && (
+              <span className="text-[10px] text-[#8C6D58] font-medium truncate">
+                {selectedOption.sublabel}
+              </span>
+            )}
+          </div>
         </div>
-        <ChevronDown 
-          className={`w-3.5 h-3.5 text-[#6F4E37] transition-transform duration-200 shrink-0 ml-1.5 ${
-            isOpen ? 'rotate-180' : ''
-          }`} 
-        />
+
+        <div className="flex items-center gap-1.5 shrink-0">
+          {badge && (
+            <span className="px-1.5 py-0.5 rounded-md bg-[#FFF8F0] text-[#6F4E37] border border-[#E8DED5] text-[10px] font-black">
+              {badge}
+            </span>
+          )}
+          <ChevronDown
+            className={`w-4 h-4 text-[#8C6D58] group-hover:text-[#6F4E37] transition-transform duration-200 ${
+              isOpen ? 'rotate-180 text-[#6F4E37]' : ''
+            }`}
+          />
+        </div>
       </button>
 
       {/* Modern Popover Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -6, scale: 0.97 }}
-            animate={{ opacity: 1, y: 4, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.97 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="absolute left-0 right-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-2xl bg-white border border-[#DDB892] shadow-2xl p-1.5 custom-scrollbar text-[#2C1810]"
-          >
-            {options.map((opt) => {
-              const optValue = getOptionValue(opt);
-              const optLabel = getOptionLabel(opt);
-              const isSelected = optValue === value;
+      {isOpen && (
+        <div className="absolute z-50 left-0 right-0 mt-2 bg-white border border-[#E8DED5] rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+          {searchable && options.length > 5 && (
+            <div className="p-2 border-b border-[#F0E6DE] bg-[#FFF8F0]/40">
+              <div className="relative">
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C6D58]" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search..."
+                  autoFocus
+                  className="w-full pl-8 pr-3 py-1.5 bg-white border border-[#E8DED5] rounded-xl text-xs font-semibold text-[#2C1810] placeholder:text-[#8C6D58]/50 focus:border-[#6F4E37] focus:outline-none"
+                />
+              </div>
+            </div>
+          )}
 
-              return (
-                <button
-                  key={String(optValue)}
-                  type="button"
-                  onClick={() => handleSelect(optValue)}
-                  className={`w-full px-3 py-2 rounded-xl text-xs font-extrabold flex items-center justify-between transition-all duration-150 cursor-pointer ${
-                    isSelected
-                      ? 'bg-gradient-to-r from-[#6F4E37] to-[#8C6D58] text-white shadow-xs'
-                      : 'text-[#2C1810] hover:bg-[#FFF5EA] hover:text-[#6F4E37]'
-                  }`}
-                >
-                  <span className="truncate">{optLabel}</span>
-                  {isSelected && <Check className="w-3.5 h-3.5 text-white shrink-0 ml-2" />}
-                </button>
-              );
-            })}
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <div className="max-h-56 overflow-y-auto p-1.5 space-y-0.5 custom-scrollbar">
+            {filteredOptions.length === 0 ? (
+              <div className="p-3 text-center text-xs text-[#8C6D58] font-medium">
+                No matching options
+              </div>
+            ) : (
+              filteredOptions.map((opt) => {
+                const isSelected = String(opt.value) === String(value);
+                const ItemIcon = opt.icon;
+                return (
+                  <button
+                    key={String(opt.value)}
+                    type="button"
+                    onClick={() => {
+                      onChange(opt.value);
+                      setIsOpen(false);
+                      setSearchTerm('');
+                    }}
+                    className={`w-full px-3 py-2 rounded-xl text-left flex items-center justify-between gap-2.5 transition-all duration-150 group ${
+                      isSelected
+                        ? 'bg-[#6F4E37] text-white shadow-xs'
+                        : 'text-[#2C1810] hover:bg-[#FFF8F0] hover:text-[#6F4E37]'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      {ItemIcon && (
+                        <ItemIcon
+                          className={`w-4 h-4 shrink-0 transition-colors ${
+                            isSelected ? 'text-white' : 'text-[#8C6D58] group-hover:text-[#6F4E37]'
+                          }`}
+                        />
+                      )}
+                      <div className="min-w-0">
+                        <div className={`text-xs font-bold truncate ${isSelected ? 'text-white' : 'text-[#2C1810]'}`}>
+                          {opt.label}
+                        </div>
+                        {opt.sublabel && (
+                          <div className={`text-[10px] truncate ${isSelected ? 'text-white/80' : 'text-[#8C6D58]'}`}>
+                            {opt.sublabel}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {isSelected && (
+                      <Check className="w-4 h-4 text-white shrink-0" />
+                    )}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
-};
-
-export default CustomSelect;
+}

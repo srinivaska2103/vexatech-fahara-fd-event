@@ -1,6 +1,46 @@
 import { useQuery } from '@tanstack/react-query';
-import axiosInstance from '@/lib/axios';
-import { API_ENDPOINTS } from '@/constants/api';
+import { eventAvailabilityService } from '@/services/eventAvailabilityService';
+
+export const useEventManagerAvailability = (params = {}) => {
+  return useQuery({
+    queryKey: ['event-manager-availability', params],
+    queryFn: async () => {
+      try {
+        return await eventAvailabilityService.getAvailability(params);
+      } catch (err) {
+        console.warn('Error fetching Event Manager Availability:', err);
+        return { blocks: [], bookings: [], venues: [], services: [] };
+      }
+    },
+    staleTime: 2 * 60 * 1000,
+  });
+};
+
+export const useEventManagerSummary = () => {
+  return useQuery({
+    queryKey: ['event-manager-summary'],
+    queryFn: async () => {
+      try {
+        return await eventAvailabilityService.getSummary();
+      } catch (err) {
+        console.warn('Error fetching Event Manager Summary:', err);
+        return {
+          todayEventsCount: 0,
+          todayBookings: [],
+          pendingRequestsCount: 0,
+          pendingRequests: [],
+          todayBlocksCount: 0,
+          todayBlocks: [],
+          upcomingBlocksCount: 0,
+          upcomingBlocks: [],
+          upcomingEventsCount: 0,
+          upcomingEvents: []
+        };
+      }
+    },
+    staleTime: 60 * 1000,
+  });
+};
 
 export const useCalendarEvents = (filters = {}) => {
   return useQuery({
@@ -12,39 +52,68 @@ export const useCalendarEvents = (filters = {}) => {
           queryParams.status = filters.status.toUpperCase();
         }
         
-        // Use cafe-bookings to fetch the events, since calendar endpoints aren't implemented yet
-        const res = await axiosInstance.get('/bookings/cafe-bookings', { params: queryParams });
-        const bookings = res.data?.data || res.data || [];
-        
-        return bookings.map(b => ({
-          id: b.id,
-          title: `Booking #${b.booking_number || (b.id ? String(b.id).slice(0, 8) : 'BK-1000')}`,
-          date: b.date ? b.date.split('T')[0] : new Date().toISOString().split('T')[0],
-          status: b.status,
-          booking: b
-        }));
+        const availabilityData = await eventAvailabilityService.getAvailability(queryParams);
+        const bookings = availabilityData?.bookings || [];
+        const blocks = availabilityData?.blocks || [];
+
+        const formattedBookings = bookings.map(b => {
+          const dateStr = b.booking_date ? b.booking_date.split('T')[0] : '';
+          return {
+            id: b.id,
+            type: 'BOOKING',
+            title: `${b.service_name || 'Event'} (#${b.booking_number || b.id.slice(0, 8)})`,
+            date: dateStr,
+            startTime: b.start_time,
+            endTime: b.end_time,
+            status: b.booking_status,
+            customerName: b.customer_name,
+            customerPhone: b.customer_phone,
+            venueName: b.venue_name,
+            totalPersons: b.total_persons,
+            booking: b
+          };
+        });
+
+        const formattedBlocks = blocks.map(bl => {
+          const startDt = new Date(bl.start_at || bl.startAt);
+          const endDt = new Date(bl.end_at || bl.endAt);
+          
+          // Use local year, month, day so blocks pin precisely on the intended local calendar date
+          const y = startDt.getFullYear();
+          const m = String(startDt.getMonth() + 1).padStart(2, '0');
+          const d = String(startDt.getDate()).padStart(2, '0');
+          const dateStr = `${y}-${m}-${d}`;
+
+          const endY = endDt.getFullYear();
+          const endM = String(endDt.getMonth() + 1).padStart(2, '0');
+          const endD = String(endDt.getDate()).padStart(2, '0');
+          const endDateStr = `${endY}-${endM}-${endD}`;
+
+          return {
+            id: bl.id,
+            type: 'BLOCK',
+            title: bl.title || 'Blocked Slot',
+            date: dateStr,
+            endDate: endDateStr,
+            startTime: bl.start_at,
+            endTime: bl.end_at,
+            status: 'BLOCKED',
+            reason: bl.reason,
+            isAllDay: bl.is_all_day,
+            notes: bl.notes,
+            serviceName: bl.event_services?.service_name,
+            venueName: bl.cafes?.name,
+            block: bl
+          };
+        });
+
+        return [...formattedBookings, ...formattedBlocks];
       } catch (err) {
         console.warn('Backend API error fetching Calendar Events.', err);
         return [];
       }
     },
-    staleTime: 5 * 60 * 1000,
-  });
-};
-
-export const useCalendarHolidays = () => {
-  return useQuery({
-    queryKey: ['calendar-holidays'],
-    queryFn: async () => {
-      try {
-        const res = await axiosInstance.get(API_ENDPOINTS.CALENDAR.HOLIDAYS);
-        return res.data.data || [];
-      } catch (err) {
-        console.warn('Backend API missing for Holidays. Returning empty array.');
-        return [];
-      }
-    },
-    staleTime: 10 * 60 * 1000,
+    staleTime: 2 * 60 * 1000,
   });
 };
 
@@ -53,10 +122,26 @@ export const useCalendarBlockedDates = () => {
     queryKey: ['calendar-blocked-dates'],
     queryFn: async () => {
       try {
-        const res = await axiosInstance.get(API_ENDPOINTS.CALENDAR.BLOCKED_DATES);
-        return res.data.data || [];
+        const data = await eventAvailabilityService.getAvailability();
+        return data?.blocks || [];
       } catch (err) {
-        console.warn('Backend API missing for Blocked Dates. Returning empty array.');
+        console.warn('Error fetching Blocked Dates.', err);
+        return [];
+      }
+    },
+    staleTime: 2 * 60 * 1000,
+  });
+};
+
+export const useCalendarHolidays = () => {
+  return useQuery({
+    queryKey: ['calendar-holidays'],
+    queryFn: async () => {
+      try {
+        const data = await eventAvailabilityService.getAvailability();
+        const blocks = data?.blocks || [];
+        return blocks.filter(b => b.reason === 'HOLIDAY');
+      } catch (err) {
         return [];
       }
     },
@@ -68,13 +153,7 @@ export const useStaffList = (filters = {}) => {
   return useQuery({
     queryKey: ['staff-list', filters],
     queryFn: async () => {
-      try {
-        const res = await axiosInstance.get(API_ENDPOINTS.STAFF.LIST, { params: filters });
-        return res.data.data || [];
-      } catch (err) {
-        console.warn('Backend API missing for Staff List. Returning empty array.');
-        return [];
-      }
+      return [];
     },
     staleTime: 5 * 60 * 1000,
   });
@@ -84,14 +163,7 @@ export const useStaffAvailability = (staffId, dateRange) => {
   return useQuery({
     queryKey: ['staff-availability', staffId, dateRange],
     queryFn: async () => {
-      if (!staffId) return [];
-      try {
-        const res = await axiosInstance.get(API_ENDPOINTS.STAFF.AVAILABILITY, { params: { staffId, ...dateRange } });
-        return res.data.data || [];
-      } catch (err) {
-        console.warn('Backend API missing for Staff Availability. Returning empty array.');
-        return [];
-      }
+      return [];
     },
     enabled: !!staffId,
     staleTime: 2 * 60 * 1000,
