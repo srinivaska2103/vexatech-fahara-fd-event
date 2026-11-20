@@ -53,17 +53,17 @@ export default function CustomTimePicker({
         onClick={() => setIsOpen((prev) => !prev)}
         className={`w-full bg-[#FFFDF9] border transition-all duration-200 rounded-2xl px-3.5 py-2.5 text-left flex items-center justify-between gap-2 shadow-xs group ${
           isOpen
-            ? 'border-[#6F4E37] ring-2 ring-[#6F4E37]/15 shadow-sm'
-            : 'border-[#E8DED5] hover:border-[#DDB892] hover:bg-white'
+            ? 'border-[#E50914] ring-2 ring-[#E50914]/15 shadow-sm'
+            : 'border-[#FEE2E2] hover:border-[#EF5350] hover:bg-white'
         }`}
       >
         <div className="flex items-center gap-2.5 min-w-0">
           <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-            isOpen ? 'bg-[#6F4E37] text-white' : 'bg-[#FFF8F0] text-[#6F4E37]'
+            isOpen ? 'bg-[#E50914] text-white' : 'bg-[#FFF5F5] text-[#E50914]'
           }`}>
             <Clock className="w-3.5 h-3.5" />
           </div>
-          <span className="text-xs font-bold text-[#2C1810] truncate">
+          <span className="text-xs font-bold text-[#252525] truncate">
             {displayTime}
           </span>
         </div>
@@ -71,8 +71,8 @@ export default function CustomTimePicker({
 
       {/* Popover Time Wheel Menu */}
       {isOpen && (
-        <div className="absolute z-50 left-0 mt-2 bg-white border border-[#E8DED5] rounded-3xl p-3.5 shadow-2xl w-64 animate-in fade-in zoom-in-95 duration-150">
-          <div className="text-[11px] font-black uppercase tracking-wider text-[#8C6D58] mb-2 px-1 flex justify-between">
+        <div className="absolute z-50 left-0 mt-2 bg-white border border-[#FEE2E2] rounded-3xl p-3.5 shadow-2xl w-64 animate-in fade-in zoom-in-95 duration-150">
+          <div className="text-[11px] font-black uppercase tracking-wider text-[#757575] mb-2 px-1 flex justify-between">
             <span>Hour</span>
             <span>Minute</span>
           </div>
@@ -93,12 +93,12 @@ export default function CustomTimePicker({
                     onClick={() => handleHourSelect(h)}
                     className={`w-full px-2.5 py-1.5 rounded-xl text-left text-xs font-bold transition-all flex items-center justify-between ${
                       isSelected
-                        ? 'bg-[#6F4E37] text-white shadow-xs font-black'
-                        : 'text-[#2C1810] hover:bg-[#FFF8F0] hover:text-[#6F4E37]'
+                        ? 'bg-[#E50914] text-white shadow-xs font-black'
+                        : 'text-[#252525] hover:bg-[#FFF5F5] hover:text-[#E50914]'
                     }`}
                   >
                     <span>{h}:00</span>
-                    <span className={`text-[10px] ${isSelected ? 'text-white/80' : 'text-[#8C6D58]'}`}>
+                    <span className={`text-[10px] ${isSelected ? 'text-white/80' : 'text-[#757575]'}`}>
                       {h12} {hPeriod}
                     </span>
                   </button>
@@ -120,8 +120,8 @@ export default function CustomTimePicker({
                     }}
                     className={`w-full px-2.5 py-2 rounded-xl text-center text-xs font-bold transition-all ${
                       isSelected
-                        ? 'bg-[#6F4E37] text-white shadow-xs font-black'
-                        : 'text-[#2C1810] hover:bg-[#FFF8F0] hover:text-[#6F4E37]'
+                        ? 'bg-[#E50914] text-white shadow-xs font-black'
+                        : 'text-[#252525] hover:bg-[#FFF5F5] hover:text-[#E50914]'
                     }`}
                   >
                     :{m}
@@ -139,7 +139,7 @@ export default function CustomTimePicker({
                 onChange('09:00');
                 setIsOpen(false);
               }}
-              className="text-[10px] font-black text-[#6F4E37] hover:underline"
+              className="text-[10px] font-black text-[#E50914] hover:underline"
             >
               Morning (09:00)
             </button>
@@ -149,7 +149,7 @@ export default function CustomTimePicker({
                 onChange('18:00');
                 setIsOpen(false);
               }}
-              className="text-[10px] font-black text-[#6F4E37] hover:underline"
+              className="text-[10px] font-black text-[#E50914] hover:underline"
             >
               Evening (18:00)
             </button>

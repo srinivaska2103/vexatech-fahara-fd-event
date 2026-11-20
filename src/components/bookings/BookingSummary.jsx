@@ -6,7 +6,7 @@ import { Calendar, CheckCircle, Clock, XCircle, BarChart3 } from 'lucide-react';
 export default function BookingSummary({ bookings }) {
   // Aggregate stats from bookings (Assuming bookings is an array or null)
   const stats = [
-    { label: 'Total Bookings', value: bookings?.length || 0, icon: BarChart3, color: 'text-[#6F4E37]', bg: 'bg-[#FFF8F0]' },
+    { label: 'Total Bookings', value: bookings?.length || 0, icon: BarChart3, color: 'text-[#E50914]', bg: 'bg-[#FFF5F5]' },
     { label: 'Pending', value: bookings?.filter(b => b.status?.toLowerCase() === 'pending').length || 0, icon: Clock, color: 'text-yellow-600', bg: 'bg-yellow-50' },
     { label: 'Accepted', value: bookings?.filter(b => ['accepted', 'assigned', 'in_progress', 'confirmed'].includes(b.status?.toLowerCase())).length || 0, icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-50' },
     { label: 'Cancelled', value: bookings?.filter(b => b.status?.toLowerCase() === 'cancelled').length || 0, icon: XCircle, color: 'text-red-600', bg: 'bg-red-50' },

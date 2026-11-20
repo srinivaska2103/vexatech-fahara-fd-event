@@ -73,19 +73,19 @@ function ComposeFormContent() {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 text-[#2C1810]">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 text-[#252525]">
       
       {/* Hero Header Banner */}
       <motion.div 
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-white via-[#FFF8F0] to-[#FFF5EA] p-5 sm:p-6 rounded-3xl border border-[#DDB892]/60 shadow-xs relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-4"
+        className="bg-gradient-to-r from-white via-[#FFF5F5] to-[#FFF5F5] p-5 sm:p-6 rounded-3xl border border-[#EF5350]/60 shadow-xs relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-4"
       >
         <div className="flex items-center gap-3.5 z-10">
           <button 
             type="button"
             onClick={() => router.push('/event/campaigns')}
-            className="w-10 h-10 rounded-2xl bg-white border border-[#DDB892]/60 hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white flex items-center justify-center shadow-2xs transition-all shrink-0 cursor-pointer"
+            className="w-10 h-10 rounded-2xl bg-white border border-[#EF5350]/60 hover:bg-[#E50914] text-[#E50914] hover:text-white flex items-center justify-center shadow-2xs transition-all shrink-0 cursor-pointer"
             title="Back to Campaigns"
             suppressHydrationWarning
           >
@@ -94,8 +94,8 @@ function ComposeFormContent() {
 
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-xl sm:text-2xl font-extrabold text-[#2C1810] tracking-tight">Compose Email Broadcast</h1>
-              <span className="px-2.5 py-0.5 rounded-full bg-[#6F4E37]/10 text-[#6F4E37] text-[10px] font-black uppercase tracking-wider">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-[#252525] tracking-tight">Compose Email Broadcast</h1>
+              <span className="px-2.5 py-0.5 rounded-full bg-[#E50914]/10 text-[#E50914] text-[10px] font-black uppercase tracking-wider">
                 Studio Edition
               </span>
             </div>
@@ -110,7 +110,7 @@ function ComposeFormContent() {
           <button 
             type="button"
             onClick={() => router.push('/event/notifications/templates')}
-            className="py-2.5 px-4 rounded-2xl bg-gradient-to-r from-[#6F4E37] to-[#A67B5B] hover:from-[#5D3F2B] hover:to-[#8E6547] text-white text-xs font-black shadow-xs hover:shadow-md flex items-center gap-2 transition-all cursor-pointer active:scale-95"
+            className="py-2.5 px-4 rounded-2xl bg-gradient-to-r from-[#E50914] to-[#B71C1C] hover:from-[#E50914] hover:to-[#8E6547] text-white text-xs font-black shadow-xs hover:shadow-md flex items-center gap-2 transition-all cursor-pointer active:scale-95"
             suppressHydrationWarning
           >
             <FileText className="w-4 h-4 text-white" />
@@ -156,9 +156,9 @@ function ComposeFormContent() {
         {/* Actions Footer */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-stone-200/60">
           <div className="flex items-center gap-2 text-xs text-stone-500 font-medium">
-            <Info className="w-4 h-4 text-[#6F4E37] shrink-0" />
+            <Info className="w-4 h-4 text-[#E50914] shrink-0" />
             <span>
-              Targeting <strong className="text-[#6F4E37] font-bold">{watchRecipients.length > 0 ? `${watchRecipients.length} customer(s)` : 'All Diners (Broadcast)'}</strong>
+              Targeting <strong className="text-[#E50914] font-bold">{watchRecipients.length > 0 ? `${watchRecipients.length} customer(s)` : 'All Diners (Broadcast)'}</strong>
             </span>
           </div>
 
@@ -175,7 +175,7 @@ function ComposeFormContent() {
             <button 
               type="submit" 
               disabled={sendMessageMutation.isPending}
-              className="w-full sm:w-auto px-7 py-3 rounded-2xl bg-gradient-to-r from-[#6F4E37] to-[#A67B5B] hover:from-[#5D3F2B] hover:to-[#8E6547] text-white text-xs font-extrabold shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-50 active:scale-95"
+              className="w-full sm:w-auto px-7 py-3 rounded-2xl bg-gradient-to-r from-[#E50914] to-[#B71C1C] hover:from-[#E50914] hover:to-[#8E6547] text-white text-xs font-extrabold shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-50 active:scale-95"
               suppressHydrationWarning
             >
               {sendMessageMutation.isPending ? (
@@ -199,7 +199,7 @@ export default function ComposeNotificationPage() {
   return (
     <Suspense fallback={
       <div className="min-h-[400px] flex items-center justify-center p-8 text-center text-xs font-bold text-stone-500 gap-2">
-        <Loader2 className="w-5 h-5 text-[#6F4E37] animate-spin" />
+        <Loader2 className="w-5 h-5 text-[#E50914] animate-spin" />
         <span>Loading Email Broadcast Studio...</span>
       </div>
     }>

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { DollarSign, TrendingUp, CreditCard, Download, Filter } from 'lucide-react';
+import { IndianRupee, TrendingUp, CreditCard, Download, Filter } from 'lucide-react';
 import RevenueSummaryCard from '@/components/finance/RevenueSummaryCard';
 import RevenueChart from '@/components/finance/RevenueChart';
 import IncomeBreakdownCard from '@/components/finance/IncomeBreakdownCard';

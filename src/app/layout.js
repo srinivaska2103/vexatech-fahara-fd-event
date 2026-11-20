@@ -5,16 +5,16 @@ import AppProviders from "@/providers/AppProviders";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Fahara Event Manager",
-  description: "Event Manager Application for Fahara Partners",
+  title: "Grab2GO Event Manager",
+  description: "Event Manager Application for Grab2GO Partners",
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: '/fahara-logo.jpeg' },
+      { url: '/grab-it-logo.png' },
       { url: '/favicon.ico' },
     ],
-    shortcut: ['/fahara-logo.jpeg'],
-    apple: ['/fahara-logo.jpeg'],
+    shortcut: ['/grab-it-logo.png'],
+    apple: ['/grab-it-logo.png'],
   },
 };
 
@@ -23,9 +23,9 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/fahara-logo.jpeg" type="image/jpeg" />
-        <link rel="shortcut icon" href="/fahara-logo.jpeg" type="image/jpeg" />
-        <link rel="apple-touch-icon" href="/fahara-logo.jpeg" />
+        <link rel="icon" href="/grab-it-logo.png" type="image/png" />
+        <link rel="shortcut icon" href="/grab-it-logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/grab-it-logo.png" />
       </head>
       <body className={`${inter.className} antialiased bg-background text-text`} suppressHydrationWarning>
         <AppProviders>

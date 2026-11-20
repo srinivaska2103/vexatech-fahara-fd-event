@@ -41,19 +41,19 @@ export default function CalendarPage() {
     <div className="space-y-6 sm:space-y-8 select-none pb-12">
       
       {/* Top Banner Header with fahra palette */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white border border-[#E8DED5] rounded-3xl p-6 sm:p-7 shadow-xs relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#6F4E37]/15 via-[#A67B5B]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white border border-[#FEE2E2] rounded-3xl p-6 sm:p-7 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#E50914]/15 via-[#B71C1C]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#FFF8F0] text-[#6F4E37] border border-[#6F4E37]/20 uppercase tracking-widest flex items-center gap-1 shadow-2xs">
+            <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#FFF5F5] text-[#E50914] border border-[#E50914]/20 uppercase tracking-widest flex items-center gap-1 shadow-2xs">
               <CalendarIcon className="w-3 h-3" />
               Event Operations Hub
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-[#2C1810] tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-black text-[#252525] tracking-tight">
             Event Manager Availability Calendar
           </h1>
-          <p className="text-xs sm:text-sm text-[#8C6D58] font-semibold mt-1 max-w-xl">
+          <p className="text-xs sm:text-sm text-[#757575] font-semibold mt-1 max-w-xl">
             Schedule private events, configure buffers, manage capacity limits, coordinate with cafes & venues, and eliminate double bookings.
           </p>
         </div>
@@ -62,7 +62,7 @@ export default function CalendarPage() {
           <button
             type="button"
             onClick={() => openCreateBlockModal()}
-            className="px-5 py-3 bg-[#6F4E37] hover:bg-[#2C1810] text-white text-xs font-black rounded-2xl transition-all shadow-xs flex items-center gap-2 active:scale-95"
+            className="px-5 py-3 bg-[#E50914] hover:bg-[#252525] text-white text-xs font-black rounded-2xl transition-all shadow-xs flex items-center gap-2 active:scale-95"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             Add Block
@@ -82,9 +82,9 @@ export default function CalendarPage() {
       {/* Main View Container */}
       <div className="min-h-[500px] flex flex-col">
         {isLoading ? (
-          <div className="bg-white border border-[#E8DED5] rounded-3xl py-24 flex flex-col items-center justify-center text-[#8C6D58] gap-3 shadow-xs">
-            <Loader2 className="w-8 h-8 animate-spin text-[#6F4E37]" />
-            <p className="text-xs font-black text-[#2C1810]">Loading availability calendar & bookings...</p>
+          <div className="bg-white border border-[#FEE2E2] rounded-3xl py-24 flex flex-col items-center justify-center text-[#757575] gap-3 shadow-xs">
+            <Loader2 className="w-8 h-8 animate-spin text-[#E50914]" />
+            <p className="text-xs font-black text-[#252525]">Loading availability calendar & bookings...</p>
           </div>
         ) : (
           <div className="w-full flex-1 flex flex-col space-y-6">

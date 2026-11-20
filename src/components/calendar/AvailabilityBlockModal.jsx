@@ -184,19 +184,19 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white border border-[#E8DED5] rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-150">
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-150">
         
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-5 sm:p-6 border-b border-[#E8DED5] bg-[#FFF8F0]">
+        <div className="flex items-center justify-between p-5 sm:p-6 border-b border-[#FEE2E2] bg-[#FFF5F5]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#6F4E37] text-white flex items-center justify-center shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-[#E50914] text-white flex items-center justify-center shadow-xs">
               <Clock className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-black text-[#2C1810]">
+              <h3 className="text-lg font-black text-[#252525]">
                 {isEditing ? 'Edit Availability Block' : 'Add Availability Block'}
               </h3>
-              <p className="text-xs text-[#8C6D58] font-semibold">
+              <p className="text-xs text-[#757575] font-semibold">
                 Configure manager schedules, buffers, and blocked periods.
               </p>
             </div>
@@ -204,7 +204,7 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
           <button
             type="button"
             onClick={closeBlockModal}
-            className="w-9 h-9 rounded-xl text-[#8C6D58] hover:text-[#2C1810] hover:bg-[#E8DED5]/40 flex items-center justify-center transition-colors"
+            className="w-9 h-9 rounded-xl text-[#757575] hover:text-[#252525] hover:bg-[#FEE2E2]/40 flex items-center justify-center transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -221,7 +221,7 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
 
           {/* Title */}
           <div>
-            <label className="block text-xs font-black text-[#2C1810] mb-1.5 uppercase tracking-wider">
+            <label className="block text-xs font-black text-[#252525] mb-1.5 uppercase tracking-wider">
               Block Title <span className="text-rose-500">*</span>
             </label>
             <input
@@ -230,14 +230,14 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Wedding Event Hall Reservation, Equipment Maintenance"
-              className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl px-4 py-2.5 text-xs font-bold text-[#2C1810] placeholder:text-[#8C6D58]/40 focus:border-[#6F4E37] focus:outline-none transition-colors"
+              className="w-full bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl px-4 py-2.5 text-xs font-bold text-[#252525] placeholder:text-[#757575]/40 focus:border-[#E50914] focus:outline-none transition-colors"
             />
           </div>
 
           {/* Block Reason & Recurrence */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-black text-[#2C1810] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-black text-[#252525] mb-1.5 uppercase tracking-wider">
                 Reason
               </label>
               <CustomSelect
@@ -249,7 +249,7 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
             </div>
 
             <div>
-              <label className="block text-xs font-black text-[#2C1810] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-black text-[#252525] mb-1.5 uppercase tracking-wider">
                 Recurrence
               </label>
               <CustomSelect
@@ -266,16 +266,16 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
           </div>
 
           {/* All Day Toggle */}
-          <div className="flex items-center justify-between p-3 bg-[#FFF8F0]/70 border border-[#E8DED5] rounded-2xl">
+          <div className="flex items-center justify-between p-3 bg-[#FFF5F5]/70 border border-[#FEE2E2] rounded-2xl">
             <div className="flex items-center gap-2">
-              <CalendarIcon className="w-4 h-4 text-[#6F4E37]" />
-              <span className="text-xs font-black text-[#2C1810]">All-Day Event / Full Day Block</span>
+              <CalendarIcon className="w-4 h-4 text-[#E50914]" />
+              <span className="text-xs font-black text-[#252525]">All-Day Event / Full Day Block</span>
             </div>
             <button
               type="button"
               onClick={() => setIsAllDay(!isAllDay)}
               className={`w-11 h-6 rounded-full transition-colors relative p-0.5 ${
-                isAllDay ? 'bg-[#6F4E37]' : 'bg-[#E8DED5]'
+                isAllDay ? 'bg-[#E50914]' : 'bg-[#FEE2E2]'
               }`}
             >
               <div
@@ -289,7 +289,7 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
           {/* Start and End Times */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-black text-[#2C1810] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-black text-[#252525] mb-1.5 uppercase tracking-wider">
                 Start Date {!isAllDay && '& Time'} <span className="text-rose-500">*</span>
               </label>
               <div className="space-y-2">
@@ -311,7 +311,7 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
             </div>
 
             <div>
-              <label className="block text-xs font-black text-[#2C1810] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-black text-[#252525] mb-1.5 uppercase tracking-wider">
                 End Date {!isAllDay && '& Time'} <span className="text-rose-500">*</span>
               </label>
               <div className="space-y-2">
@@ -333,8 +333,8 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
           {/* Service & Venue Coordination Selection */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-black text-[#2C1810] mb-1.5 uppercase tracking-wider flex items-center gap-1.5">
-                <Package className="w-3.5 h-3.5 text-[#6F4E37]" />
+              <label className="block text-xs font-black text-[#252525] mb-1.5 uppercase tracking-wider flex items-center gap-1.5">
+                <Package className="w-3.5 h-3.5 text-[#E50914]" />
                 Event Package / Service
               </label>
               <CustomSelect
@@ -355,8 +355,8 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
             </div>
 
             <div>
-              <label className="block text-xs font-black text-[#2C1810] mb-1.5 uppercase tracking-wider flex items-center gap-1.5">
-                <Building2 className="w-3.5 h-3.5 text-[#6F4E37]" />
+              <label className="block text-xs font-black text-[#252525] mb-1.5 uppercase tracking-wider flex items-center gap-1.5">
+                <Building2 className="w-3.5 h-3.5 text-[#E50914]" />
                 Venue / Cafe Coordination
               </label>
               <CustomSelect
@@ -370,7 +370,7 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
                   ...venues.map((v) => ({
                     value: v.id,
                     label: v.name,
-                    sublabel: v.city ? `Partner Cafe in ${v.city}` : 'Fahara Listed Partner Cafe'
+                    sublabel: v.city ? `Partner Cafe in ${v.city}` : 'Grab2GO Listed Partner Cafe'
                   }))
                 ]}
               />
@@ -380,7 +380,7 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
           {/* Buffer Minutes & Concurrent Bookings Capacity */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-black text-[#2C1810] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-black text-[#252525] mb-1.5 uppercase tracking-wider">
                 Buffer Time (Minutes)
               </label>
               <input
@@ -391,15 +391,15 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
                 value={bufferMinutes}
                 onChange={(e) => setBufferMinutes(e.target.value)}
                 placeholder="0"
-                className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl px-4 py-2 text-xs font-bold text-[#2C1810] focus:border-[#6F4E37] focus:outline-none"
+                className="w-full bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl px-4 py-2 text-xs font-bold text-[#252525] focus:border-[#E50914] focus:outline-none"
               />
-              <span className="text-[10px] text-[#8C6D58] font-semibold mt-1 block">
+              <span className="text-[10px] text-[#757575] font-semibold mt-1 block">
                 Cleanup & prep buffer before and after events
               </span>
             </div>
 
             <div>
-              <label className="block text-xs font-black text-[#2C1810] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-black text-[#252525] mb-1.5 uppercase tracking-wider">
                 Simultaneous Events Capacity
               </label>
               <input
@@ -409,9 +409,9 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
                 value={maxConcurrentEvents}
                 onChange={(e) => setMaxConcurrentEvents(e.target.value)}
                 placeholder="1"
-                className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl px-4 py-2 text-xs font-bold text-[#2C1810] focus:border-[#6F4E37] focus:outline-none"
+                className="w-full bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl px-4 py-2 text-xs font-bold text-[#252525] focus:border-[#E50914] focus:outline-none"
               />
-              <span className="text-[10px] text-[#8C6D58] font-semibold mt-1 block">
+              <span className="text-[10px] text-[#757575] font-semibold mt-1 block">
                 Max concurrent bookings handled at once
               </span>
             </div>
@@ -419,7 +419,7 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
 
           {/* Internal Notes */}
           <div>
-            <label className="block text-xs font-black text-[#2C1810] mb-1.5 uppercase tracking-wider">
+            <label className="block text-xs font-black text-[#252525] mb-1.5 uppercase tracking-wider">
               Internal Notes (Kept Private)
             </label>
             <textarea
@@ -427,12 +427,12 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Private details, client requirements, vendor contacts..."
-              className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl px-4 py-2.5 text-xs font-bold text-[#2C1810] placeholder:text-[#8C6D58]/40 focus:border-[#6F4E37] focus:outline-none resize-none transition-colors"
+              className="w-full bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl px-4 py-2.5 text-xs font-bold text-[#252525] placeholder:text-[#757575]/40 focus:border-[#E50914] focus:outline-none resize-none transition-colors"
             />
           </div>
 
           {/* Modal Footer Controls */}
-          <div className="pt-3 border-t border-[#E8DED5] flex items-center justify-between gap-3">
+          <div className="pt-3 border-t border-[#FEE2E2] flex items-center justify-between gap-3">
             {isEditing ? (
               confirmDelete ? (
                 <div className="flex items-center gap-2">
@@ -447,7 +447,7 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
                   <button
                     type="button"
                     onClick={() => setConfirmDelete(false)}
-                    className="px-3 py-2 text-xs font-bold text-[#8C6D58] hover:text-[#2C1810]"
+                    className="px-3 py-2 text-xs font-bold text-[#757575] hover:text-[#252525]"
                   >
                     Cancel
                   </button>
@@ -471,14 +471,14 @@ export default function AvailabilityBlockModal({ services = [], venues = [] }) {
                 type="button"
                 onClick={closeBlockModal}
                 disabled={isPending}
-                className="px-4 py-2 text-xs font-black text-[#8C6D58] hover:text-[#2C1810] rounded-2xl transition-colors"
+                className="px-4 py-2 text-xs font-black text-[#757575] hover:text-[#252525] rounded-2xl transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isPending}
-                className="px-5 py-2 bg-[#6F4E37] hover:bg-[#2C1810] text-white text-xs font-black rounded-2xl transition-all shadow-xs flex items-center gap-2 active:scale-95 disabled:opacity-50"
+                className="px-5 py-2 bg-[#E50914] hover:bg-[#252525] text-white text-xs font-black rounded-2xl transition-all shadow-xs flex items-center gap-2 active:scale-95 disabled:opacity-50"
               >
                 {isPending && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 {isEditing ? 'Save Changes' : 'Create Block'}

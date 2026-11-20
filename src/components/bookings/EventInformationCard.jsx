@@ -36,52 +36,52 @@ export default function EventInformationCard({ booking }) {
   })();
 
   return (
-    <div className="bg-white rounded-3xl border border-stone-200/80 p-6 md:p-7 shadow-xs hover:shadow-sm transition-all space-y-6 text-[#2C1810]">
+    <div className="bg-white rounded-3xl border border-stone-200/80 p-6 md:p-7 shadow-xs hover:shadow-sm transition-all space-y-6 text-[#252525]">
       <div className="flex items-center gap-3.5 pb-4 border-b border-stone-100">
         <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-800 border border-amber-200 flex items-center justify-center font-black text-sm shrink-0">
           <Calendar className="w-5 h-5" />
         </div>
         <div>
-          <h2 className="text-lg font-black text-[#2C1810] tracking-tight">Event & Schedule Details</h2>
+          <h2 className="text-lg font-black text-[#252525] tracking-tight">Event & Schedule Details</h2>
           <p className="text-xs text-stone-500 font-medium">Service specs and venue location</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-        <div className="p-3.5 rounded-2xl bg-[#FFF8F0]/70 border border-[#DDB892]/40">
-          <span className="text-[10px] font-extrabold text-[#6F4E37] uppercase tracking-wider block mb-0.5 flex items-center gap-1">
+        <div className="p-3.5 rounded-2xl bg-[#FFF5F5]/70 border border-[#EF5350]/40">
+          <span className="text-[10px] font-extrabold text-[#E50914] uppercase tracking-wider block mb-0.5 flex items-center gap-1">
             <Tag size={12} /> Service Category
           </span>
-          <p className="text-sm font-black text-[#2C1810]">{serviceName}</p>
+          <p className="text-sm font-black text-[#252525]">{serviceName}</p>
         </div>
-        <div className="p-3.5 rounded-2xl bg-[#FFF8F0]/70 border border-[#DDB892]/40">
-          <span className="text-[10px] font-extrabold text-[#6F4E37] uppercase tracking-wider block mb-0.5 flex items-center gap-1">
+        <div className="p-3.5 rounded-2xl bg-[#FFF5F5]/70 border border-[#EF5350]/40">
+          <span className="text-[10px] font-extrabold text-[#E50914] uppercase tracking-wider block mb-0.5 flex items-center gap-1">
             <PackageIcon size={12} /> Selected Package
           </span>
-          <p className="text-sm font-black text-[#6F4E37]">{packageName}</p>
+          <p className="text-sm font-black text-[#E50914]">{packageName}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-3">
         <div className="p-3 rounded-2xl bg-stone-50 border border-stone-200/80 text-center">
           <span className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider block mb-0.5">Date</span>
-          <p className="text-xs font-black text-[#2C1810]">{dateStr}</p>
+          <p className="text-xs font-black text-[#252525]">{dateStr}</p>
         </div>
         <div className="p-3 rounded-2xl bg-stone-50 border border-stone-200/80 text-center">
           <span className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider block mb-0.5">Time</span>
-          <p className="text-xs font-black text-[#2C1810]">{timeStr}</p>
+          <p className="text-xs font-black text-[#252525]">{timeStr}</p>
         </div>
         <div className="p-3 rounded-2xl bg-stone-50 border border-stone-200/80 text-center">
           <span className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider block mb-0.5">Guests</span>
-          <p className="text-xs font-black text-[#2C1810]">{guests} Persons</p>
+          <p className="text-xs font-black text-[#252525]">{guests} Persons</p>
         </div>
       </div>
 
       <div className="p-4 rounded-2xl bg-gradient-to-r from-stone-50 via-white to-stone-50 border border-stone-200/80 flex items-start gap-3">
-        <Store size={18} className="text-[#6F4E37] shrink-0 mt-0.5" />
+        <Store size={18} className="text-[#E50914] shrink-0 mt-0.5" />
         <div>
-          <span className="text-[10px] font-extrabold text-[#6F4E37] uppercase tracking-wider block mb-0.5">Venue Location</span>
-          <p className="text-xs font-black text-[#2C1810] leading-relaxed">{venueAddress}</p>
+          <span className="text-[10px] font-extrabold text-[#E50914] uppercase tracking-wider block mb-0.5">Venue Location</span>
+          <p className="text-xs font-black text-[#252525] leading-relaxed">{venueAddress}</p>
         </div>
       </div>
     </div>

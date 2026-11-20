@@ -16,7 +16,7 @@ const TAB_TOUR_STEPS = [
   {
     isWelcomeStep: true,
     target: null,
-    title: 'Welcome to Fahara',
+    title: 'Welcome to Grab2GO',
     category: 'ONBOARDING',
     icon: PartyPopper,
     description: "Let's take an interactive guided tour and show you how to set up your event services, manage bookings, and receive payouts.",
@@ -324,19 +324,19 @@ export default function DashboardTour() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 15 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                className="w-full max-w-md bg-[#FFFDF9] border border-[#E8DED5] rounded-[36px] p-6 sm:p-8 shadow-2xl relative text-center select-none space-y-6 font-sans"
+                className="w-full max-w-md bg-[#FFFDF9] border border-[#FEE2E2] rounded-[36px] p-6 sm:p-8 shadow-2xl relative text-center select-none space-y-6 font-sans"
               >
                 {/* Header: Step Pill & Close Button */}
                 <div className="flex items-center justify-between">
-                  <span className="px-3.5 py-1 rounded-full bg-[#6F4E37]/10 border border-[#6F4E37]/20 text-[#6F4E37] text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-[#6F4E37]" />
+                  <span className="px-3.5 py-1 rounded-full bg-[#E50914]/10 border border-[#E50914]/20 text-[#E50914] text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#E50914]" />
                     STEP 1 OF {TAB_TOUR_STEPS.length}
                   </span>
 
                   <button
                     type="button"
                     onClick={handleSkip}
-                    className="w-8 h-8 rounded-full bg-[#FFF8F0] text-[#6F4E37] hover:bg-[#6F4E37] hover:text-white transition-all flex items-center justify-center cursor-pointer shadow-2xs"
+                    className="w-8 h-8 rounded-full bg-[#FFF5F5] text-[#E50914] hover:bg-[#E50914] hover:text-white transition-all flex items-center justify-center cursor-pointer shadow-2xs"
                     aria-label="Close"
                   >
                     <X className="w-4 h-4" />
@@ -344,16 +344,16 @@ export default function DashboardTour() {
                 </div>
 
                 {/* Big Coffee/Beverage Cup Icon Card */}
-                <div className="w-16 h-16 rounded-2xl bg-[#6F4E37] text-white flex items-center justify-center mx-auto shadow-md shadow-[#6F4E37]/25">
+                <div className="w-16 h-16 rounded-2xl bg-[#E50914] text-white flex items-center justify-center mx-auto shadow-md shadow-[#E50914]/25">
                   <Coffee className="w-8 h-8 stroke-[2]" />
                 </div>
 
                 {/* Welcome Title & Subtitle */}
                 <div className="space-y-2">
-                  <h2 className="text-2xl sm:text-3xl font-black text-[#2C1810] tracking-tight leading-tight">
-                    Welcome to Fahara, {user?.ownerName || user?.name || 'Srinivas K A'} 👋
+                  <h2 className="text-2xl sm:text-3xl font-black text-[#252525] tracking-tight leading-tight">
+                    Welcome to Grab2GO, {user?.ownerName || user?.name || 'Srinivas K A'} 👋
                   </h2>
-                  <p className="text-xs sm:text-sm text-[#8C6D58] font-medium leading-relaxed max-w-xs mx-auto">
+                  <p className="text-xs sm:text-sm text-[#757575] font-medium leading-relaxed max-w-xs mx-auto">
                     {step.description}
                   </p>
                 </div>
@@ -363,7 +363,7 @@ export default function DashboardTour() {
                   <button
                     type="button"
                     onClick={handleNext}
-                    className="w-full sm:w-1/2 py-3 rounded-2xl bg-[#6F4E37] hover:bg-[#5D4037] text-white font-extrabold text-xs shadow-md shadow-[#6F4E37]/20 flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
+                    className="w-full sm:w-1/2 py-3 rounded-2xl bg-[#E50914] hover:bg-[#B71C1C] text-white font-extrabold text-xs shadow-md shadow-[#E50914]/20 flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
                   >
                     <span>Start Guided Tour →</span>
                   </button>
@@ -371,7 +371,7 @@ export default function DashboardTour() {
                   <button
                     type="button"
                     onClick={handleSkip}
-                    className="w-full sm:w-1/2 py-3 rounded-2xl bg-white hover:bg-[#FFF8F0] text-[#2C1810] border border-[#E8DED5] font-extrabold text-xs shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer"
+                    className="w-full sm:w-1/2 py-3 rounded-2xl bg-white hover:bg-[#FFF5F5] text-[#252525] border border-[#FEE2E2] font-extrabold text-xs shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer"
                   >
                     <span>Skip for Now</span>
                   </button>
@@ -386,13 +386,13 @@ export default function DashboardTour() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.95 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                className="w-full max-w-lg bg-[#FFFDF9] border border-[#E8DED5] rounded-[32px] p-6 sm:p-7 shadow-2xl pointer-events-auto space-y-5 font-sans select-none"
+                className="w-full max-w-lg bg-[#FFFDF9] border border-[#FEE2E2] rounded-[32px] p-6 sm:p-7 shadow-2xl pointer-events-auto space-y-5 font-sans select-none"
               >
                 {/* Header Row: Step Pill, Progress Dots, Skip */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="px-3.5 py-1 rounded-full bg-[#6F4E37]/10 border border-[#6F4E37]/20 text-[#6F4E37] text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#6F4E37]" />
+                    <span className="px-3.5 py-1 rounded-full bg-[#E50914]/10 border border-[#E50914]/20 text-[#E50914] text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#E50914]" />
                       STEP {currentStep + 1} OF {TAB_TOUR_STEPS.length}
                     </span>
 
@@ -406,8 +406,8 @@ export default function DashboardTour() {
                           title={`Jump to Step ${i + 1}: ${stepItem.title}`}
                           className={`rounded-full transition-all cursor-pointer ${
                             i === currentStep 
-                              ? 'w-4 h-2 bg-[#6F4E37] shadow-xs' 
-                              : 'w-2 h-2 bg-[#E8DED5] hover:bg-[#6F4E37]/50'
+                              ? 'w-4 h-2 bg-[#E50914] shadow-xs' 
+                              : 'w-2 h-2 bg-[#FEE2E2] hover:bg-[#E50914]/50'
                           }`} 
                           aria-label={`Jump to Step ${i + 1}`}
                         />
@@ -418,7 +418,7 @@ export default function DashboardTour() {
                   <button 
                     type="button"
                     onClick={handleSkip}
-                    className="text-xs font-bold text-[#8C6D58] hover:text-[#2C1810] transition-colors cursor-pointer"
+                    className="text-xs font-bold text-[#757575] hover:text-[#252525] transition-colors cursor-pointer"
                   >
                     Skip Tour
                   </button>
@@ -427,14 +427,14 @@ export default function DashboardTour() {
                 {/* Title & Icon Header */}
                 <div className="flex items-start justify-between gap-3 pt-1">
                   <div className="flex items-start gap-3.5">
-                    <div className="w-11 h-11 rounded-2xl bg-[#6F4E37] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#6F4E37]/25">
+                    <div className="w-11 h-11 rounded-2xl bg-[#E50914] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#E50914]/25">
                       <StepIcon className="w-5 h-5 stroke-[2]" />
                     </div>
                     <div className="space-y-0.5">
-                      <h3 className="text-xl font-extrabold text-[#2C1810] tracking-tight leading-tight">
+                      <h3 className="text-xl font-extrabold text-[#252525] tracking-tight leading-tight">
                         {step.title}
                       </h3>
-                      <span className="text-[10px] font-black text-[#A67B5B] uppercase tracking-wider block">
+                      <span className="text-[10px] font-black text-[#B71C1C] uppercase tracking-wider block">
                         {step.category}
                       </span>
                     </div>
@@ -449,7 +449,7 @@ export default function DashboardTour() {
                 </div>
 
                 {/* Description */}
-                <p className="text-xs sm:text-sm text-[#8C6D58] font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#757575] font-medium leading-relaxed">
                   {step.description}
                 </p>
 
@@ -463,25 +463,25 @@ export default function DashboardTour() {
 
                 {/* Info Box if Present */}
                 {step.infoBox && (
-                  <div className="bg-white border border-[#E8DED5] rounded-2xl p-3.5 flex items-center justify-between text-xs font-extrabold text-[#2C1810] shadow-2xs">
-                    <span className="text-[#8C6D58] font-bold">{step.infoBox.label}</span>
-                    <span className="font-mono text-xs text-[#2C1810]">{step.infoBox.val}</span>
+                  <div className="bg-white border border-[#FEE2E2] rounded-2xl p-3.5 flex items-center justify-between text-xs font-extrabold text-[#252525] shadow-2xs">
+                    <span className="text-[#757575] font-bold">{step.infoBox.label}</span>
+                    <span className="font-mono text-xs text-[#252525]">{step.infoBox.val}</span>
                   </div>
                 )}
 
                 {/* Key Metrics Tracked Box (Interactive Clickable Checkboxes) */}
                 {step.metrics && (
-                  <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-4 space-y-2.5">
+                  <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl p-4 space-y-2.5">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider block">
+                      <span className="text-[10px] font-black text-[#757575] uppercase tracking-wider block">
                         KEY METRICS TRACKED:
                       </span>
-                      <span className="text-[9px] font-bold text-[#A67B5B]">
+                      <span className="text-[9px] font-bold text-[#B71C1C]">
                         Tap metric to toggle check
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs font-bold text-[#2C1810]">
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs font-bold text-[#252525]">
                       {step.metrics.map((m, idx) => {
                         const isChecked = checkedMetrics[`${currentStep}-${idx}`] ?? true;
                         return (
@@ -491,7 +491,7 @@ export default function DashboardTour() {
                             className={`flex items-center gap-1.5 p-1.5 rounded-xl border transition-all cursor-pointer ${
                               isChecked 
                                 ? 'bg-emerald-50/80 border-emerald-200 text-emerald-950 shadow-2xs' 
-                                : 'bg-white border-[#E8DED5] text-[#8C6D58] opacity-70'
+                                : 'bg-white border-[#FEE2E2] text-[#757575] opacity-70'
                             }`}
                           >
                             <Check className={`w-3.5 h-3.5 stroke-[3] shrink-0 ${isChecked ? 'text-emerald-600' : 'text-gray-400'}`} />
@@ -509,7 +509,7 @@ export default function DashboardTour() {
                     <button
                       type="button"
                       onClick={handlePrev}
-                      className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-2xl sm:rounded-full border border-[#E8DED5] bg-white hover:bg-[#FFF8F0] text-[#2C1810] text-xs font-extrabold transition-all flex items-center gap-1 active:scale-95 shadow-2xs cursor-pointer shrink-0"
+                      className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-2xl sm:rounded-full border border-[#FEE2E2] bg-white hover:bg-[#FFF5F5] text-[#252525] text-xs font-extrabold transition-all flex items-center gap-1 active:scale-95 shadow-2xs cursor-pointer shrink-0"
                     >
                       <ChevronLeft className="w-4 h-4" />
                       <span>Back</span>
@@ -521,7 +521,7 @@ export default function DashboardTour() {
                       <button
                         type="button"
                         onClick={() => router.push(step.actionBtn.route)}
-                        className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl sm:rounded-full bg-[#6F4E37]/15 hover:bg-[#6F4E37]/25 text-[#6F4E37] text-xs font-extrabold transition-all flex items-center gap-1 active:scale-95 cursor-pointer shrink-0"
+                        className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl sm:rounded-full bg-[#E50914]/15 hover:bg-[#E50914]/25 text-[#E50914] text-xs font-extrabold transition-all flex items-center gap-1 active:scale-95 cursor-pointer shrink-0"
                       >
                         <span>{step.actionBtn.label}</span>
                       </button>
@@ -530,7 +530,7 @@ export default function DashboardTour() {
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-2xl sm:rounded-full bg-[#6F4E37] hover:bg-[#5D4037] text-white text-xs font-extrabold shadow-md shadow-[#6F4E37]/20 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer shrink-0"
+                      className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-2xl sm:rounded-full bg-[#E50914] hover:bg-[#B71C1C] text-white text-xs font-extrabold shadow-md shadow-[#E50914]/20 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer shrink-0"
                     >
                       <span>{currentStep === TAB_TOUR_STEPS.length - 1 ? 'Finish Tour 🎉' : 'Next Step'}</span>
                       <ChevronRight className="w-4 h-4" />
@@ -653,7 +653,7 @@ export default function DashboardTour() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: 'spring', stiffness: 280, damping: 22 }}
-            className="w-full max-w-lg bg-[#FFFDF9] border border-[#E8DED5] rounded-[36px] p-8 sm:p-10 shadow-2xl relative text-center overflow-hidden my-auto select-none space-y-4"
+            className="w-full max-w-lg bg-[#FFFDF9] border border-[#FEE2E2] rounded-[36px] p-8 sm:p-10 shadow-2xl relative text-center overflow-hidden my-auto select-none space-y-4"
           >
             {/* Glossy Orange/Amber Star Icon Box */}
             <div className="w-20 h-20 rounded-[28px] bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-400 text-white flex items-center justify-center mx-auto shadow-xl shadow-orange-500/30">
@@ -662,20 +662,20 @@ export default function DashboardTour() {
 
             {/* Step Complete Pill Badge */}
             <div className="inline-block">
-              <span className="px-4 py-1.5 rounded-full bg-[#6F4E37]/10 text-[#6F4E37] border border-[#6F4E37]/20 font-black text-[11px] uppercase tracking-widest flex items-center gap-1.5 justify-center">
-                <Sparkles className="w-3.5 h-3.5 text-[#6F4E37]" />
+              <span className="px-4 py-1.5 rounded-full bg-[#E50914]/10 text-[#E50914] border border-[#E50914]/20 font-black text-[11px] uppercase tracking-widest flex items-center gap-1.5 justify-center">
+                <Sparkles className="w-3.5 h-3.5 text-[#E50914]" />
                 STEP {TAB_TOUR_STEPS.length} OF {TAB_TOUR_STEPS.length} • COMPLETE
               </span>
             </div>
 
             {/* Title */}
-            <h2 className="text-3xl font-extrabold text-[#2C1810] tracking-tight">
+            <h2 className="text-3xl font-extrabold text-[#252525] tracking-tight">
               You're All Set! 🎉
             </h2>
 
             {/* Description */}
-            <p className="text-xs sm:text-sm text-[#8C6D58] leading-relaxed font-medium max-w-md mx-auto">
-              Your Fahara Owner Portal is ready. Monitor bookings, ratings, and revenue to start managing your venue and growing your business.
+            <p className="text-xs sm:text-sm text-[#757575] leading-relaxed font-medium max-w-md mx-auto">
+              Your Grab2GO Owner Portal is ready. Monitor bookings, ratings, and revenue to start managing your venue and growing your business.
             </p>
 
             {/* Dual Action Buttons (Exact to Screenshot) */}
@@ -683,7 +683,7 @@ export default function DashboardTour() {
               <button
                 type="button"
                 onClick={finishAndGoToDashboard}
-                className="w-full sm:w-1/2 py-3.5 rounded-2xl bg-[#6F4E37] hover:bg-[#5D4037] text-white font-extrabold text-xs shadow-md shadow-[#6F4E37]/20 flex items-center justify-center gap-2 transition-all active:scale-95"
+                className="w-full sm:w-1/2 py-3.5 rounded-2xl bg-[#E50914] hover:bg-[#B71C1C] text-white font-extrabold text-xs shadow-md shadow-[#E50914]/20 flex items-center justify-center gap-2 transition-all active:scale-95"
               >
                 <Sparkles className="w-4 h-4 text-amber-200" />
                 <span>Go to Dashboard</span>
@@ -695,7 +695,7 @@ export default function DashboardTour() {
                   setShowCelebration(false);
                   router.push('/event/services');
                 }}
-                className="w-full sm:w-1/2 py-3.5 rounded-2xl bg-white hover:bg-[#FFF8F0] text-[#2C1810] border border-[#E8DED5] font-extrabold text-xs shadow-2xs flex items-center justify-center transition-all active:scale-95"
+                className="w-full sm:w-1/2 py-3.5 rounded-2xl bg-white hover:bg-[#FFF5F5] text-[#252525] border border-[#FEE2E2] font-extrabold text-xs shadow-2xs flex items-center justify-center transition-all active:scale-95"
               >
                 <span>Manage Event Services</span>
               </button>
@@ -716,7 +716,7 @@ export default function DashboardTour() {
             setCurrentStep(0);
             setIsOpen(true);
           }}
-          className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-[#6F4E37] text-white shadow-xl hover:bg-[#5C3B29] border-2 border-white flex items-center justify-center cursor-pointer transition-all group"
+          className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-[#E50914] text-white shadow-xl hover:bg-[#5C3B29] border-2 border-white flex items-center justify-center cursor-pointer transition-all group"
           title="Launch Interactive Tour"
           aria-label="Launch Interactive Tour"
         >

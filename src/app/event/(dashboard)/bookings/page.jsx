@@ -21,6 +21,19 @@ function BookingsDashboard() {
   const queryFilters = { ...filters, search: searchQuery, sort: sortBy };
   
   const { data: bookings, isLoading, isError, error, refetch } = useGetBookings(queryFilters);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    try {
+      setIsRefreshing(true);
+      await refetch();
+      toast.success('Bookings list updated');
+    } catch {
+      toast.error('Failed to refresh bookings');
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 500);
+    }
+  };
   const bookingsList = Array.isArray(bookings) ? bookings : [];
 
   // Metrics calculation
@@ -44,7 +57,7 @@ function BookingsDashboard() {
         booking_number: 'BK-1001',
         customerName: 'Sample Customer',
         customerEmail: 'sample@example.com',
-        cafeName: 'Fahara Grand Event Hall',
+        cafeName: 'Grab2GO Grand Event Hall',
         date: new Date().toISOString(),
         startTime: '10:00',
         guests: 50,
@@ -100,21 +113,21 @@ function BookingsDashboard() {
       {/* ========================================== */}
       {/* 1. TOP HERO BANNER CARD                    */}
       {/* ========================================== */}
-      <div className="bg-[#FFF8F0]/80 border border-[#E8DED5] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#6F4E37]/10 via-[#A67B5B]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
+      <div className="bg-[#FFF5F5]/80 border border-[#FEE2E2] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#E50914]/10 via-[#B71C1C]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#6F4E37]/10 border border-[#6F4E37]/20 text-[#6F4E37] text-[11px] font-black uppercase tracking-widest">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E50914]/10 border border-[#E50914]/20 text-[#E50914] text-[11px] font-black uppercase tracking-widest">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Reservation Studio</span>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#2C1810] tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#252525] tracking-tight">
               Booking Management
             </h1>
             
-            <p className="text-xs sm:text-sm text-[#8C6D58] font-medium max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#757575] font-medium max-w-2xl leading-relaxed">
               Monitor event reservations, approve pending requests, and export financial booking records.
             </p>
           </div>
@@ -124,15 +137,15 @@ function BookingsDashboard() {
             <button 
               type="button"
               onClick={handleExport}
-              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-[#FFF8F0] border border-[#E8DED5] text-[#2C1810] text-xs font-bold shadow-2xs flex items-center gap-2 transition-all active:scale-95 min-h-[42px]"
+              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-[#FFF5F5] border border-[#FEE2E2] text-[#252525] text-xs font-bold shadow-2xs flex items-center gap-2 transition-all active:scale-95 min-h-[42px]"
             >
-              <Download className="w-4 h-4 text-[#8C6D58]" />
+              <Download className="w-4 h-4 text-[#757575]" />
               <span>Export CSV</span>
             </button>
             
             <Link 
               href="/event/calendar"
-              className="px-5 py-2.5 rounded-2xl bg-[#6F4E37] hover:bg-[#5D4037] text-white text-xs font-bold shadow-md shadow-[#6F4E37]/20 flex items-center gap-2 transition-all active:scale-95 min-h-[42px]"
+              className="px-5 py-2.5 rounded-2xl bg-[#E50914] hover:bg-[#B71C1C] text-white text-xs font-bold shadow-md shadow-[#E50914]/20 flex items-center gap-2 transition-all active:scale-95 min-h-[42px]"
             >
               <Calendar className="w-4 h-4" />
               <span>Calendar View</span>
@@ -147,27 +160,27 @@ function BookingsDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         
         {/* Card 1: TOTAL BOOKINGS */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-[#6F4E37]/30 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-[#E50914]/30 transition-colors">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-black text-[#8C6D58] uppercase tracking-wider">
+            <span className="text-[11px] font-black text-[#757575] uppercase tracking-wider">
               Total Bookings
             </span>
-            <div className="w-9 h-9 rounded-full bg-[#F3EFEA] text-[#6F4E37] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-full bg-[#F3EFEA] text-[#E50914] flex items-center justify-center">
               <Calendar className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <div className="text-3xl sm:text-4xl font-black text-[#2C1810] tracking-tight">
+            <div className="text-3xl sm:text-4xl font-black text-[#252525] tracking-tight">
               {totalBookings}
             </div>
-            <p className="text-xs text-[#8C6D58] font-medium mt-1">
+            <p className="text-xs text-[#757575] font-medium mt-1">
               All recorded event slots
             </p>
           </div>
         </div>
 
         {/* Card 2: PENDING ACTION */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-amber-300 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-amber-300 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-black text-amber-700 uppercase tracking-wider">
               Pending Action
@@ -177,7 +190,7 @@ function BookingsDashboard() {
             </div>
           </div>
           <div>
-            <div className="text-3xl sm:text-4xl font-black text-[#2C1810] tracking-tight">
+            <div className="text-3xl sm:text-4xl font-black text-[#252525] tracking-tight">
               {pendingCount}
             </div>
             <p className="text-xs text-amber-700 font-bold mt-1">
@@ -187,7 +200,7 @@ function BookingsDashboard() {
         </div>
 
         {/* Card 3: CONFIRMED */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-emerald-300 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-emerald-300 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-black text-emerald-700 uppercase tracking-wider">
               Confirmed
@@ -197,7 +210,7 @@ function BookingsDashboard() {
             </div>
           </div>
           <div>
-            <div className="text-3xl sm:text-4xl font-black text-[#2C1810] tracking-tight">
+            <div className="text-3xl sm:text-4xl font-black text-[#252525] tracking-tight">
               {confirmedCount}
             </div>
             <p className="text-xs text-emerald-700 font-bold mt-1">
@@ -207,7 +220,7 @@ function BookingsDashboard() {
         </div>
 
         {/* Card 4: TOTAL REVENUE */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-purple-300 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-purple-300 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-black text-purple-700 uppercase tracking-wider">
               Total Revenue
@@ -217,10 +230,10 @@ function BookingsDashboard() {
             </div>
           </div>
           <div>
-            <div className="text-3xl sm:text-4xl font-black text-[#2C1810] tracking-tight">
+            <div className="text-3xl sm:text-4xl font-black text-[#252525] tracking-tight">
               ₹{totalRevenue.toLocaleString()}
             </div>
-            <p className="text-xs text-[#8C6D58] font-medium mt-1">
+            <p className="text-xs text-[#757575] font-medium mt-1">
               Recorded booking value
             </p>
           </div>
@@ -231,7 +244,7 @@ function BookingsDashboard() {
       {/* ========================================== */}
       {/* 3. STATUS FILTER TABS & SEARCH TOOLBAR     */}
       {/* ========================================== */}
-      <div className="bg-white border border-[#E8DED5] rounded-3xl p-4 sm:p-5 shadow-2xs flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-4">
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl p-4 sm:p-5 shadow-2xs flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-4">
         
         {/* Status Filter Pills Left */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 xl:pb-0 scrollbar-none">
@@ -244,13 +257,13 @@ function BookingsDashboard() {
                 onClick={() => setFilters({ status: tab.id === 'ALL' ? 'all' : tab.id.toLowerCase() })}
                 className={`px-4 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
                   isActive
-                    ? 'bg-[#6F4E37] text-white shadow-xs'
-                    : 'bg-[#FFF8F0] hover:bg-[#6F4E37]/10 text-[#8C6D58]'
+                    ? 'bg-[#E50914] text-white shadow-xs'
+                    : 'bg-[#FFF5F5] hover:bg-[#E50914]/10 text-[#757575]'
                 }`}
               >
                 <span>{tab.label}</span>
                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                  isActive ? 'bg-white/20 text-white' : 'bg-[#E8DED5]/60 text-[#6F4E37]'
+                  isActive ? 'bg-white/20 text-white' : 'bg-[#FEE2E2]/60 text-[#E50914]'
                 }`}>
                   {tab.count || 0}
                 </span>
@@ -264,24 +277,25 @@ function BookingsDashboard() {
           
           {/* Search Box */}
           <div className="relative flex-1 xl:w-80">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8C6D58]" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#757575]" />
             <input 
               type="text"
               placeholder="Search guest name, ref ID, or email..."
               value={searchQuery || ''}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#2C1810] focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/15 transition-all"
+              className="w-full bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#252525] focus:outline-none focus:border-[#E50914] focus:ring-2 focus:ring-[#E50914]/15 transition-all"
             />
           </div>
 
           {/* Refresh Control Button */}
           <button
             type="button"
-            onClick={() => refetch()}
-            className="p-2.5 rounded-2xl bg-[#FFFDF9] border border-[#E8DED5] text-[#8C6D58] hover:text-[#2C1810] hover:bg-[#FFF8F0] transition-colors shrink-0"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="p-2.5 rounded-2xl bg-[#FFFDF9] border border-[#FEE2E2] text-[#757575] hover:text-[#252525] hover:bg-[#FFF5F5] transition-colors shrink-0 disabled:opacity-50 cursor-pointer"
             title="Refresh list"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#E50914]' : ''}`} />
           </button>
 
         </div>
@@ -310,7 +324,7 @@ function BookingsDashboard() {
 
 export default function BookingsPage() {
   return (
-    <Suspense fallback={<div className="h-48 flex items-center justify-center font-black text-sm text-[#6F4E37]">Loading Reservations...</div>}>
+    <Suspense fallback={<div className="h-48 flex items-center justify-center font-black text-sm text-[#E50914]">Loading Reservations...</div>}>
       <BookingsDashboard />
     </Suspense>
   );

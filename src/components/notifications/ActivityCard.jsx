@@ -1,13 +1,13 @@
 "use client";
 import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { User, CalendarDays, DollarSign, Star, Briefcase } from 'lucide-react';
+import { User, CalendarDays, IndianRupee, Star, Briefcase } from 'lucide-react';
 
 const getActivityIcon = (type) => {
   switch (type) {
     case 'booking': return <CalendarDays className="w-4 h-4 text-white" />;
     case 'customer': return <User className="w-4 h-4 text-white" />;
-    case 'payment': return <DollarSign className="w-4 h-4 text-white" />;
+    case 'payment': return <IndianRupee className="w-4 h-4 text-white" />;
     case 'review': return <Star className="w-4 h-4 text-white" />;
     case 'staff': return <Briefcase className="w-4 h-4 text-white" />;
     default: return <User className="w-4 h-4 text-white" />;

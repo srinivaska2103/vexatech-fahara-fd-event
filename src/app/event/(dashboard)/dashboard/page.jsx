@@ -42,17 +42,17 @@ function DashboardContent() {
           <AlertCircle className="w-8 h-8" />
         </div>
         
-        <h3 className="text-xl sm:text-2xl font-extrabold text-[#2C1810] tracking-tight mb-2">
+        <h3 className="text-xl sm:text-2xl font-extrabold text-[#252525] tracking-tight mb-2">
           Unable to load dashboard data
         </h3>
         
-        <p className="text-xs sm:text-sm text-[#2C1810]/70 font-medium mb-6 max-w-md leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#252525]/70 font-medium mb-6 max-w-md leading-relaxed">
           {error?.message || 'We encountered an issue while retrieving your latest event metrics. Please verify your connection.'}
         </p>
         
         <button 
           onClick={() => refetch()}
-          className="px-6 py-3 bg-[#6F4E37] hover:bg-[#5D4037] text-white rounded-2xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-[#6F4E37]/20 flex items-center gap-2 active:scale-95"
+          className="px-6 py-3 bg-[#E50914] hover:bg-[#B71C1C] text-white rounded-2xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-[#E50914]/20 flex items-center gap-2 active:scale-95"
         >
           <RefreshCw className="w-4 h-4" />
           <span>Try Again</span>

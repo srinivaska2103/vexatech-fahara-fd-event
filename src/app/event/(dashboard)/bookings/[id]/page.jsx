@@ -29,7 +29,7 @@ function BookingDetailsContent({ id }) {
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh]">
-        <Loader2 className="w-10 h-10 text-[#6F4E37] animate-spin mb-4" />
+        <Loader2 className="w-10 h-10 text-[#E50914] animate-spin mb-4" />
         <p className="text-stone-500 font-semibold animate-pulse text-xs">Loading booking details...</p>
       </div>
     );
@@ -52,20 +52,20 @@ function BookingDetailsContent({ id }) {
   const bookingRef = booking.booking_number ? `#${booking.booking_number.toUpperCase()}` : `#${String(booking.id).slice(0, 8).toUpperCase()}`;
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-16 space-y-6 text-[#2C1810]">
+    <div className="max-w-7xl mx-auto w-full pb-16 space-y-6 text-[#252525]">
       
       {/* Modern SaaS Header Hero Banner */}
-      <div className="bg-gradient-to-r from-white via-[#FFF8F0] to-[#FFF5EA] p-6 sm:p-8 rounded-3xl border border-[#DDB892]/60 shadow-xs space-y-4">
+      <div className="bg-gradient-to-r from-white via-[#FFF5F5] to-[#FFF5F5] p-6 sm:p-8 rounded-3xl border border-[#EF5350]/60 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <button 
             type="button"
             onClick={() => router.push('/event/bookings')}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white border border-stone-200 text-xs font-black hover:bg-[#6F4E37] hover:text-white transition-all shadow-2xs cursor-pointer"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white border border-stone-200 text-xs font-black hover:bg-[#E50914] hover:text-white transition-all shadow-2xs cursor-pointer"
           >
             <ArrowLeft size={14} />
             <span>Back to Bookings</span>
           </button>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#6F4E37]/10 text-[#6F4E37] text-xs font-extrabold">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E50914]/10 text-[#E50914] text-xs font-extrabold">
             <span>RESERVATION STUDIO</span>
           </div>
         </div>
@@ -73,7 +73,7 @@ function BookingDetailsContent({ id }) {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
           <div>
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-2xl sm:text-4xl font-black text-[#2C1810] tracking-tight">
+              <h1 className="text-2xl sm:text-4xl font-black text-[#252525] tracking-tight">
                 Booking {bookingRef}
               </h1>
               <span className="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">

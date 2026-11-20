@@ -64,7 +64,7 @@ export default function ResetPasswordForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 w-full select-none mt-2">
       <div className="flex flex-col items-center mb-4">
-        <span className="text-[11px] font-black text-[#4A3225] uppercase tracking-wider mb-2">Enter 6-Digit OTP Code</span>
+        <span className="text-[11px] font-black text-[#E50914] uppercase tracking-wider mb-2">Enter 6-Digit OTP Code</span>
         <OTPInput 
           length={6} 
           onComplete={handleOtpComplete}

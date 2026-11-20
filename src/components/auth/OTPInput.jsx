@@ -73,8 +73,8 @@ export default function OTPInput({ length = 6, onComplete, error }) {
             ref={(ref) => inputRefs.current[index] = ref}
             onChange={(e) => handleChange(index, e)}
             onKeyDown={(e) => handleKeyDown(index, e)}
-            className={`w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-black rounded-2xl border bg-[#FFFBF7] text-[#2C1810] focus:bg-white focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/20 transition-all shadow-2xs ${
-              error ? 'border-red-500 bg-red-50/50' : 'border-[#E8DED5]'
+            className={`w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-black rounded-2xl border bg-[#FFFBF7] text-[#252525] focus:bg-white focus:outline-none focus:border-[#E50914] focus:ring-2 focus:ring-[#E50914]/20 transition-all shadow-2xs ${
+              error ? 'border-red-500 bg-red-50/50' : 'border-[#FEE2E2]'
             }`}
           />
         ))}

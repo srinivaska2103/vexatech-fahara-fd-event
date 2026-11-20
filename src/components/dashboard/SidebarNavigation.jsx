@@ -22,7 +22,7 @@ const NAV_GROUPS = [
       { name: 'Dashboard', href: '/event/dashboard', icon: LayoutGrid, color: 'text-amber-600', bg: 'bg-amber-100/70' },
       { name: 'Services & Packages', href: '/event/services', icon: PackageCheck, color: 'text-rose-600', bg: 'bg-rose-100/70' },
       { name: 'Bookings', href: '/event/bookings', icon: CalendarCheck2, color: 'text-emerald-600', bg: 'bg-emerald-100/70' },
-      { name: 'Availability Calendar', href: '/event/calendar', icon: CalendarDays, color: 'text-[#6F4E37]', bg: 'bg-amber-100/70' },
+      { name: 'Availability Calendar', href: '/event/calendar', icon: CalendarDays, color: 'text-[#E50914]', bg: 'bg-amber-100/70' },
     ]
   },
   {
@@ -134,36 +134,36 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
         data-tour="sidebar-nav"
         aria-label="Desktop Navigation Sidebar"
         className={`
-          hidden lg:flex flex-col relative shrink-0 inset-y-0 left-0 z-40 bg-[#FFFDF9] border-r border-[#E8DED5]
+          hidden lg:flex flex-col relative shrink-0 inset-y-0 left-0 z-40 bg-[#FFFDF9] border-r border-[#FEE2E2]
           transition-all duration-300 ease-in-out select-none h-screen overflow-hidden shadow-xs
           ${isCollapsed ? 'w-20' : 'w-64'}
         `}
       >
-        {/* Top Header Section (Fahara VENUE PARTNER) */}
+        {/* Top Header Section (Grab2GO VENUE PARTNER) */}
         <div className="h-16 flex items-center justify-between px-4 border-b border-[#F2EAE1] bg-white shrink-0">
           <Link 
             href="/event/dashboard" 
             className="flex items-center gap-3 focus-visible:outline-none rounded-xl group"
           >
-            <div className="w-10 h-10 rounded-2xl bg-[#FAF5EF] border border-[#6F4E37]/20 p-1 shadow-2xs flex items-center justify-center shrink-0 overflow-hidden group-hover:scale-105 group-hover:rotate-1 transition-all duration-300">
+            <div className="w-10 h-10 rounded-2xl bg-[#FAF5EF] border border-[#E50914]/20 p-1 shadow-2xs flex items-center justify-center shrink-0 overflow-hidden group-hover:scale-105 group-hover:rotate-1 transition-all duration-300">
               <img 
-                src="/Fahara Logo.jpeg" 
-                alt="Fahara Venue Partner Logo" 
+                src="/grab-it-logo.png" 
+                alt="Grab2GO Venue Partner Logo" 
                 className="w-full h-full object-cover rounded-xl"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.style.display = 'none';
                   e.target.parentElement.innerText = 'F';
-                  e.target.parentElement.className = 'w-10 h-10 rounded-2xl bg-[#6F4E37] text-white font-black flex items-center justify-center text-base';
+                  e.target.parentElement.className = 'w-10 h-10 rounded-2xl bg-[#E50914] text-white font-black flex items-center justify-center text-base';
                 }}
               />
             </div>
             {!isCollapsed && (
               <div className="flex flex-col min-w-0">
-                <span className="text-base font-extrabold text-[#2C1810] tracking-tight truncate leading-tight group-hover:text-[#6F4E37] transition-colors">
-                  Fahara
+                <span className="text-base font-extrabold text-[#252525] tracking-tight truncate leading-tight group-hover:text-[#E50914] transition-colors">
+                  Grab2GO
                 </span>
-                <span className="text-[9px] font-black text-[#8C6D58] uppercase tracking-widest truncate">
+                <span className="text-[9px] font-black text-[#757575] uppercase tracking-widest truncate">
                   VENUE PARTNER
                 </span>
               </div>
@@ -173,7 +173,7 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            className="p-2 rounded-xl text-[#8C6D58] hover:text-[#6F4E37] hover:bg-[#FFF8F0] border border-transparent hover:border-[#6F4E37]/20 active:scale-95 transition-all cursor-pointer"
+            className="p-2 rounded-xl text-[#757575] hover:text-[#E50914] hover:bg-[#FFF5F5] border border-transparent hover:border-[#E50914]/20 active:scale-95 transition-all cursor-pointer"
             title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {isCollapsed ? (
@@ -197,15 +197,15 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                     <button
                       type="button"
                       onClick={() => toggleGroup(group.group)}
-                      className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-[#FFF8F0] transition-all cursor-pointer group/header select-none"
+                      className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-[#FFF5F5] transition-all cursor-pointer group/header select-none"
                     >
-                      <h3 className="text-[9.5px] font-black text-[#8C6D58] group-hover/header:text-[#6F4E37] uppercase tracking-widest transition-colors flex items-center gap-1.5">
+                      <h3 className="text-[9.5px] font-black text-[#757575] group-hover/header:text-[#E50914] uppercase tracking-widest transition-colors flex items-center gap-1.5">
                         <span>{group.group}</span>
                         {hasActiveChild && !isGroupOpen && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#6F4E37] animate-pulse" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#E50914] animate-pulse" />
                         )}
                       </h3>
-                      <div className="w-5 h-5 rounded-lg bg-[#FAF5EF] group-hover/header:bg-[#6F4E37] group-hover/header:text-white text-[#8C6D58] flex items-center justify-center transition-all duration-300 shadow-2xs">
+                      <div className="w-5 h-5 rounded-lg bg-[#FAF5EF] group-hover/header:bg-[#E50914] group-hover/header:text-white text-[#757575] flex items-center justify-center transition-all duration-300 shadow-2xs">
                         <ChevronDown 
                           className={`w-3.5 h-3.5 transition-transform duration-300 ease-in-out ${isGroupOpen ? 'rotate-0' : '-rotate-90'}`} 
                         />
@@ -216,7 +216,7 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                   )}
 
                   {(isGroupOpen || isCollapsed) && (
-                    <div className={`space-y-0.5 transition-all duration-300 ease-in-out ${!isCollapsed ? 'pl-2 border-l border-[#6F4E37]/15 ml-2.5 my-1' : ''}`}>
+                    <div className={`space-y-0.5 transition-all duration-300 ease-in-out ${!isCollapsed ? 'pl-2 border-l border-[#E50914]/15 ml-2.5 my-1' : ''}`}>
                       {group.items.map((item) => {
                         const active = isItemActive(item.href);
                         const Icon = item.icon;
@@ -238,23 +238,23 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                                 ${isCollapsed ? 'justify-center px-0 py-1.5' : 'px-2.5 py-1.5 gap-2'}
                                 ${
                                   active
-                                    ? 'bg-gradient-to-r from-[#6F4E37] to-[#4A3225] text-white font-extrabold shadow-md shadow-[#6F4E37]/20 scale-[1.01]'
+                                    ? 'bg-gradient-to-r from-[#E50914] to-[#E50914] text-white font-extrabold shadow-md shadow-[#E50914]/20 scale-[1.01]'
                                     : isLocked
-                                    ? 'text-[#4A3225]/50 hover:bg-amber-50/50 hover:text-amber-800 font-medium'
-                                    : 'text-[#4A3225]/85 hover:bg-[#FFF8F0] hover:text-[#6F4E37] hover:translate-x-0.5 font-bold border border-transparent hover:border-[#6F4E37]/15'
+                                    ? 'text-[#E50914]/50 hover:bg-amber-50/50 hover:text-amber-800 font-medium'
+                                    : 'text-[#E50914]/85 hover:bg-[#FFF5F5] hover:text-[#E50914] hover:translate-x-0.5 font-bold border border-transparent hover:border-[#E50914]/15'
                                 }
                               `}
                             >
                               {/* Active Left Indicator Bar */}
                               {active && !isCollapsed && (
-                                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-r-full bg-[#E6C5A8]" />
+                                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-r-full bg-[#E50914]" />
                               )}
 
                               {/* Sub-navigation Branch Arrow */}
                               {!isCollapsed && (
                                 <CornerDownRight 
                                   className={`w-3 h-3 shrink-0 stroke-[2] transition-colors ${
-                                    active ? 'text-white/80' : 'text-[#8C6D58]/40 group-hover/item:text-[#6F4E37]'
+                                    active ? 'text-white/80' : 'text-[#757575]/40 group-hover/item:text-[#E50914]'
                                   }`} 
                                 />
                               )}
@@ -278,7 +278,7 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                                       <Lock className="w-3 h-3 text-amber-600 shrink-0" />
                                     )}
                                     {showBadge && (
-                                      <span className="px-1.5 py-0.5 text-[8.5px] font-black rounded-full bg-[#6F4E37] text-white animate-pulse">
+                                      <span className="px-1.5 py-0.5 text-[8.5px] font-black rounded-full bg-[#E50914] text-white animate-pulse">
                                         {notificationCount}
                                       </span>
                                     )}
@@ -287,7 +287,7 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                                         className={`w-3 h-3 transition-all duration-200 ${
                                           active 
                                             ? 'text-white/80 translate-x-0.5 opacity-100' 
-                                            : 'text-[#8C6D58]/50 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 group-hover/item:text-[#6F4E37]'
+                                            : 'text-[#757575]/50 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 group-hover/item:text-[#E50914]'
                                         }`} 
                                       />
                                     )}
@@ -298,7 +298,7 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
 
                             {/* Tooltip for Collapsed Sidebar */}
                             {isCollapsed && (
-                              <div className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-3 px-3 py-1.5 bg-[#2C1810] text-white text-[10px] font-bold rounded-xl shadow-xl opacity-0 group-hover/item:opacity-100 transition-opacity duration-150 z-50 whitespace-nowrap flex items-center gap-2">
+                              <div className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-3 px-3 py-1.5 bg-[#252525] text-white text-[10px] font-bold rounded-xl shadow-xl opacity-0 group-hover/item:opacity-100 transition-opacity duration-150 z-50 whitespace-nowrap flex items-center gap-2">
                                 <span>{item.name}</span>
                                 {showBadge && (
                                   <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
@@ -321,20 +321,20 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
           {!isCollapsed && (
             <Link
               href="/event/settings"
-              className="flex items-center gap-2.5 p-2 rounded-2xl bg-[#FFFBF8] border border-[#F0E6DD] hover:border-[#6F4E37]/30 hover:bg-[#FFF8F0] transition-all group/profile cursor-pointer"
+              className="flex items-center gap-2.5 p-2 rounded-2xl bg-[#FFFBF8] border border-[#F0E6DD] hover:border-[#E50914]/30 hover:bg-[#FFF5F5] transition-all group/profile cursor-pointer"
             >
-              <div className="w-8 h-8 rounded-xl bg-[#6F4E37] text-white font-black text-xs flex items-center justify-center shrink-0 shadow-2xs group-hover/profile:scale-105 transition-transform">
+              <div className="w-8 h-8 rounded-xl bg-[#E50914] text-white font-black text-xs flex items-center justify-center shrink-0 shadow-2xs group-hover/profile:scale-105 transition-transform">
                 {user?.name ? user.name.charAt(0).toUpperCase() : 'M'}
               </div>
               <div className="flex flex-col min-w-0 flex-1">
-                <span className="text-xs font-extrabold text-[#2C1810] truncate group-hover/profile:text-[#6F4E37] transition-colors">
+                <span className="text-xs font-extrabold text-[#252525] truncate group-hover/profile:text-[#E50914] transition-colors">
                   {user?.name || 'Event Manager'}
                 </span>
-                <span className="text-[10px] font-medium text-[#8C6D58] truncate">
+                <span className="text-[10px] font-medium text-[#757575] truncate">
                   {user?.email || 'manager@fahara.com'}
                 </span>
               </div>
-              <ChevronRight className="w-3.5 h-3.5 text-[#8C6D58] group-hover/profile:translate-x-0.5 transition-transform" />
+              <ChevronRight className="w-3.5 h-3.5 text-[#757575] group-hover/profile:translate-x-0.5 transition-transform" />
             </Link>
           )}
 
@@ -358,24 +358,24 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
       {isOpen && (
         <div className="lg:hidden fixed inset-0 z-50 bg-[#FFFDF9] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom duration-200">
           {/* Compact Mobile Header */}
-          <div className="h-16 bg-white border-b border-[#E8DED5] px-4 flex items-center justify-between shrink-0 shadow-2xs">
+          <div className="h-16 bg-white border-b border-[#FEE2E2] px-4 flex items-center justify-between shrink-0 shadow-2xs">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-white border border-[#E8DED5] p-1 shadow-2xs flex items-center justify-center shrink-0 overflow-hidden">
+              <div className="w-9 h-9 rounded-2xl bg-white border border-[#FEE2E2] p-1 shadow-2xs flex items-center justify-center shrink-0 overflow-hidden">
                 <img 
-                  src="/Fahara Logo.jpeg" 
-                  alt="Fahara Event Logo" 
+                  src="/grab-it-logo.png" 
+                  alt="Grab2GO Event Logo" 
                   className="w-full h-full object-cover rounded-xl"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.style.display = 'none';
                     e.target.parentElement.innerText = 'F';
-                    e.target.parentElement.className = 'w-9 h-9 rounded-2xl bg-[#6F4E37] text-white font-extrabold flex items-center justify-center text-base';
+                    e.target.parentElement.className = 'w-9 h-9 rounded-2xl bg-[#E50914] text-white font-extrabold flex items-center justify-center text-base';
                   }}
                 />
               </div>
               <div>
-                <span className="text-base font-extrabold text-[#2C1810] block leading-tight">Fahara Event</span>
-                <span className="text-[10px] text-[#8C6D58] font-bold uppercase tracking-wider block">Owner Portal</span>
+                <span className="text-base font-extrabold text-[#252525] block leading-tight">Grab2GO Event</span>
+                <span className="text-[10px] text-[#757575] font-bold uppercase tracking-wider block">Owner Portal</span>
               </div>
             </div>
 
@@ -383,18 +383,18 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
               <Link
                 href="/event/notifications"
                 onClick={onClose}
-                className="relative p-2 rounded-xl text-[#2C1810]/70 hover:text-[#6F4E37] hover:bg-[#FFF8F0] transition-colors"
+                className="relative p-2 rounded-xl text-[#252525]/70 hover:text-[#E50914] hover:bg-[#FFF5F5] transition-colors"
                 aria-label="Notifications"
               >
                 <Bell className="w-5 h-5" />
                 {notificationCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#6F4E37]" />
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#E50914]" />
                 )}
               </Link>
 
               <button
                 onClick={onClose}
-                className="p-2 rounded-xl text-[#2C1810]/70 hover:text-[#2C1810] hover:bg-[#E8DED5]/50 transition-colors ml-1"
+                className="p-2 rounded-xl text-[#252525]/70 hover:text-[#252525] hover:bg-[#FEE2E2]/50 transition-colors ml-1"
                 aria-label="Close menu"
               >
                 <X className="w-6 h-6" />
@@ -414,12 +414,12 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                     onClick={() => toggleGroup(group.group)}
                     className="w-full flex items-center justify-between px-1 py-1 cursor-pointer group/mobileHeader"
                   >
-                    <h3 className="text-[10px] font-black text-[#8C6D58] tracking-widest uppercase flex items-center gap-2">
+                    <h3 className="text-[10px] font-black text-[#757575] tracking-widest uppercase flex items-center gap-2">
                       <span>{group.group}</span>
                     </h3>
                     <div className="flex items-center gap-2 flex-1 ml-3">
-                      <span className="h-px bg-[#E8DED5] flex-1" />
-                      <div className="w-5 h-5 rounded-lg bg-[#FAF5EF] text-[#8C6D58] flex items-center justify-center transition-all duration-300">
+                      <span className="h-px bg-[#FEE2E2] flex-1" />
+                      <div className="w-5 h-5 rounded-lg bg-[#FAF5EF] text-[#757575] flex items-center justify-center transition-all duration-300">
                         <ChevronDown 
                           className={`w-3.5 h-3.5 transition-transform duration-300 ${isGroupOpen ? 'rotate-0' : '-rotate-90'}`} 
                         />
@@ -448,10 +448,10 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                               flex flex-col justify-between items-start active:scale-[0.97] touch-manipulation overflow-hidden
                               ${
                                 active
-                                  ? 'bg-[#6F4E37] text-white border-[#6F4E37] shadow-md shadow-[#6F4E37]/20'
+                                  ? 'bg-[#E50914] text-white border-[#E50914] shadow-md shadow-[#E50914]/20'
                                   : isLocked
-                                  ? 'bg-amber-50/40 border-[#E8DED5] text-[#2C1810]/70 hover:border-amber-400/50'
-                                  : 'bg-white border-[#E8DED5] text-[#2C1810] hover:border-[#6F4E37]/40 hover:bg-[#FFF8F0]'
+                                  ? 'bg-amber-50/40 border-[#FEE2E2] text-[#252525]/70 hover:border-amber-400/50'
+                                  : 'bg-white border-[#FEE2E2] text-[#252525] hover:border-[#E50914]/40 hover:bg-[#FFF5F5]'
                               }
                             `}
                           >
@@ -470,7 +470,7 @@ export default function SidebarNavigation({ isOpen, isMobile, onClose }) {
                                   <Lock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                                 )}
                                 {showBadge && (
-                                  <span className="px-1.5 py-0.5 text-[8.5px] font-black rounded-full bg-[#6F4E37] text-white animate-pulse">
+                                  <span className="px-1.5 py-0.5 text-[8.5px] font-black rounded-full bg-[#E50914] text-white animate-pulse">
                                     {notificationCount}
                                   </span>
                                 )}

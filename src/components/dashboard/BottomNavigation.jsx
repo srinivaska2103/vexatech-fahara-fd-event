@@ -36,25 +36,25 @@ export default function BottomNavigation() {
     { name: 'Settlements', href: '/event/finance/settlements', icon: ArrowLeftRight, color: 'bg-indigo-500' },
   ];
 
-  // Cohesive Fahara theme-based navigation items with curated icons
+  // Cohesive Grab2GO theme-based navigation items with curated icons
   const allMenuLinks = [
-    { name: 'Dashboard', href: '/event/dashboard', icon: LayoutGrid, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#6F4E37] text-white shadow-2xs' },
-    { name: 'Subscription', href: '/event/subscription', icon: Sparkles, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#8C6239] text-amber-100 shadow-2xs' },
-    { name: 'Company Profile', href: '/event/profile', icon: Building2, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#5D3A29] text-[#FFF8F0] shadow-2xs' },
-    { name: 'Services & Packages', href: '/event/services', icon: PackageCheck, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#A67B5B] text-white shadow-2xs' },
-    { name: 'Bookings', href: '/event/bookings', icon: CalendarCheck2, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#6F4E37] text-white shadow-2xs' },
-    { name: 'Events Calendar', href: '/event/calendar', icon: CalendarDays, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#7C5036] text-amber-50 shadow-2xs' },
-    { name: 'Customers', href: '/event/customers', icon: Users, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#8B5E3C] text-white shadow-2xs' },
-    { name: 'Reviews', href: '/event/reviews', icon: Star, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#A47148] text-amber-100 shadow-2xs' },
-    { name: 'Campaigns', href: '/event/campaigns', icon: Megaphone, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#6F4E37] text-white shadow-2xs' },
-    { name: 'Payments', href: '/event/finance/payments', icon: CreditCard, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#5D3A29] text-[#FFF8F0] shadow-2xs' },
-    { name: 'Settlements', href: '/event/finance/settlements', icon: ArrowLeftRight, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#7C5036] text-white shadow-2xs' },
-    { name: 'Refunds', href: '/event/finance/refunds', icon: RotateCcw, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#9C6644] text-white shadow-2xs' },
-    { name: 'Payment Account', href: '/event/finance/payment-account', icon: ShieldCheck, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#4A2C11] text-amber-100 shadow-2xs' },
-    { name: 'Analytics', href: '/event/analytics', icon: BarChart3, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#8C6239] text-white shadow-2xs' },
-    { name: 'Notifications', href: '/event/notifications', icon: Bell, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#A67B5B] text-white shadow-2xs' },
-    { name: 'Settings', href: '/event/settings', icon: Settings, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#5D3A29] text-white shadow-2xs' },
-    { name: 'Help & Support', href: '/event/support', icon: LifeBuoy, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF8F0]', cardBorder: 'border-[#E8DED5] hover:border-[#6F4E37]/40', textColor: 'text-[#2C1810]', badgeStyle: 'bg-[#6F4E37] text-white shadow-2xs' },
+    { name: 'Dashboard', href: '/event/dashboard', icon: LayoutGrid, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#E50914] text-white shadow-2xs' },
+    { name: 'Subscription', href: '/event/subscription', icon: Sparkles, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#8C6239] text-amber-100 shadow-2xs' },
+    { name: 'Company Profile', href: '/event/profile', icon: Building2, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#5D3A29] text-[#FFF5F5] shadow-2xs' },
+    { name: 'Services & Packages', href: '/event/services', icon: PackageCheck, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#B71C1C] text-white shadow-2xs' },
+    { name: 'Bookings', href: '/event/bookings', icon: CalendarCheck2, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#E50914] text-white shadow-2xs' },
+    { name: 'Events Calendar', href: '/event/calendar', icon: CalendarDays, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#7C5036] text-amber-50 shadow-2xs' },
+    { name: 'Customers', href: '/event/customers', icon: Users, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#8B5E3C] text-white shadow-2xs' },
+    { name: 'Reviews', href: '/event/reviews', icon: Star, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#A47148] text-amber-100 shadow-2xs' },
+    { name: 'Campaigns', href: '/event/campaigns', icon: Megaphone, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#E50914] text-white shadow-2xs' },
+    { name: 'Payments', href: '/event/finance/payments', icon: CreditCard, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#5D3A29] text-[#FFF5F5] shadow-2xs' },
+    { name: 'Settlements', href: '/event/finance/settlements', icon: ArrowLeftRight, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#7C5036] text-white shadow-2xs' },
+    { name: 'Refunds', href: '/event/finance/refunds', icon: RotateCcw, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#9C6644] text-white shadow-2xs' },
+    { name: 'Payment Account', href: '/event/finance/payment-account', icon: ShieldCheck, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#B71C1C] text-amber-100 shadow-2xs' },
+    { name: 'Analytics', href: '/event/analytics', icon: BarChart3, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#8C6239] text-white shadow-2xs' },
+    { name: 'Notifications', href: '/event/notifications', icon: Bell, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#B71C1C] text-white shadow-2xs' },
+    { name: 'Settings', href: '/event/settings', icon: Settings, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#5D3A29] text-white shadow-2xs' },
+    { name: 'Help & Support', href: '/event/support', icon: LifeBuoy, cardBg: 'bg-[#FFFDFB] hover:bg-[#FFF5F5]', cardBorder: 'border-[#FEE2E2] hover:border-[#E50914]/40', textColor: 'text-[#252525]', badgeStyle: 'bg-[#E50914] text-white shadow-2xs' },
   ];
 
   const handleLogout = () => {
@@ -81,25 +81,25 @@ export default function BottomNavigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsQuickActionsOpen(false)}
-              className="absolute inset-0 bg-[#2C1810]/60 backdrop-blur-xs"
+              className="absolute inset-0 bg-[#252525]/60 backdrop-blur-xs"
             />
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 100 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-sm mx-4 mb-20 bg-white border border-[#E8DED5] rounded-3xl p-5 shadow-2xl z-10 space-y-4"
+              className="relative w-full max-w-sm mx-4 mb-20 bg-white border border-[#FEE2E2] rounded-3xl p-5 shadow-2xl z-10 space-y-4"
             >
               <div className="flex items-center justify-between border-b border-[#F2EAE1] pb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-[#FFF8F0] border border-[#6F4E37]/20 flex items-center justify-center text-[#6F4E37]">
+                  <div className="w-8 h-8 rounded-xl bg-[#FFF5F5] border border-[#E50914]/20 flex items-center justify-center text-[#E50914]">
                     <Sparkles className="w-4 h-4" />
                   </div>
-                  <span className="text-sm font-black text-[#2C1810]">Quick Actions</span>
+                  <span className="text-sm font-black text-[#252525]">Quick Actions</span>
                 </div>
                 <button 
                   onClick={() => setIsQuickActionsOpen(false)} 
-                  className="p-1.5 rounded-full text-[#8C6D58] hover:bg-[#FFF8F0]"
+                  className="p-1.5 rounded-full text-[#757575] hover:bg-[#FFF5F5]"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -113,7 +113,7 @@ export default function BottomNavigation() {
                       key={idx}
                       href={action.href}
                       onClick={() => setIsQuickActionsOpen(false)}
-                      className="flex items-center gap-3.5 p-3 rounded-2xl bg-[#FFFDF9] border border-[#E8DED5] hover:border-[#6F4E37] text-[#2C1810] font-bold text-xs transition-all active:scale-98"
+                      className="flex items-center gap-3.5 p-3 rounded-2xl bg-[#FFFDF9] border border-[#FEE2E2] hover:border-[#E50914] text-[#252525] font-bold text-xs transition-all active:scale-98"
                     >
                       <div className={`w-8 h-8 rounded-xl ${action.color} text-white flex items-center justify-center shadow-xs`}>
                         <Icon className="w-4 h-4 stroke-[2]" />
@@ -137,23 +137,23 @@ export default function BottomNavigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMenuOpen(false)}
-              className="absolute inset-0 bg-[#2C1810]/60 backdrop-blur-xs"
+              className="absolute inset-0 bg-[#252525]/60 backdrop-blur-xs"
             />
             <motion.div
               initial={{ opacity: 0, y: 120 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 120 }}
               transition={{ type: 'spring', damping: 25, stiffness: 280 }}
-              className="relative w-full max-w-lg mx-auto bg-white border-t border-[#E8DED5] rounded-t-3xl p-4 xs:p-5 sm:p-6 shadow-2xl z-10 max-h-[85vh] overflow-y-auto space-y-4 xs:space-y-5"
+              className="relative w-full max-w-lg mx-auto bg-white border-t border-[#FEE2E2] rounded-t-3xl p-4 xs:p-5 sm:p-6 shadow-2xl z-10 max-h-[85vh] overflow-y-auto space-y-4 xs:space-y-5"
             >
               <div className="flex items-center justify-between border-b border-[#F2EAE1] pb-3">
                 <div>
-                  <h3 className="text-sm xs:text-base font-black text-[#2C1810]">Full Navigation Menu</h3>
-                  <p className="text-[10px] xs:text-[11px] text-[#8C6D58] font-semibold">Access all event manager features</p>
+                  <h3 className="text-sm xs:text-base font-black text-[#252525]">Full Navigation Menu</h3>
+                  <p className="text-[10px] xs:text-[11px] text-[#757575] font-semibold">Access all event manager features</p>
                 </div>
                 <button 
                   onClick={() => setIsMenuOpen(false)}
-                  className="p-1.5 xs:p-2 rounded-xl text-[#8C6D58] hover:bg-[#FFF8F0] border border-[#E8DED5] active:scale-95 transition-all"
+                  className="p-1.5 xs:p-2 rounded-xl text-[#757575] hover:bg-[#FFF5F5] border border-[#FEE2E2] active:scale-95 transition-all"
                   aria-label="Close Navigation Menu"
                 >
                   <X className="w-4 h-4 xs:w-5 xs:h-5" />
@@ -177,7 +177,7 @@ export default function BottomNavigation() {
                     onClick={() => setIsMenuOpen(false)}
                     className={`flex flex-col items-start p-2.5 xs:p-3 sm:p-3.5 rounded-xl xs:rounded-2xl border transition-all active:scale-95 shadow-2xs ${
                       active 
-                        ? 'bg-[#6F4E37] text-white border-[#6F4E37] shadow-sm ring-2 ring-[#6F4E37]/30' 
+                        ? 'bg-[#E50914] text-white border-[#E50914] shadow-sm ring-2 ring-[#E50914]/30' 
                         : `${item.cardBg} ${item.cardBorder} ${item.textColor} hover:shadow-xs`
                     }`}
                   >
@@ -216,7 +216,7 @@ export default function BottomNavigation() {
     />
 
     {/* BOTTOM NAVIGATION BAR FOR MOBILE & TABLET (<1024px) */}
-    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#E8DED5] px-1.5 sm:px-4 py-1.5 sm:py-2 lg:hidden shadow-lg select-none">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#FEE2E2] px-1.5 sm:px-4 py-1.5 sm:py-2 lg:hidden shadow-lg select-none">
       <div className="flex items-center justify-around max-w-lg mx-auto relative">
         {mainTabs.map((tab, idx) => {
           if (tab.isQuickAction) {
@@ -230,10 +230,10 @@ export default function BottomNavigation() {
                 }}
                 className="relative -top-4 sm:-top-5 flex flex-col items-center group shrink-0"
               >
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-[#6F4E37] to-[#4A3324] text-white flex items-center justify-center shadow-lg shadow-[#6F4E37]/30 border-2 sm:border-4 border-white active:scale-95 transition-transform">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-[#E50914] to-[#4A3324] text-white flex items-center justify-center shadow-lg shadow-[#E50914]/30 border-2 sm:border-4 border-white active:scale-95 transition-transform">
                   <Plus className={`w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5] transition-transform duration-300 ${isQuickActionsOpen ? 'rotate-45' : ''}`} />
                 </div>
-                <span className="text-[9px] sm:text-[10px] font-black text-[#6F4E37] mt-0.5 truncate max-w-[65px] text-center">Quick Action</span>
+                <span className="text-[9px] sm:text-[10px] font-black text-[#E50914] mt-0.5 truncate max-w-[65px] text-center">Quick Action</span>
               </button>
             );
           }
@@ -249,7 +249,7 @@ export default function BottomNavigation() {
                   setIsQuickActionsOpen(false);
                 }}
                 className={`flex flex-col items-center justify-center py-0.5 sm:py-1 px-1 sm:px-3 rounded-2xl transition-all shrink-0 ${
-                  isMenuOpen ? 'text-[#6F4E37]' : 'text-[#8C6D58] hover:text-[#6F4E37]'
+                  isMenuOpen ? 'text-[#E50914]' : 'text-[#757575] hover:text-[#E50914]'
                 }`}
               >
                 <Icon className="w-4.5 h-4.5 sm:w-5 sm:h-5 stroke-[2]" />
@@ -275,13 +275,13 @@ export default function BottomNavigation() {
                 setIsQuickActionsOpen(false);
               }}
               className={`flex flex-col items-center justify-center py-0.5 sm:py-1 px-1 sm:px-3 rounded-2xl transition-all shrink-0 ${
-                active ? 'text-[#6F4E37]' : 'text-[#8C6D58] hover:text-[#6F4E37]'
+                active ? 'text-[#E50914]' : 'text-[#757575] hover:text-[#E50914]'
               }`}
             >
-                <div className={`p-1 rounded-xl transition-all ${active ? 'bg-[#FFF8F0] text-[#6F4E37]' : ''}`}>
+                <div className={`p-1 rounded-xl transition-all ${active ? 'bg-[#FFF5F5] text-[#E50914]' : ''}`}>
                   <Icon className={`w-4.5 h-4.5 sm:w-5 sm:h-5 ${active ? 'stroke-[2.5]' : 'stroke-[2]'}`} />
                 </div>
-                <span className={`text-[9px] sm:text-[10px] tracking-tight mt-0.5 ${active ? 'font-black text-[#2C1810]' : 'font-semibold'}`}>
+                <span className={`text-[9px] sm:text-[10px] tracking-tight mt-0.5 ${active ? 'font-black text-[#252525]' : 'font-semibold'}`}>
                   {tab.name}
                 </span>
               </Link>

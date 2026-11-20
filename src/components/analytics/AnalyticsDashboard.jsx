@@ -142,21 +142,21 @@ const AnalyticsDashboard = () => {
       {/* ========================================== */}
       {/* 1. TOP HERO BANNER CARD                    */}
       {/* ========================================== */}
-      <div className="bg-[#FFF8F0]/80 border border-[#E8DED5] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#6F4E37]/10 via-[#A67B5B]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
+      <div className="bg-[#FFF5F5]/80 border border-[#FEE2E2] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#E50914]/10 via-[#B71C1C]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#6F4E37]/10 border border-[#6F4E37]/20 text-[#6F4E37] text-[11px] font-black uppercase tracking-widest">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E50914]/10 border border-[#E50914]/20 text-[#E50914] text-[11px] font-black uppercase tracking-widest">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Business Intelligence Studio</span>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#2C1810] tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#252525] tracking-tight">
               Analytics Dashboard
             </h1>
             
-            <p className="text-xs sm:text-sm text-[#8C6D58] font-medium max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#757575] font-medium max-w-2xl leading-relaxed">
               Monitor your business performance, revenue growth trends, booking activity, and package analytics.
             </p>
           </div>
@@ -168,7 +168,7 @@ const AnalyticsDashboard = () => {
             <button 
               type="button"
               onClick={() => setIsExportModalOpen(true)}
-              className="px-5 py-3 rounded-2xl bg-[#6F4E37] hover:bg-[#5D4037] text-white text-xs sm:text-sm font-extrabold shadow-md shadow-[#6F4E37]/20 flex items-center gap-2 transition-all active:scale-95 min-h-[44px]"
+              className="px-5 py-3 rounded-2xl bg-[#E50914] hover:bg-[#B71C1C] text-white text-xs sm:text-sm font-extrabold shadow-md shadow-[#E50914]/20 flex items-center gap-2 transition-all active:scale-95 min-h-[44px]"
             >
               <Download className="w-4 h-4 stroke-[2.5]" />
               <span>Export Report</span>

@@ -59,7 +59,7 @@ export const useBusinessSettings = () => {
         };
       } catch (error) {
         return {
-          businessName: 'Fahara Events',
+          businessName: 'Grab2GO Events',
           gstNumber: 'GST123456789',
           address: '123 Event Street, City, Country',
           bankName: '',
@@ -151,7 +151,7 @@ export const useBrandingSettings = () => {
         const res = await axiosInstance.get('/settings/branding');
         return res.data.data;
       } catch (error) {
-        return { primaryColor: '#6F4E37', secondaryColor: '#A67B5B' };
+        return { primaryColor: '#E50914', secondaryColor: '#B71C1C' };
       }
     },
   });

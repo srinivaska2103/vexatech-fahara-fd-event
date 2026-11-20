@@ -16,6 +16,19 @@ export default function PaymentsPage() {
 
   const { searchQuery, setSearchQuery, filters, setFilters, clearFilters } = useFinanceStore();
   const { data: paymentsData, isLoading, isError, error, refetch } = usePaymentsList(filters);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    try {
+      setIsRefreshing(true);
+      await refetch();
+      toast.success('Payments list updated');
+    } catch {
+      toast.error('Failed to refresh payments');
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 500);
+    }
+  };
   
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [period, setPeriod] = useState('30_days'); // 'today', '7_days', '30_days', 'month', 'custom'
@@ -125,7 +138,7 @@ export default function PaymentsPage() {
               <span>Financial & Settlement Studio</span>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#2C1810] tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#252525] tracking-tight">
               Payments & Finances
             </h1>
             
@@ -139,7 +152,7 @@ export default function PaymentsPage() {
             <button 
               type="button"
               onClick={handleExport}
-              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-[#FAF5EF] border border-[#F0E6DD] text-[#2C1810] text-xs font-bold shadow-xs flex items-center gap-2 transition-all active:scale-95 min-h-[42px] cursor-pointer"
+              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-[#FAF5EF] border border-[#F0E6DD] text-[#252525] text-xs font-bold shadow-xs flex items-center gap-2 transition-all active:scale-95 min-h-[42px] cursor-pointer"
             >
               <Download className="w-4 h-4 text-[#7A5A44]" />
               <span>Export CSV</span>
@@ -155,7 +168,7 @@ export default function PaymentsPage() {
 
             <Link 
               href="/event/revenue/payouts"
-              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-[#FAF5EF] border border-[#F0E6DD] text-[#2C1810] text-xs font-bold shadow-xs flex items-center gap-2 transition-all active:scale-95 min-h-[42px] cursor-pointer"
+              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-[#FAF5EF] border border-[#F0E6DD] text-[#252525] text-xs font-bold shadow-xs flex items-center gap-2 transition-all active:scale-95 min-h-[42px] cursor-pointer"
             >
               <Repeat className="w-4 h-4 text-[#7A5A44]" />
               <span>Settlements</span>
@@ -168,8 +181,8 @@ export default function PaymentsPage() {
       {/* ========================================== */}
       {/* 2. FILTER PERIOD BAR                       */}
       {/* ========================================== */}
-      <div className="bg-white border border-[#E8DED5] rounded-3xl p-3 sm:p-4 shadow-2xs flex flex-col sm:flex-row justify-between items-center gap-3">
-        <span className="text-[11px] font-black text-[#8C6D58] uppercase tracking-wider pl-2">
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl p-3 sm:p-4 shadow-2xs flex flex-col sm:flex-row justify-between items-center gap-3">
+        <span className="text-[11px] font-black text-[#757575] uppercase tracking-wider pl-2">
           Filter Period:
         </span>
 
@@ -181,8 +194,8 @@ export default function PaymentsPage() {
               onClick={() => setPeriod(p.id)}
               className={`px-4 py-2 rounded-2xl text-xs font-black transition-all shrink-0 ${
                 period === p.id
-                  ? 'bg-[#6F4E37] text-white shadow-2xs'
-                  : 'bg-[#FFF8F0] hover:bg-[#6F4E37]/10 text-[#8C6D58]'
+                  ? 'bg-[#E50914] text-white shadow-2xs'
+                  : 'bg-[#FFF5F5] hover:bg-[#E50914]/10 text-[#757575]'
               }`}
             >
               {p.label}
@@ -197,37 +210,37 @@ export default function PaymentsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         
         {/* Card 1: TOTAL BOOKING VALUE */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-2 hover:border-[#6F4E37]/30 transition-colors">
-          <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-2 hover:border-[#E50914]/30 transition-colors">
+          <span className="text-[10px] font-black text-[#757575] uppercase tracking-wider">
             Total Booking Value
           </span>
           <div>
-            <div className="text-2xl sm:text-3xl font-black text-[#2C1810] tracking-tight">
+            <div className="text-2xl sm:text-3xl font-black text-[#252525] tracking-tight">
               ₹{totalBookingValue.toLocaleString('en-IN')}
             </div>
-            <p className="text-[11px] text-[#8C6D58] font-medium mt-1">
+            <p className="text-[11px] text-[#757575] font-medium mt-1">
               Gross customer payments
             </p>
           </div>
         </div>
 
         {/* Card 2: YOUR NET EARNINGS */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-2 hover:border-[#6F4E37]/30 transition-colors">
-          <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-2 hover:border-[#E50914]/30 transition-colors">
+          <span className="text-[10px] font-black text-[#757575] uppercase tracking-wider">
             Your Net Earnings
           </span>
           <div>
-            <div className="text-2xl sm:text-3xl font-black text-[#2C1810] tracking-tight">
+            <div className="text-2xl sm:text-3xl font-black text-[#252525] tracking-tight">
               ₹{Math.round(yourNetEarnings).toLocaleString('en-IN')}
             </div>
-            <p className="text-[11px] text-[#8C6D58] font-medium mt-1">
+            <p className="text-[11px] text-[#757575] font-medium mt-1">
               After platform adjustments
             </p>
           </div>
         </div>
 
         {/* Card 3: PENDING SETTLEMENT */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-2 hover:border-amber-300 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-2 hover:border-amber-300 transition-colors">
           <span className="text-[10px] font-black text-amber-700 uppercase tracking-wider">
             Pending Settlement
           </span>
@@ -242,7 +255,7 @@ export default function PaymentsPage() {
         </div>
 
         {/* Card 4: SETTLED AMOUNT */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-2 hover:border-emerald-300 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-2 hover:border-emerald-300 transition-colors">
           <span className="text-[10px] font-black text-emerald-700 uppercase tracking-wider">
             Settled Amount
           </span>
@@ -257,7 +270,7 @@ export default function PaymentsPage() {
         </div>
 
         {/* Card 5: REFUND AMOUNT */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-2 hover:border-rose-300 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-2 hover:border-rose-300 transition-colors">
           <span className="text-[10px] font-black text-rose-700 uppercase tracking-wider">
             Refund Amount
           </span>
@@ -276,17 +289,17 @@ export default function PaymentsPage() {
       {/* ========================================== */}
       {/* 4. SEARCH & DROPDOWN FILTERS TOOLBAR       */}
       {/* ========================================== */}
-      <div className="bg-white border border-[#E8DED5] rounded-3xl p-4 sm:p-5 shadow-2xs flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-4">
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl p-4 sm:p-5 shadow-2xs flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-4">
         
         {/* Search Box */}
         <div className="relative flex-1 xl:w-96">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8C6D58]" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#757575]" />
           <input 
             type="text"
             placeholder="Search transaction ID, booking ID, diner name..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#2C1810] focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/15 transition-all"
+            className="w-full bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#252525] focus:outline-none focus:border-[#E50914] focus:ring-2 focus:ring-[#E50914]/15 transition-all"
           />
         </div>
 
@@ -294,8 +307,8 @@ export default function PaymentsPage() {
         <div className="flex flex-wrap items-center gap-3">
           
           {/* Status Dropdown */}
-          <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl px-3 py-2 text-xs font-bold text-[#2C1810] flex items-center gap-2">
-            <Filter className="w-3.5 h-3.5 text-[#8C6D58]" />
+          <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl px-3 py-2 text-xs font-bold text-[#252525] flex items-center gap-2">
+            <Filter className="w-3.5 h-3.5 text-[#757575]" />
             <select
               value={filters.status || 'all'}
               onChange={(e) => setFilters({ status: e.target.value })}
@@ -309,8 +322,8 @@ export default function PaymentsPage() {
           </div>
 
           {/* Payment Method Dropdown */}
-          <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl px-3 py-2 text-xs font-bold text-[#2C1810] flex items-center gap-2">
-            <CreditCard className="w-3.5 h-3.5 text-[#8C6D58]" />
+          <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl px-3 py-2 text-xs font-bold text-[#252525] flex items-center gap-2">
+            <CreditCard className="w-3.5 h-3.5 text-[#757575]" />
             <select
               value={selectedMethod}
               onChange={(e) => setSelectedMethod(e.target.value)}
@@ -324,8 +337,8 @@ export default function PaymentsPage() {
           </div>
 
           {/* Timeframe Dropdown */}
-          <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl px-3 py-2 text-xs font-bold text-[#2C1810] flex items-center gap-2">
-            <Calendar className="w-3.5 h-3.5 text-[#8C6D58]" />
+          <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl px-3 py-2 text-xs font-bold text-[#252525] flex items-center gap-2">
+            <Calendar className="w-3.5 h-3.5 text-[#757575]" />
             <select
               value={selectedTimeframe}
               onChange={(e) => setSelectedTimeframe(e.target.value)}
@@ -341,11 +354,12 @@ export default function PaymentsPage() {
           {/* Refresh Control Button */}
           <button
             type="button"
-            onClick={() => refetch()}
-            className="p-2.5 rounded-2xl bg-[#FFFDF9] border border-[#E8DED5] text-[#8C6D58] hover:text-[#2C1810] hover:bg-[#FFF8F0] transition-colors shrink-0"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="p-2.5 rounded-2xl bg-[#FFFDF9] border border-[#FEE2E2] text-[#757575] hover:text-[#252525] hover:bg-[#FFF5F5] transition-colors shrink-0 disabled:opacity-50 cursor-pointer"
             title="Refresh list"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#E50914]' : ''}`} />
           </button>
 
         </div>
@@ -354,11 +368,11 @@ export default function PaymentsPage() {
       {/* ========================================== */}
       {/* 5. MAIN PAYMENTS TABLE DIRECTORY           */}
       {/* ========================================== */}
-      <div className="bg-white border border-[#E8DED5] rounded-3xl shadow-xs overflow-hidden min-h-[380px]">
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl shadow-xs overflow-hidden min-h-[380px]">
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center p-16 text-[#8C6D58] min-h-[350px] space-y-3">
-            <Loader2 className="w-8 h-8 animate-spin text-[#6F4E37]" />
-            <p className="text-xs font-black text-[#2C1810]">Loading Razorpay Route Payments...</p>
+          <div className="flex flex-col items-center justify-center p-16 text-[#757575] min-h-[350px] space-y-3">
+            <Loader2 className="w-8 h-8 animate-spin text-[#E50914]" />
+            <p className="text-xs font-black text-[#252525]">Loading Razorpay Route Payments...</p>
           </div>
         ) : isError ? (
           <div className="bg-rose-50 border border-rose-200 rounded-3xl py-12 px-6 flex flex-col items-center justify-center text-center space-y-3">
@@ -373,18 +387,18 @@ export default function PaymentsPage() {
             animate={{ opacity: 1, scale: 1 }}
             className="py-16 px-6 flex flex-col items-center justify-center text-center space-y-3"
           >
-            <div className="w-20 h-20 bg-[#FFF8F0] border border-[#6F4E37]/20 rounded-3xl flex items-center justify-center text-[#6F4E37] mb-2 shadow-inner">
+            <div className="w-20 h-20 bg-[#FFF5F5] border border-[#E50914]/20 rounded-3xl flex items-center justify-center text-[#E50914] mb-2 shadow-inner">
               <CreditCard className="w-10 h-10 stroke-[1.8]" />
             </div>
-            <h3 className="text-xl font-black text-[#2C1810]">No Payments Recorded</h3>
-            <p className="text-xs sm:text-sm text-[#8C6D58] font-medium max-w-md leading-relaxed">
+            <h3 className="text-xl font-black text-[#252525]">No Payments Recorded</h3>
+            <p className="text-xs sm:text-sm text-[#757575] font-medium max-w-md leading-relaxed">
               No financial transaction records match your search filters or status selection.
             </p>
           </motion.div>
         ) : (
           <div className="w-full overflow-x-auto">
-            <table className="w-full text-left text-xs sm:text-sm text-[#2C1810] whitespace-nowrap">
-              <thead className="bg-[#FFF8F0] border-b border-[#E8DED5] text-[10px] uppercase tracking-wider text-[#8C6D58] font-black select-none">
+            <table className="w-full text-left text-xs sm:text-sm text-[#252525] whitespace-nowrap">
+              <thead className="bg-[#FFF5F5] border-b border-[#FEE2E2] text-[10px] uppercase tracking-wider text-[#757575] font-black select-none">
                 <tr>
                   <th className="p-4">Transaction / Booking Ref</th>
                   <th className="p-4">Customer & Service</th>
@@ -406,28 +420,28 @@ export default function PaymentsPage() {
                     className="hover:bg-[#FFFDF9] transition-colors cursor-pointer group"
                   >
                     <td className="p-4">
-                      <div className="font-black text-[#6F4E37] text-xs sm:text-sm group-hover:underline">
+                      <div className="font-black text-[#E50914] text-xs sm:text-sm group-hover:underline">
                         {payment.bookingId || 'BK-1001'}
                       </div>
-                      <div className="text-[11px] font-medium text-[#8C6D58] truncate max-w-[150px]">
+                      <div className="text-[11px] font-medium text-[#757575] truncate max-w-[150px]">
                         {payment.razorpayPaymentId || payment.cashfreePaymentId || `RZP_SETTL_${payment.id?.substring(0, 6)}`}
                       </div>
                     </td>
 
                     <td className="p-4">
-                      <div className="font-bold text-[#2C1810]">
+                      <div className="font-bold text-[#252525]">
                         {payment.customerName || 'Customer'}
                       </div>
-                      <div className="text-xs text-[#8C6D58] font-medium truncate max-w-[200px]">
+                      <div className="text-xs text-[#757575] font-medium truncate max-w-[200px]">
                         {payment.serviceName || 'Event Service'}
                       </div>
                     </td>
 
-                    <td className="p-4 text-xs font-bold text-[#2C1810]">
+                    <td className="p-4 text-xs font-bold text-[#252525]">
                       {payment.paymentMethod || 'UPI / Razorpay'}
                     </td>
 
-                    <td className="p-4 font-black text-[#2C1810]">
+                    <td className="p-4 font-black text-[#252525]">
                       ₹{Number(payment.totalAmount || payment.amount || 0).toLocaleString('en-IN')}
                     </td>
 
@@ -467,7 +481,7 @@ export default function PaymentsPage() {
                           e.stopPropagation();
                           setSelectedPayment(payment);
                         }}
-                        className="p-2 rounded-xl bg-[#FFF8F0] hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white border border-[#6F4E37]/20 transition-all shadow-2xs"
+                        className="p-2 rounded-xl bg-[#FFF5F5] hover:bg-[#E50914] text-[#E50914] hover:text-white border border-[#E50914]/20 transition-all shadow-2xs"
                         title="View Details"
                       >
                         <ChevronRight className="w-4 h-4 stroke-[2.5]" />
@@ -486,15 +500,15 @@ export default function PaymentsPage() {
       {/* ========================================== */}
       {selectedPayment && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white border border-[#E8DED5] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-6">
-            <div className="flex items-center justify-between pb-4 border-b border-[#E8DED5]">
+          <div className="bg-white border border-[#FEE2E2] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-6">
+            <div className="flex items-center justify-between pb-4 border-b border-[#FEE2E2]">
               <div>
-                <h3 className="text-lg font-black text-[#2C1810]">Razorpay Route Breakdown</h3>
-                <p className="text-xs text-[#8C6D58] font-medium">Txn Ref: {selectedPayment.razorpayPaymentId || selectedPayment.cashfreePaymentId || selectedPayment.id}</p>
+                <h3 className="text-lg font-black text-[#252525]">Razorpay Route Breakdown</h3>
+                <p className="text-xs text-[#757575] font-medium">Txn Ref: {selectedPayment.razorpayPaymentId || selectedPayment.cashfreePaymentId || selectedPayment.id}</p>
               </div>
               <button
                 onClick={() => setSelectedPayment(null)}
-                className="w-8 h-8 rounded-full bg-[#FFF8F0] text-[#6F4E37] font-bold flex items-center justify-center hover:bg-[#6F4E37] hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-[#FFF5F5] text-[#E50914] font-bold flex items-center justify-center hover:bg-[#E50914] hover:text-white transition-colors"
               >
                 ✕
               </button>
@@ -502,20 +516,20 @@ export default function PaymentsPage() {
 
             <div className="space-y-3 text-xs sm:text-sm font-semibold">
               <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
-                <span className="text-[#8C6D58]">Booking Ref:</span>
-                <span className="font-extrabold text-[#2C1810]">{selectedPayment.bookingId || 'BK-1001'}</span>
+                <span className="text-[#757575]">Booking Ref:</span>
+                <span className="font-extrabold text-[#252525]">{selectedPayment.bookingId || 'BK-1001'}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
-                <span className="text-[#8C6D58]">Customer Name:</span>
-                <span className="font-extrabold text-[#2C1810]">{selectedPayment.customerName || 'Customer'}</span>
+                <span className="text-[#757575]">Customer Name:</span>
+                <span className="font-extrabold text-[#252525]">{selectedPayment.customerName || 'Customer'}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
-                <span className="text-[#8C6D58]">Service Item:</span>
-                <span className="font-extrabold text-[#2C1810]">{selectedPayment.serviceName || 'Event Service'}</span>
+                <span className="text-[#757575]">Service Item:</span>
+                <span className="font-extrabold text-[#252525]">{selectedPayment.serviceName || 'Event Service'}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
-                <span className="text-[#8C6D58]">Gross Payment:</span>
-                <span className="font-black text-[#2C1810]">₹{Number(selectedPayment.totalAmount || selectedPayment.amount || 0).toLocaleString('en-IN')}</span>
+                <span className="text-[#757575]">Gross Payment:</span>
+                <span className="font-black text-[#252525]">₹{Number(selectedPayment.totalAmount || selectedPayment.amount || 0).toLocaleString('en-IN')}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#F2EAE1] text-rose-600">
                 <span>Platform Commission (5%):</span>
@@ -529,7 +543,7 @@ export default function PaymentsPage() {
 
             <button
               onClick={() => setSelectedPayment(null)}
-              className="w-full py-3 rounded-2xl bg-[#6F4E37] hover:bg-[#5D4037] text-white font-extrabold text-xs sm:text-sm transition-all shadow-md shadow-[#6F4E37]/20"
+              className="w-full py-3 rounded-2xl bg-[#E50914] hover:bg-[#B71C1C] text-white font-extrabold text-xs sm:text-sm transition-all shadow-md shadow-[#E50914]/20"
             >
               Close Breakdown
             </button>

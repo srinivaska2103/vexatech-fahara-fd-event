@@ -28,13 +28,13 @@ export default function BookingTimeline({ booking }) {
   ];
 
   return (
-    <div className="bg-white rounded-3xl border border-stone-200/80 p-6 md:p-7 shadow-xs text-[#2C1810] h-full space-y-6">
+    <div className="bg-white rounded-3xl border border-stone-200/80 p-6 md:p-7 shadow-xs text-[#252525] h-full space-y-6">
       <div className="flex items-center gap-3.5 pb-4 border-b border-stone-100">
         <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-800 border border-amber-200 flex items-center justify-center font-black text-sm shrink-0">
           <Clock size={18} />
         </div>
         <div>
-          <h2 className="text-base font-black text-[#2C1810] tracking-tight">Booking Timeline</h2>
+          <h2 className="text-base font-black text-[#252525] tracking-tight">Booking Timeline</h2>
           <p className="text-xs text-stone-500 font-medium">Real-time status progression</p>
         </div>
       </div>
@@ -47,18 +47,18 @@ export default function BookingTimeline({ booking }) {
             <div key={idx} className="relative pl-6">
               <div 
                 className={`absolute left-[-9px] top-0.5 w-4 h-4 rounded-full flex items-center justify-center transition-all ${
-                  isCompleted ? 'bg-[#6F4E37] text-white shadow-2xs' : 'bg-stone-100 border border-stone-300 text-stone-400'
+                  isCompleted ? 'bg-[#E50914] text-white shadow-2xs' : 'bg-stone-100 border border-stone-300 text-stone-400'
                 }`}
               >
                 {isCompleted ? <Check size={10} className="stroke-[3]" /> : <span className="w-1.5 h-1.5 rounded-full bg-stone-300" />}
               </div>
 
               <div>
-                <h4 className={`text-xs font-black transition-colors ${isCompleted ? 'text-[#2C1810]' : 'text-stone-400'}`}>
+                <h4 className={`text-xs font-black transition-colors ${isCompleted ? 'text-[#252525]' : 'text-stone-400'}`}>
                   {step.label}
                 </h4>
                 {step.date ? (
-                  <p className="text-[11px] font-bold text-[#6F4E37] mt-0.5">
+                  <p className="text-[11px] font-bold text-[#E50914] mt-0.5">
                     {new Date(step.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} at {new Date(step.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 ) : (

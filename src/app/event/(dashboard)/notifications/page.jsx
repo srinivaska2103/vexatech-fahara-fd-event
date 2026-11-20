@@ -70,20 +70,20 @@ export default function NotificationsPage() {
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8 select-none font-sans pb-28 sm:pb-36 text-[#2C1810]">
+    <div className="space-y-6 sm:space-y-8 select-none font-sans pb-28 sm:pb-36 text-[#252525]">
       
       {/* 1. TOP HERO BANNER CARD */}
-      <div className="bg-[#FFF8F0]/80 border border-[#E8DED5] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#6F4E37]/10 via-[#A67B5B]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
+      <div className="bg-[#FFF5F5]/80 border border-[#FEE2E2] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#E50914]/10 via-[#B71C1C]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#FFF8F0] border border-[#6F4E37]/20 flex items-center justify-center text-[#6F4E37] shrink-0 shadow-inner">
+            <div className="w-12 h-12 rounded-2xl bg-[#FFF5F5] border border-[#E50914]/20 flex items-center justify-center text-[#E50914] shrink-0 shadow-inner">
               <BellRing className="w-6 h-6 stroke-[2] animate-bounce" />
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2.5">
-                <h1 className="text-3xl sm:text-4xl font-extrabold text-[#2C1810] tracking-tight">
+                <h1 className="text-3xl sm:text-4xl font-extrabold text-[#252525] tracking-tight">
                   Notification Center
                 </h1>
                 {unreadAlerts > 0 && (
@@ -92,7 +92,7 @@ export default function NotificationsPage() {
                   </span>
                 )}
               </div>
-              <p className="text-xs sm:text-sm text-[#8C6D58] font-medium max-w-xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#757575] font-medium max-w-xl leading-relaxed">
                 Stay updated with real-time venue reservations, customer review updates, and system alert notifications.
               </p>
             </div>
@@ -121,15 +121,15 @@ export default function NotificationsPage() {
         {/* Total Alerts */}
         <div 
           onClick={() => { setStatusFilter('all'); setTypeFilter('all'); }}
-          className="p-4 rounded-3xl bg-white border border-stone-200/90 hover:border-[#6F4E37]/40 shadow-2xs transition-all cursor-pointer group"
+          className="p-4 rounded-3xl bg-white border border-stone-200/90 hover:border-[#E50914]/40 shadow-2xs transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">Total Alerts</span>
-            <div className="w-7 h-7 rounded-xl bg-[#6F4E37]/10 text-[#6F4E37] flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-7 h-7 rounded-xl bg-[#E50914]/10 text-[#E50914] flex items-center justify-center group-hover:scale-110 transition-transform">
               <Bell className="w-3.5 h-3.5" />
             </div>
           </div>
-          <p className="text-xl sm:text-2xl font-black text-[#2C1810] mt-1">{systemNotifications.length}</p>
+          <p className="text-xl sm:text-2xl font-black text-[#252525] mt-1">{systemNotifications.length}</p>
           <span className="text-[10px] font-semibold text-stone-400">All received messages</span>
         </div>
 
@@ -180,15 +180,15 @@ export default function NotificationsPage() {
       </div>
 
       {/* 3. SEARCH & FILTER CONTROL BAR - Single Modern Row */}
-      <div className="bg-white p-3 sm:p-4 rounded-3xl border border-[#DDB892]/60 shadow-2xs flex flex-wrap xl:flex-nowrap gap-3 items-center justify-between">
+      <div className="bg-white p-3 sm:p-4 rounded-3xl border border-[#EF5350]/60 shadow-2xs flex flex-wrap xl:flex-nowrap gap-3 items-center justify-between">
         <div className="relative flex-1 min-w-[220px]">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6F4E37]" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#E50914]" />
           <input
             type="text"
             placeholder="Search notifications..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-10 pl-10 pr-4 text-xs font-bold rounded-2xl border border-[#DDB892]/80 bg-[#FFF8F0] focus:bg-[#FFF5EA] focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/20 text-[#2C1810] placeholder:text-stone-400 transition-all shadow-2xs"
+            className="w-full h-10 pl-10 pr-4 text-xs font-bold rounded-2xl border border-[#EF5350]/80 bg-[#FFF5F5] focus:bg-[#FFF5F5] focus:outline-none focus:border-[#E50914] focus:ring-2 focus:ring-[#E50914]/20 text-[#252525] placeholder:text-stone-400 transition-all shadow-2xs"
           />
         </div>
 
@@ -214,10 +214,10 @@ export default function NotificationsPage() {
       {/* 4. LIST OR EMPTY STATE */}
       {filteredSystemNotifications.length === 0 ? (
         <div className="bg-white rounded-3xl p-12 border border-stone-200/90 text-center space-y-3">
-          <div className="w-14 h-14 rounded-2xl bg-[#FFF8F0] border border-[#6F4E37]/20 text-[#6F4E37] flex items-center justify-center mx-auto">
+          <div className="w-14 h-14 rounded-2xl bg-[#FFF5F5] border border-[#E50914]/20 text-[#E50914] flex items-center justify-center mx-auto">
             <BellOff className="w-7 h-7" />
           </div>
-          <h3 className="text-base font-extrabold text-[#2C1810]">No System Notifications</h3>
+          <h3 className="text-base font-extrabold text-[#252525]">No System Notifications</h3>
           <p className="text-xs text-stone-500 max-w-sm mx-auto">
             You're all caught up! There are no new alerts, booking updates, or payout notifications at this time.
           </p>
@@ -227,11 +227,11 @@ export default function NotificationsPage() {
           {filteredSystemNotifications.map((notif, idx) => (
             <div key={notif.id || idx} className="p-4 bg-white rounded-2xl border border-stone-200/80 shadow-2xs flex items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
-                <div className="w-9 h-9 rounded-xl bg-[#6F4E37]/10 text-[#6F4E37] flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-[#E50914]/10 text-[#E50914] flex items-center justify-center shrink-0">
                   <Bell className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs sm:text-sm font-extrabold text-[#2C1810]">{notif.title || 'System Notification'}</h4>
+                  <h4 className="text-xs sm:text-sm font-extrabold text-[#252525]">{notif.title || 'System Notification'}</h4>
                   <p className="text-xs text-stone-500 mt-0.5">{notif.message}</p>
                 </div>
               </div>

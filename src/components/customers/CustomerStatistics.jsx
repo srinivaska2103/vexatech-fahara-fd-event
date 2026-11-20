@@ -1,5 +1,5 @@
 import { useCustomerStatistics } from '@/hooks/customers/useCustomerQueries';
-import { DollarSign, CalendarCheck, XCircle, TrendingUp, Loader2 } from 'lucide-react';
+import { IndianRupee, CalendarCheck, XCircle, TrendingUp, Loader2 } from 'lucide-react';
 
 export default function CustomerStatistics({ customer, bookings }) {
   const completedEvents = bookings?.filter(b => b.booking_status === 'COMPLETED').length || 0;
@@ -11,7 +11,7 @@ export default function CustomerStatistics({ customer, bookings }) {
     {
       title: 'Lifetime Revenue',
       value: `₹${(totalRevenue || 0).toLocaleString()}`,
-      icon: DollarSign,
+      icon: IndianRupee,
       color: 'text-green-600',
       bg: 'bg-green-100',
     },

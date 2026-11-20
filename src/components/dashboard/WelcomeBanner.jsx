@@ -47,7 +47,7 @@ export default function WelcomeBanner({ stats }) {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-black text-sm text-amber-950">FAHARA EVENT PARTNER Subscription Inactive</span>
+                <span className="font-black text-sm text-amber-950">Grab2GO EVENT PARTNER Subscription Inactive</span>
                 <span className="px-2 py-0.5 rounded-md bg-amber-200 text-amber-900 text-[10px] font-extrabold uppercase">Locked</span>
               </div>
               <p className="text-xs text-amber-900/80 font-medium mt-0.5">
@@ -58,7 +58,7 @@ export default function WelcomeBanner({ stats }) {
 
           <Link
             href="/event/subscription"
-            className="px-5 py-2.5 rounded-xl bg-[#6F4E37] hover:bg-[#5D4037] text-white font-extrabold text-xs shadow-md flex items-center gap-2 transition-all active:scale-95 shrink-0"
+            className="px-5 py-2.5 rounded-xl bg-[#E50914] hover:bg-[#B71C1C] text-white font-extrabold text-xs shadow-md flex items-center gap-2 transition-all active:scale-95 shrink-0"
           >
             <Sparkles className="w-4 h-4 text-amber-300" />
             <span>Subscribe Now @ ₹1/mo</span>
@@ -72,7 +72,7 @@ export default function WelcomeBanner({ stats }) {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="relative overflow-hidden bg-gradient-to-r from-[#4A3222] via-[#5D4037] to-[#3D261C] border border-[#6F4E37]/30 rounded-3xl p-6 sm:p-8 text-white shadow-xl"
+        className="relative overflow-hidden bg-gradient-to-r from-[#4A3222] via-[#B71C1C] to-[#3D261C] border border-[#E50914]/30 rounded-3xl p-6 sm:p-8 text-white shadow-xl"
       >
         {/* Background Subtle Warm Lighting */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none -z-0" />

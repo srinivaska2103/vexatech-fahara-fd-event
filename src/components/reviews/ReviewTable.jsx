@@ -19,15 +19,15 @@ export default function ReviewTable({ reviews }) {
   };
 
   return (
-    <div className="w-full bg-white border border-[#E8DED5] rounded-3xl overflow-hidden shadow-xs">
+    <div className="w-full bg-white border border-[#FEE2E2] rounded-3xl overflow-hidden shadow-xs">
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs sm:text-sm text-[#2C1810] whitespace-nowrap">
-          <thead className="bg-[#FFF8F0] border-b border-[#E8DED5] text-[10px] uppercase tracking-wider text-[#8C6D58] font-black select-none">
+        <table className="w-full text-left text-xs sm:text-sm text-[#252525] whitespace-nowrap">
+          <thead className="bg-[#FFF5F5] border-b border-[#FEE2E2] text-[10px] uppercase tracking-wider text-[#757575] font-black select-none">
             <tr>
               <th className="p-4 w-12 text-center">
                 <input 
                   type="checkbox" 
-                  className="w-4 h-4 rounded-md border-[#E8DED5] text-[#6F4E37] focus:ring-[#6F4E37]"
+                  className="w-4 h-4 rounded-md border-[#FEE2E2] text-[#E50914] focus:ring-[#E50914]"
                   checked={reviews.length > 0 && selectedReviewIds.length === reviews.length}
                   onChange={handleSelectAll}
                 />
@@ -51,21 +51,21 @@ export default function ReviewTable({ reviews }) {
                 <td className="p-4 text-center" onClick={(e) => e.stopPropagation()}>
                   <input 
                     type="checkbox" 
-                    className="w-4 h-4 rounded-md border-[#E8DED5] text-[#6F4E37] focus:ring-[#6F4E37]"
+                    className="w-4 h-4 rounded-md border-[#FEE2E2] text-[#E50914] focus:ring-[#E50914]"
                     checked={selectedReviewIds.includes(review.id)}
                     onChange={() => toggleReviewSelection(review.id)}
                   />
                 </td>
                 <td className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-[#FFF8F0] border border-[#6F4E37]/20 flex items-center justify-center font-black text-[#6F4E37] text-sm shadow-2xs shrink-0">
+                    <div className="w-10 h-10 rounded-2xl bg-[#FFF5F5] border border-[#E50914]/20 flex items-center justify-center font-black text-[#E50914] text-sm shadow-2xs shrink-0">
                       {review.customer_name?.charAt(0)?.toUpperCase() || 'C'}
                     </div>
                     <div className="max-w-[200px] sm:max-w-[300px]">
-                      <div className="font-bold text-[#2C1810] text-sm group-hover:text-[#6F4E37] transition-colors truncate">
+                      <div className="font-bold text-[#252525] text-sm group-hover:text-[#E50914] transition-colors truncate">
                         {review.customer_name || 'Guest Reviewer'}
                       </div>
-                      <div className="text-xs text-[#8C6D58] font-medium truncate">{review.service_name || 'Event Booking'}</div>
+                      <div className="text-xs text-[#757575] font-medium truncate">{review.service_name || 'Event Booking'}</div>
                     </div>
                   </div>
                 </td>
@@ -73,7 +73,7 @@ export default function ReviewTable({ reviews }) {
                   <StarRating rating={review.rating} />
                 </td>
                 <td className="p-4 hidden sm:table-cell">
-                  <span className="text-xs font-bold text-[#2C1810]">
+                  <span className="text-xs font-bold text-[#252525]">
                     {(() => {
                       const d = review.created_at || review.createdAt || review.date;
                       try {
@@ -101,7 +101,7 @@ export default function ReviewTable({ reviews }) {
                 <td className="p-4 text-right">
                   <Link 
                     href={`/event/reviews/${review.id}`} 
-                    className="inline-flex items-center justify-center p-2 rounded-xl bg-[#FFF8F0] hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white border border-[#6F4E37]/20 transition-all shadow-2xs"
+                    className="inline-flex items-center justify-center p-2 rounded-xl bg-[#FFF5F5] hover:bg-[#E50914] text-[#E50914] hover:text-white border border-[#E50914]/20 transition-all shadow-2xs"
                   >
                     <ChevronRight className="w-4 h-4 stroke-[2.5]" />
                   </Link>

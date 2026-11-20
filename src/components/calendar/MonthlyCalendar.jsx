@@ -68,11 +68,11 @@ export default function MonthlyCalendar({ events = [], onSelectDate }) {
   };
 
   return (
-    <div className="flex-1 flex flex-col w-full bg-white border border-[#E8DED5] rounded-3xl overflow-hidden shadow-xs">
+    <div className="flex-1 flex flex-col w-full bg-white border border-[#FEE2E2] rounded-3xl overflow-hidden shadow-xs">
       {/* Day Names Header */}
-      <div className="grid grid-cols-7 border-b border-[#E8DED5] bg-[#FFF8F0] select-none">
+      <div className="grid grid-cols-7 border-b border-[#FEE2E2] bg-[#FFF5F5] select-none">
         {weekDays.map(day => (
-          <div key={day} className="py-3 text-center text-[10px] font-black text-[#8C6D58] tracking-widest uppercase">
+          <div key={day} className="py-3 text-center text-[10px] font-black text-[#757575] tracking-widest uppercase">
             {day}
           </div>
         ))}
@@ -110,19 +110,19 @@ export default function MonthlyCalendar({ events = [], onSelectDate }) {
                 if (onSelectDate) onSelectDate(day);
               }}
               className={`min-h-[95px] sm:min-h-[120px] border-r border-b border-[#F2EAE1] p-2 transition-all cursor-pointer flex flex-col justify-between group relative ${
-                !isCurrentMonth ? 'bg-[#FFFDF9]/40 text-[#8C6D58]/40' : 'bg-white text-[#2C1810]'
-              } ${isCurrentDay ? 'bg-[#FFF8F0]/80' : ''} ${isDaySelected ? 'ring-2 ring-inset ring-[#6F4E37] bg-[#FFF8F0]/40' : ''}`}
+                !isCurrentMonth ? 'bg-[#FFFDF9]/40 text-[#757575]/40' : 'bg-white text-[#252525]'
+              } ${isCurrentDay ? 'bg-[#FFF5F5]/80' : ''} ${isDaySelected ? 'ring-2 ring-inset ring-[#E50914] bg-[#FFF5F5]/40' : ''}`}
             >
               {/* Day Header */}
               <div className="flex justify-between items-start mb-1">
                 <span className={`text-xs font-black w-7 h-7 flex items-center justify-center rounded-xl transition-all ${
                   isCurrentDay 
-                    ? 'bg-[#6F4E37] text-white shadow-xs scale-105' 
+                    ? 'bg-[#E50914] text-white shadow-xs scale-105' 
                     : isDaySelected
-                    ? 'bg-[#A67B5B] text-white'
+                    ? 'bg-[#B71C1C] text-white'
                     : isCurrentMonth 
-                    ? 'text-[#2C1810] group-hover:bg-[#FFF8F0] group-hover:text-[#6F4E37]' 
-                    : 'text-[#8C6D58]/40'
+                    ? 'text-[#252525] group-hover:bg-[#FFF5F5] group-hover:text-[#E50914]' 
+                    : 'text-[#757575]/40'
                 }`}>
                   {format(day, 'd')}
                 </span>
@@ -162,7 +162,7 @@ export default function MonthlyCalendar({ events = [], onSelectDate }) {
                   );
                 })}
                 {dayEvents.length > 3 && (
-                  <span className="text-[8.5px] font-black text-[#8C6D58] block pl-1">
+                  <span className="text-[8.5px] font-black text-[#757575] block pl-1">
                     +{dayEvents.length - 3} more
                   </span>
                 )}
@@ -176,7 +176,7 @@ export default function MonthlyCalendar({ events = [], onSelectDate }) {
                   setSelectedDate(day);
                   openCreateBlockModal(day);
                 }}
-                className="opacity-0 group-hover:opacity-100 absolute bottom-1 right-1 p-1 bg-[#6F4E37] text-white rounded-lg text-[9px] font-bold shadow-xs transition-opacity hover:bg-[#2C1810]"
+                className="opacity-0 group-hover:opacity-100 absolute bottom-1 right-1 p-1 bg-[#E50914] text-white rounded-lg text-[9px] font-bold shadow-xs transition-opacity hover:bg-[#252525]"
                 title="Add Block on this date"
               >
                 + Block

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { formatDistanceToNow } from 'date-fns';
 import { 
   CalendarDays, 
-  DollarSign, 
+  IndianRupee, 
   Star, 
   MessageSquare, 
   Info, 
@@ -18,7 +18,7 @@ import toast from 'react-hot-toast';
 const getIcon = (type) => {
   switch (type) {
     case 'booking': return <CalendarDays className="w-5 h-5 text-blue-600" />;
-    case 'payment': return <DollarSign className="w-5 h-5 text-green-600" />;
+    case 'payment': return <IndianRupee className="w-5 h-5 text-green-600" />;
     case 'review': return <Star className="w-5 h-5 text-yellow-600" />;
     case 'message': return <MessageSquare className="w-5 h-5 text-purple-600" />;
     case 'system': return <Info className="w-5 h-5 text-gray-600" />;

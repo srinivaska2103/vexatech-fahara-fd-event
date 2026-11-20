@@ -22,7 +22,7 @@ export default function DashboardLayout({ children }) {
   const [checkoutError, setCheckoutError] = useState(null);
 
   useEffect(() => {
-    document.title = "Fahara Event Manager";
+    document.title = "Grab2GO Event Manager";
   }, [pathname]);
 
   useEffect(() => {
@@ -86,9 +86,9 @@ export default function DashboardLayout({ children }) {
         key: orderData.razorpayKeyId,
         amount: Math.round(resolvedAmount * 100),
         currency: orderData.currency || 'INR',
-        name: 'Fahara Event Partner',
-        description: `Fahara Event Partner Monthly Subscription ₹${resolvedAmount}/month`,
-        image: '/Fahara Logo.jpeg',
+        name: 'Grab2GO Event Partner',
+        description: `Grab2GO Event Partner Monthly Subscription ₹${resolvedAmount}/month`,
+        image: '/grab-it-logo.png',
         prefill: {
           name: user?.name || '',
           email: user?.email || '',
@@ -96,7 +96,7 @@ export default function DashboardLayout({ children }) {
         },
 
         theme: {
-          color: '#6F4E37'
+          color: '#E50914'
         },
         handler: async function (response) {
           try {
@@ -160,17 +160,17 @@ export default function DashboardLayout({ children }) {
             {showLockedState ? (
               <div className="min-h-full py-4 px-2 sm:px-4 max-w-5xl mx-auto space-y-8">
                 {/* Locked Hero Card */}
-                <div className="relative bg-gradient-to-br from-[#FFF9F2] via-[#FAF0E6] to-[#F5E6D3] text-[#2C1810] p-6 sm:p-10 rounded-3xl shadow-xl overflow-hidden border border-[#DDB892]/80">
+                <div className="relative bg-gradient-to-br from-[#FFF9F2] via-[#FFF5F5] to-[#F5E6D3] text-[#252525] p-6 sm:p-10 rounded-3xl shadow-xl overflow-hidden border border-[#EF5350]/80">
                   <div className="absolute -top-24 -left-24 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
                   
                   <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
                     <div className="space-y-4 max-w-2xl">
-                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#6F4E37]/10 text-[#6F4E37] text-xs font-black uppercase tracking-wider border border-[#6F4E37]/20 shadow-xs">
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E50914]/10 text-[#E50914] text-xs font-black uppercase tracking-wider border border-[#E50914]/20 shadow-xs">
                         <Lock className="w-3.5 h-3.5 text-amber-700" />
-                        FAHARA EVENT PARTNER • INSTANT UNLOCK
+                        Grab2GO EVENT PARTNER • INSTANT UNLOCK
                       </div>
-                      <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight text-[#2C1810]">
-                        Unlock Your <span className="text-[#6F4E37]">Fahara Event Partner</span> Dashboard
+                      <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight text-[#252525]">
+                        Unlock Your <span className="text-[#E50914]">Grab2GO Event Partner</span> Dashboard
                       </h1>
                       <p className="text-stone-600 text-xs sm:text-sm leading-relaxed font-medium">
                         Subscribe for ₹299/month to manage your event services, packages, client bookings, calendar availability, photo portfolio, customer reviews, and event business analytics.
@@ -183,11 +183,11 @@ export default function DashboardLayout({ children }) {
                       </div>
                     </div>
 
-                    <div className="w-full lg:w-80 bg-white/90 backdrop-blur-xl border border-[#DDB892]/80 hover:border-[#6F4E37]/50 p-6 rounded-3xl shrink-0 text-center space-y-4 shadow-xl transition-all">
+                    <div className="w-full lg:w-80 bg-white/90 backdrop-blur-xl border border-[#EF5350]/80 hover:border-[#E50914]/50 p-6 rounded-3xl shrink-0 text-center space-y-4 shadow-xl transition-all">
                       <div className="space-y-1">
                         <span className="text-stone-500 text-[11px] font-black uppercase tracking-widest block">Partner Membership</span>
                         <div className="flex items-baseline justify-center gap-1">
-                          <span className="text-4xl font-black text-[#6F4E37] tracking-tight">₹299</span>
+                          <span className="text-4xl font-black text-[#E50914] tracking-tight">₹299</span>
                           <span className="text-xs font-bold text-stone-500"> / month</span>
                         </div>
                         <p className="text-[10px] text-stone-400">Monthly recurring partner subscription</p>
@@ -196,7 +196,7 @@ export default function DashboardLayout({ children }) {
                       <button
                         onClick={handleDirectSubscribe}
                         disabled={checkoutLoading}
-                        className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#6F4E37] via-[#593E2B] to-[#452718] hover:from-[#593E2B] hover:to-[#2C1810] text-white font-black text-xs sm:text-sm shadow-lg shadow-[#6F4E37]/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                        className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#E50914] via-[#593E2B] to-[#452718] hover:from-[#593E2B] hover:to-[#252525] text-white font-black text-xs sm:text-sm shadow-lg shadow-[#E50914]/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                       >
                         {checkoutLoading ? (
                           <>
@@ -226,10 +226,10 @@ export default function DashboardLayout({ children }) {
                 <div className="space-y-6">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 pb-4">
                     <div>
-                      <h2 className="text-xl font-black text-[#2C1810]">Event Partner Modules</h2>
+                      <h2 className="text-xl font-black text-[#252525]">Event Partner Modules</h2>
                       <p className="text-xs text-stone-500 font-medium">Complete event management suite enabled upon subscription</p>
                     </div>
-                    <span className="px-3.5 py-1.5 rounded-full bg-[#FAF0E6] text-[#6F4E37] text-xs font-black border border-[#DDB892]/60 w-fit">
+                    <span className="px-3.5 py-1.5 rounded-full bg-[#FFF5F5] text-[#E50914] text-xs font-black border border-[#EF5350]/60 w-fit">
                       6 Event Modules
                     </span>
                   </div>
@@ -252,7 +252,7 @@ export default function DashboardLayout({ children }) {
                               </span>
                             </div>
 
-                            <h3 className="text-base font-black text-[#2C1810] group-hover:text-[#6F4E37] transition-colors leading-snug">
+                            <h3 className="text-base font-black text-[#252525] group-hover:text-[#E50914] transition-colors leading-snug">
                               {feat.title}
                             </h3>
                             <p className="text-xs text-stone-500 leading-relaxed font-medium">

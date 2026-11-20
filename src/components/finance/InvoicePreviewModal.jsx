@@ -33,7 +33,7 @@ const InvoicePreviewModal = ({ isOpen, onClose, invoice }) => {
               <div className="bg-white p-8 shadow-sm rounded-lg border border-border">
                 <div className="flex justify-between items-start mb-8 border-b border-border pb-8">
                   <div>
-                    <h1 className="text-3xl font-bold text-primary mb-1">FAHARA</h1>
+                    <h1 className="text-3xl font-bold text-primary mb-1">Grab2GO</h1>
                     <p className="text-sm text-gray-500">Event Management</p>
                   </div>
                   <div className="text-right">

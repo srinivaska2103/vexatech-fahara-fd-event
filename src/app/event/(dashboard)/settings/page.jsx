@@ -37,40 +37,40 @@ export default function SettingsPage() {
       {/* ========================================== */}
       {/* 1. TOP HERO BANNER & STEP WIZARD PROGRESS  */}
       {/* ========================================== */}
-      <div className="bg-[#FFF8F0]/80 border border-[#E8DED5] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#6F4E37]/10 via-[#A67B5B]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
+      <div className="bg-[#FFF5F5]/80 border border-[#FEE2E2] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#E50914]/10 via-[#B71C1C]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
         
         <div className="space-y-4 relative z-10">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#6F4E37]/10 border border-[#6F4E37]/20 text-[#6F4E37] text-[11px] font-black uppercase tracking-widest">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E50914]/10 border border-[#E50914]/20 text-[#E50914] text-[11px] font-black uppercase tracking-widest">
                 <Settings className="w-3.5 h-3.5" />
                 <span>Partner Account Studio</span>
               </div>
               
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-[#2C1810] tracking-tight">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-[#252525] tracking-tight">
                 Settings & Profile Setup
               </h1>
               
-              <p className="text-xs sm:text-sm text-[#8C6D58] font-medium max-w-2xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#757575] font-medium max-w-2xl leading-relaxed">
                 Configure your partner profile, company address, and settlement bank details.
               </p>
             </div>
 
-            <div className="bg-white border border-[#E8DED5] px-4 py-2.5 rounded-2xl shadow-2xs shrink-0 self-start md:self-center">
-              <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider block">
+            <div className="bg-white border border-[#FEE2E2] px-4 py-2.5 rounded-2xl shadow-2xs shrink-0 self-start md:self-center">
+              <span className="text-[10px] font-black text-[#757575] uppercase tracking-wider block">
                 Setup Progress
               </span>
-              <span className="text-sm font-extrabold text-[#2C1810]">
+              <span className="text-sm font-extrabold text-[#252525]">
                 Step {currentStepObj.step} of 3 ({progressPercent}%)
               </span>
             </div>
           </div>
 
           {/* Progress Bar Line */}
-          <div className="w-full bg-[#E8DED5]/60 h-2 rounded-full overflow-hidden">
+          <div className="w-full bg-[#FEE2E2]/60 h-2 rounded-full overflow-hidden">
             <motion.div 
-              className="bg-[#6F4E37] h-full rounded-full"
+              className="bg-[#E50914] h-full rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${progressPercent}%` }}
               transition={{ duration: 0.3 }}
@@ -91,8 +91,8 @@ export default function SettingsPage() {
               onClick={() => setActiveTab(s.id)}
               className={`px-4 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
                 isActive 
-                  ? s.danger ? 'bg-rose-600 text-white shadow-xs' : 'bg-[#6F4E37] text-white shadow-xs'
-                  : 'bg-white border border-[#E8DED5] text-[#8C6D58] hover:bg-[#FFF8F0]'
+                  ? s.danger ? 'bg-rose-600 text-white shadow-xs' : 'bg-[#E50914] text-white shadow-xs'
+                  : 'bg-white border border-[#FEE2E2] text-[#757575] hover:bg-[#FFF5F5]'
               }`}
             >
               <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-black">

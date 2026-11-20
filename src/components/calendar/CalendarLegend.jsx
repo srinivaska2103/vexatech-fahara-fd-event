@@ -15,7 +15,7 @@ export default function CalendarLegend() {
   const { filters, setFilters } = useCalendarStore();
 
   const statuses = [
-    { id: 'all', label: 'All Items', color: 'bg-[#6F4E37]', border: 'border-[#6F4E37]/30' },
+    { id: 'all', label: 'All Items', color: 'bg-[#E50914]', border: 'border-[#E50914]/30' },
     { id: 'CONFIRMED', label: 'Confirmed Events', color: 'bg-emerald-600', border: 'border-emerald-600/30' },
     { id: 'PENDING', label: 'Pending Requests', color: 'bg-amber-500', border: 'border-amber-500/30' },
     { id: 'BLOCKED', label: 'Blocked / Unavailable', color: 'bg-rose-500', border: 'border-rose-500/30' },
@@ -26,10 +26,10 @@ export default function CalendarLegend() {
   const currentStatus = filters.status || 'all';
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white border border-[#E8DED5] rounded-3xl shadow-xs select-none">
+    <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white border border-[#FEE2E2] rounded-3xl shadow-xs select-none">
       <div className="flex items-center gap-2">
-        <span className="text-[11px] font-black uppercase tracking-wider text-[#8C6D58] flex items-center gap-1.5 mr-1">
-          <Sparkles className="w-3.5 h-3.5 text-[#6F4E37]" />
+        <span className="text-[11px] font-black uppercase tracking-wider text-[#757575] flex items-center gap-1.5 mr-1">
+          <Sparkles className="w-3.5 h-3.5 text-[#E50914]" />
           Filter View:
         </span>
       </div>
@@ -44,8 +44,8 @@ export default function CalendarLegend() {
               onClick={() => setFilters({ status: st.id })}
               className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 border ${
                 isSelected
-                  ? 'bg-[#FFF8F0] text-[#6F4E37] border-[#6F4E37]/30 shadow-2xs'
-                  : 'bg-white text-[#8C6D58] border-transparent hover:bg-[#FFFDF9] hover:text-[#2C1810]'
+                  ? 'bg-[#FFF5F5] text-[#E50914] border-[#E50914]/30 shadow-2xs'
+                  : 'bg-white text-[#757575] border-transparent hover:bg-[#FFFDF9] hover:text-[#252525]'
               }`}
             >
               <span className={`w-2.5 h-2.5 rounded-full ${st.color}`} />

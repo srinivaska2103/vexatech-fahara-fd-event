@@ -62,14 +62,14 @@ export default function ReviewReplyEditor({ review }) {
       className="bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-3xl p-6 sm:p-8 shadow-[0_10px_35px_rgba(0,0,0,0.04)] mb-6 font-sans relative overflow-hidden"
     >
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-stone-100">
-        <h3 className="text-sm font-black text-[#2C1810] uppercase tracking-wider flex items-center gap-2">
-          <MessageSquare className="w-4.5 h-4.5 text-[#6F4E37]" /> Manager Response
+        <h3 className="text-sm font-black text-[#252525] uppercase tracking-wider flex items-center gap-2">
+          <MessageSquare className="w-4.5 h-4.5 text-[#E50914]" /> Manager Response
         </h3>
         {hasReply && !isEditing && (
           <div className="flex items-center gap-2">
             <button 
               onClick={() => setIsEditing(true)} 
-              className="p-2 text-stone-500 hover:text-[#6F4E37] transition-all rounded-xl hover:bg-[#FFF8F0] border border-transparent hover:border-[#DDB892]/40 cursor-pointer"
+              className="p-2 text-stone-500 hover:text-[#E50914] transition-all rounded-xl hover:bg-[#FFF5F5] border border-transparent hover:border-[#EF5350]/40 cursor-pointer"
               title="Edit Response"
             >
               <Edit2 className="w-4 h-4" />
@@ -99,7 +99,7 @@ export default function ReviewReplyEditor({ review }) {
                   key={i}
                   type="button"
                   onClick={() => setValue('reply_text', tmpl, { shouldValidate: true })}
-                  className="text-xs font-semibold text-stone-700 bg-stone-50 hover:bg-[#FFF8F0] hover:text-[#6F4E37] border border-stone-200/80 hover:border-[#DDB892]/60 px-3 py-1.5 rounded-xl transition-all active:scale-95 text-left cursor-pointer shadow-2xs"
+                  className="text-xs font-semibold text-stone-700 bg-stone-50 hover:bg-[#FFF5F5] hover:text-[#E50914] border border-stone-200/80 hover:border-[#EF5350]/60 px-3 py-1.5 rounded-xl transition-all active:scale-95 text-left cursor-pointer shadow-2xs"
                 >
                   &ldquo;{tmpl.slice(0, 45)}...&rdquo;
                 </button>
@@ -112,7 +112,7 @@ export default function ReviewReplyEditor({ review }) {
               {...register('reply_text')}
               placeholder="Write a public response to this review..."
               rows={4}
-              className="w-full bg-[#FFF8F0]/30 border border-stone-200/90 focus:border-[#6F4E37] rounded-2xl p-4 text-sm font-medium text-stone-800 focus:outline-none focus:ring-2 focus:ring-[#6F4E37]/10 transition-all shadow-inner leading-relaxed"
+              className="w-full bg-[#FFF5F5]/30 border border-stone-200/90 focus:border-[#E50914] rounded-2xl p-4 text-sm font-medium text-stone-800 focus:outline-none focus:ring-2 focus:ring-[#E50914]/10 transition-all shadow-inner leading-relaxed"
             />
             <div className="flex justify-between items-center mt-1.5 px-1">
               {errors.reply_text ? (
@@ -144,7 +144,7 @@ export default function ReviewReplyEditor({ review }) {
               whileTap={{ scale: 0.96 }}
               type="submit"
               disabled={submitMutation.isPending || updateMutation.isPending}
-              className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#4A2C11] via-[#5C3818] to-[#6F4E37] text-white rounded-2xl text-xs font-black shadow-md hover:shadow-lg transition-all disabled:opacity-50 cursor-pointer"
+              className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#B71C1C] via-[#5C3818] to-[#E50914] text-white rounded-2xl text-xs font-black shadow-md hover:shadow-lg transition-all disabled:opacity-50 cursor-pointer"
             >
               {(submitMutation.isPending || updateMutation.isPending) ? (
                 <Loader2 className="w-4 h-4 animate-spin text-amber-300" />
@@ -156,8 +156,8 @@ export default function ReviewReplyEditor({ review }) {
           </div>
         </form>
       ) : (
-        <div className="bg-[#FFF8F0]/70 border border-[#DDB892]/50 rounded-2xl p-5 sm:p-6 relative shadow-2xs space-y-2">
-          <div className="text-xs font-black text-[#6F4E37] uppercase tracking-wider flex items-center justify-between">
+        <div className="bg-[#FFF5F5]/70 border border-[#EF5350]/50 rounded-2xl p-5 sm:p-6 relative shadow-2xs space-y-2">
+          <div className="text-xs font-black text-[#E50914] uppercase tracking-wider flex items-center justify-between">
             <span className="flex items-center gap-1.5">
               <CheckCircle className="w-4 h-4 text-emerald-600" /> Official Response
             </span>

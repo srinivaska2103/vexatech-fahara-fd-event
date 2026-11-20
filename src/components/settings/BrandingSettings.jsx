@@ -13,7 +13,7 @@ export default function BrandingSettings() {
   const { setActiveTab } = useSettingsStore();
 
   const { register, handleSubmit, reset, watch } = useForm({
-    defaultValues: { primaryColor: '#6F4E37', secondaryColor: '#A67B5B' }
+    defaultValues: { primaryColor: '#E50914', secondaryColor: '#B71C1C' }
   });
 
   const primaryColor = watch('primaryColor');
@@ -37,72 +37,72 @@ export default function BrandingSettings() {
 
   if (isLoading) {
     return (
-      <div className="bg-white border border-[#E8DED5] rounded-3xl py-20 flex flex-col items-center justify-center text-[#8C6D58] gap-3 shadow-xs">
-        <Loader2 className="w-8 h-8 animate-spin text-[#6F4E37]" />
-        <p className="text-xs font-black text-[#2C1810]">Loading Branding Settings...</p>
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl py-20 flex flex-col items-center justify-center text-[#757575] gap-3 shadow-xs">
+        <Loader2 className="w-8 h-8 animate-spin text-[#E50914]" />
+        <p className="text-xs font-black text-[#252525]">Loading Branding Settings...</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-3xl border border-[#E8DED5] p-6 sm:p-8 shadow-xs space-y-6 select-none font-sans">
+    <div className="bg-white rounded-3xl border border-[#FEE2E2] p-6 sm:p-8 shadow-xs space-y-6 select-none font-sans">
       
       {/* Header */}
       <div className="border-b border-[#F2EAE1] pb-4 space-y-1">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#6F4E37]/10 text-[#6F4E37] text-[10px] font-black uppercase tracking-widest">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E50914]/10 text-[#E50914] text-[10px] font-black uppercase tracking-widest">
           <span>STEP 3 OF 4 • BRANDING & MEDIA</span>
         </div>
-        <h2 className="text-xl sm:text-2xl font-extrabold text-[#2C1810]">Branding & Theme Colors</h2>
-        <p className="text-xs text-[#8C6D58] font-medium">Customize your brand identity and theme colors across your customer-facing event page.</p>
+        <h2 className="text-xl sm:text-2xl font-extrabold text-[#252525]">Branding & Theme Colors</h2>
+        <p className="text-xs text-[#757575] font-medium">Customize your brand identity and theme colors across your customer-facing event page.</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           
           <div className="space-y-2">
-            <label className="block text-xs font-black text-[#2C1810] uppercase tracking-wider">Primary Studio Color</label>
+            <label className="block text-xs font-black text-[#252525] uppercase tracking-wider">Primary Studio Color</label>
             <div className="flex items-center gap-3">
               <input 
                 type="color"
                 {...register('primaryColor')}
-                className="w-12 h-12 rounded-2xl cursor-pointer border border-[#E8DED5] p-1 bg-white shrink-0"
+                className="w-12 h-12 rounded-2xl cursor-pointer border border-[#FEE2E2] p-1 bg-white shrink-0"
               />
               <input 
                 type="text"
                 {...register('primaryColor')}
-                className="w-full px-4 py-3 bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl text-xs font-mono font-bold text-[#2C1810] uppercase focus:outline-none focus:border-[#6F4E37]"
+                className="w-full px-4 py-3 bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl text-xs font-mono font-bold text-[#252525] uppercase focus:outline-none focus:border-[#E50914]"
               />
             </div>
-            <p className="text-[11px] text-[#8C6D58] font-medium">Used for key CTA buttons, active state indicators, and badges.</p>
+            <p className="text-[11px] text-[#757575] font-medium">Used for key CTA buttons, active state indicators, and badges.</p>
           </div>
 
           <div className="space-y-2">
-            <label className="block text-xs font-black text-[#2C1810] uppercase tracking-wider">Secondary Accent Color</label>
+            <label className="block text-xs font-black text-[#252525] uppercase tracking-wider">Secondary Accent Color</label>
             <div className="flex items-center gap-3">
               <input 
                 type="color"
                 {...register('secondaryColor')}
-                className="w-12 h-12 rounded-2xl cursor-pointer border border-[#E8DED5] p-1 bg-white shrink-0"
+                className="w-12 h-12 rounded-2xl cursor-pointer border border-[#FEE2E2] p-1 bg-white shrink-0"
               />
               <input 
                 type="text"
                 {...register('secondaryColor')}
-                className="w-full px-4 py-3 bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl text-xs font-mono font-bold text-[#2C1810] uppercase focus:outline-none focus:border-[#6F4E37]"
+                className="w-full px-4 py-3 bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl text-xs font-mono font-bold text-[#252525] uppercase focus:outline-none focus:border-[#E50914]"
               />
             </div>
-            <p className="text-[11px] text-[#8C6D58] font-medium">Used for subheadings, borders, and secondary highlights.</p>
+            <p className="text-[11px] text-[#757575] font-medium">Used for subheadings, borders, and secondary highlights.</p>
           </div>
         </div>
 
         {/* Live Theme Preview */}
         <div className="pt-4 border-t border-[#F2EAE1] space-y-3">
-          <h3 className="text-xs font-black text-[#2C1810] uppercase tracking-wider">Live Theme Preview</h3>
-          <div className="p-6 rounded-3xl border border-[#E8DED5] flex flex-col sm:flex-row items-center justify-between gap-4" style={{ backgroundColor: `${primaryColor}0D` }}>
+          <h3 className="text-xs font-black text-[#252525] uppercase tracking-wider">Live Theme Preview</h3>
+          <div className="p-6 rounded-3xl border border-[#FEE2E2] flex flex-col sm:flex-row items-center justify-between gap-4" style={{ backgroundColor: `${primaryColor}0D` }}>
             <div className="space-y-1">
               <span className="text-xs font-black uppercase tracking-wider" style={{ color: primaryColor }}>
-                • FAHARA VENUE PARTNER
+                • Grab2GO VENUE PARTNER
               </span>
-              <h4 className="text-lg font-extrabold text-[#2C1810]">Theme Preview Card</h4>
+              <h4 className="text-lg font-extrabold text-[#252525]">Theme Preview Card</h4>
             </div>
             <button 
               type="button" 
@@ -119,15 +119,15 @@ export default function BrandingSettings() {
           <button 
             type="button" 
             onClick={() => setActiveTab('business')}
-            className="px-5 py-2.5 rounded-2xl bg-white hover:bg-[#FFF8F0] border border-[#E8DED5] text-[#2C1810] text-xs font-bold shadow-2xs flex items-center gap-2 transition-all active:scale-95"
+            className="px-5 py-2.5 rounded-2xl bg-white hover:bg-[#FFF5F5] border border-[#FEE2E2] text-[#252525] text-xs font-bold shadow-2xs flex items-center gap-2 transition-all active:scale-95"
           >
-            <ArrowLeft className="w-4 h-4 text-[#8C6D58]" />
+            <ArrowLeft className="w-4 h-4 text-[#757575]" />
             <span>Back to Step 2</span>
           </button>
 
           <button 
             type="submit" 
-            className="bg-[#6F4E37] hover:bg-[#5D4037] text-white px-6 py-3 rounded-2xl font-extrabold text-xs sm:text-sm shadow-md shadow-[#6F4E37]/20 flex items-center gap-2 transition-all active:scale-95"
+            className="bg-[#E50914] hover:bg-[#B71C1C] text-white px-6 py-3 rounded-2xl font-extrabold text-xs sm:text-sm shadow-md shadow-[#E50914]/20 flex items-center gap-2 transition-all active:scale-95"
           >
             <span>Save & Continue to Step 4</span>
             <ArrowRight className="w-4 h-4" />

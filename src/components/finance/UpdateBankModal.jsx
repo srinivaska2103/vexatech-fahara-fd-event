@@ -16,7 +16,7 @@ export default function UpdateBankModal() {
   const { data: profileData } = useGetProfileQuery();
   const { user } = useAuthStore();
 
-  const initialHolderName = accountData?.accountHolderName || profileData?.bank_account_holder || profileData?.account_holder_name || profileData?.name || user?.name || 'Fahara Events & Services Pvt Ltd';
+  const initialHolderName = accountData?.accountHolderName || profileData?.bank_account_holder || profileData?.account_holder_name || profileData?.name || user?.name || 'Grab2GO Events & Services Pvt Ltd';
   const initialEmail = accountData?.email || profileData?.email || user?.email || '';
   const initialIfsc = accountData?.ifsc || profileData?.ifsc_code || profileData?.ifsc || '';
 
@@ -33,7 +33,7 @@ export default function UpdateBankModal() {
   useEffect(() => {
     if (isUpdateBankModalOpen) {
       setFormData({
-        accountHolderName: accountData?.accountHolderName || profileData?.bank_account_holder || profileData?.account_holder_name || profileData?.name || user?.name || 'Fahara Events & Services Pvt Ltd',
+        accountHolderName: accountData?.accountHolderName || profileData?.bank_account_holder || profileData?.account_holder_name || profileData?.name || user?.name || 'Grab2GO Events & Services Pvt Ltd',
         email: accountData?.email || profileData?.email || user?.email || '',
         accountNumber: '',
         confirmAccountNumber: '',
@@ -92,7 +92,7 @@ export default function UpdateBankModal() {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 bg-[#2C1810]/40 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto select-none font-sans">
+      <div className="fixed inset-0 z-50 bg-[#252525]/40 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto select-none font-sans">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -103,11 +103,11 @@ export default function UpdateBankModal() {
           {/* Header */}
           <div className="flex items-start justify-between pb-4 border-b border-[#F2EAE1]">
             <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-2xl bg-[#FFF8F0] border border-[#966746]/20 flex items-center justify-center text-[#966746] shrink-0 shadow-inner">
+              <div className="w-12 h-12 rounded-2xl bg-[#FFF5F5] border border-[#966746]/20 flex items-center justify-center text-[#966746] shrink-0 shadow-inner">
                 <Landmark className="w-6 h-6 stroke-[2]" />
               </div>
               <div className="space-y-0.5">
-                <h2 className="text-xl font-extrabold text-[#2C1810]">Update Settlement Bank Account</h2>
+                <h2 className="text-xl font-extrabold text-[#252525]">Update Settlement Bank Account</h2>
                 <p className="text-xs text-[#7A5A44] font-medium">Razorpay Route vendor payout destination</p>
               </div>
             </div>
@@ -115,7 +115,7 @@ export default function UpdateBankModal() {
             <button
               onClick={() => setUpdateBankModalOpen(false)}
               type="button"
-              className="w-8 h-8 rounded-full bg-[#FAF5EF] hover:bg-[#F2EAE1] text-[#7A5A44] hover:text-[#2C1810] flex items-center justify-center transition-all cursor-pointer"
+              className="w-8 h-8 rounded-full bg-[#FAF5EF] hover:bg-[#F2EAE1] text-[#7A5A44] hover:text-[#252525] flex items-center justify-center transition-all cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -137,7 +137,7 @@ export default function UpdateBankModal() {
             {/* Beneficiary Name */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="block text-[11px] font-black text-[#4A3225] uppercase tracking-wider">
+                <label className="block text-[11px] font-black text-[#E50914] uppercase tracking-wider">
                   Beneficiary Name
                 </label>
                 <input
@@ -148,7 +148,7 @@ export default function UpdateBankModal() {
                     if (errors.accountHolderName) setErrors({ ...errors, accountHolderName: null });
                   }}
                   placeholder="Enter Beneficiary Name"
-                  className={`w-full bg-[#FFFBF8] border rounded-2xl px-4 py-3 text-sm font-medium text-[#2C1810] placeholder:text-[#B59D8B] focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
+                  className={`w-full bg-[#FFFBF8] border rounded-2xl px-4 py-3 text-sm font-medium text-[#252525] placeholder:text-[#B59D8B] focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
                     errors.accountHolderName ? 'border-red-500 bg-red-50/30' : 'border-[#F0E6DD]'
                   }`}
                 />
@@ -156,7 +156,7 @@ export default function UpdateBankModal() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-[11px] font-black text-[#4A3225] uppercase tracking-wider">
+                <label className="block text-[11px] font-black text-[#E50914] uppercase tracking-wider">
                   Email Address
                 </label>
                 <input
@@ -164,7 +164,7 @@ export default function UpdateBankModal() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="vendor@example.com"
-                  className="w-full bg-[#FFFBF8] border border-[#F0E6DD] rounded-2xl px-4 py-3 text-sm font-medium text-[#2C1810] placeholder:text-[#B59D8B] focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all"
+                  className="w-full bg-[#FFFBF8] border border-[#F0E6DD] rounded-2xl px-4 py-3 text-sm font-medium text-[#252525] placeholder:text-[#B59D8B] focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all"
                 />
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function UpdateBankModal() {
             {/* Account Number & Confirm */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="block text-[11px] font-black text-[#4A3225] uppercase tracking-wider">
+                <label className="block text-[11px] font-black text-[#E50914] uppercase tracking-wider">
                   Account Number
                 </label>
                 <input
@@ -183,7 +183,7 @@ export default function UpdateBankModal() {
                     if (errors.accountNumber) setErrors({ ...errors, accountNumber: null });
                   }}
                   placeholder="Enter bank account number"
-                  className={`w-full bg-[#FFFBF8] border rounded-2xl px-4 py-3 text-sm font-mono font-bold text-[#2C1810] placeholder:text-[#B59D8B] placeholder:font-sans focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
+                  className={`w-full bg-[#FFFBF8] border rounded-2xl px-4 py-3 text-sm font-mono font-bold text-[#252525] placeholder:text-[#B59D8B] placeholder:font-sans focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
                     errors.accountNumber ? 'border-red-500 bg-red-50/30' : 'border-[#F0E6DD]'
                   }`}
                 />
@@ -191,7 +191,7 @@ export default function UpdateBankModal() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-[11px] font-black text-[#4A3225] uppercase tracking-wider">
+                <label className="block text-[11px] font-black text-[#E50914] uppercase tracking-wider">
                   Re-Enter Account Number
                 </label>
                 <input
@@ -202,7 +202,7 @@ export default function UpdateBankModal() {
                     if (errors.confirmAccountNumber) setErrors({ ...errors, confirmAccountNumber: null });
                   }}
                   placeholder="Re-enter to confirm"
-                  className={`w-full bg-[#FFFBF8] border rounded-2xl px-4 py-3 text-sm font-mono font-bold text-[#2C1810] placeholder:text-[#B59D8B] placeholder:font-sans focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
+                  className={`w-full bg-[#FFFBF8] border rounded-2xl px-4 py-3 text-sm font-mono font-bold text-[#252525] placeholder:text-[#B59D8B] placeholder:font-sans focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
                     errors.confirmAccountNumber ? 'border-red-500 bg-red-50/30' : 'border-[#F0E6DD]'
                   }`}
                 />
@@ -213,7 +213,7 @@ export default function UpdateBankModal() {
             {/* IFSC & Phone */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="block text-[11px] font-black text-[#4A3225] uppercase tracking-wider">
+                <label className="block text-[11px] font-black text-[#E50914] uppercase tracking-wider">
                   IFSC Code
                 </label>
                 <input
@@ -224,7 +224,7 @@ export default function UpdateBankModal() {
                     if (errors.ifscCode) setErrors({ ...errors, ifscCode: null });
                   }}
                   placeholder="HDFC0001234"
-                  className={`w-full bg-[#FFFBF8] border rounded-2xl px-4 py-3 text-sm font-mono uppercase font-extrabold text-[#2C1810] placeholder:text-[#B59D8B] placeholder:font-sans focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
+                  className={`w-full bg-[#FFFBF8] border rounded-2xl px-4 py-3 text-sm font-mono uppercase font-extrabold text-[#252525] placeholder:text-[#B59D8B] placeholder:font-sans focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
                     errors.ifscCode ? 'border-red-500 bg-red-50/30' : 'border-[#F0E6DD]'
                   }`}
                 />
@@ -232,7 +232,7 @@ export default function UpdateBankModal() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-[11px] font-black text-[#4A3225] uppercase tracking-wider">
+                <label className="block text-[11px] font-black text-[#E50914] uppercase tracking-wider">
                   Phone Number
                 </label>
                 <input
@@ -240,7 +240,7 @@ export default function UpdateBankModal() {
                   value={formData.phoneNumber}
                   onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
                   placeholder="10-digit phone number"
-                  className="w-full bg-[#FFFBF8] border border-[#F0E6DD] rounded-2xl px-4 py-3 text-sm font-medium text-[#2C1810] placeholder:text-[#B59D8B] focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all"
+                  className="w-full bg-[#FFFBF8] border border-[#F0E6DD] rounded-2xl px-4 py-3 text-sm font-medium text-[#252525] placeholder:text-[#B59D8B] focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all"
                 />
               </div>
             </div>
@@ -250,7 +250,7 @@ export default function UpdateBankModal() {
               <button
                 type="button"
                 onClick={() => setUpdateBankModalOpen(false)}
-                className="px-5 py-3 rounded-2xl border border-[#F0E6DD] bg-white text-[#7A5A44] hover:text-[#2C1810] hover:bg-[#FAF5EF] font-bold text-sm transition-all cursor-pointer active:scale-98"
+                className="px-5 py-3 rounded-2xl border border-[#F0E6DD] bg-white text-[#7A5A44] hover:text-[#252525] hover:bg-[#FAF5EF] font-bold text-sm transition-all cursor-pointer active:scale-98"
               >
                 Cancel
               </button>

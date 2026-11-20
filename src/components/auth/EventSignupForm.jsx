@@ -35,12 +35,12 @@ export default function EventSignupForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-full select-none mt-2">
       
       <div className="flex flex-col space-y-1.5 w-full">
-        <label className="text-[11px] font-black text-[#4A3225] uppercase tracking-wider">Owner / Manager Name</label>
+        <label className="text-[11px] font-black text-[#E50914] uppercase tracking-wider">Owner / Manager Name</label>
         <input
           {...register('name')}
           type="text"
           placeholder="Enter Your Name"
-          className={`w-full px-4 py-3 rounded-2xl border bg-[#FFFBF8] text-[#2C1810] placeholder:text-[#B59D8B] text-sm font-medium focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
+          className={`w-full px-4 py-3 rounded-2xl border bg-[#FFFBF8] text-[#252525] placeholder:text-[#B59D8B] text-sm font-medium focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
             errors.name ? 'border-red-500 bg-red-50/50' : 'border-[#F0E6DD]'
           }`}
         />
@@ -48,12 +48,12 @@ export default function EventSignupForm() {
       </div>
 
       <div className="flex flex-col space-y-1.5 w-full">
-        <label className="text-[11px] font-black text-[#4A3225] uppercase tracking-wider">Business Email Address</label>
+        <label className="text-[11px] font-black text-[#E50914] uppercase tracking-wider">Business Email Address</label>
         <input
           {...register('email')}
           type="email"
           placeholder="manager@company.com"
-          className={`w-full px-4 py-3 rounded-2xl border bg-[#FFFBF8] text-[#2C1810] placeholder:text-[#B59D8B] text-sm font-medium focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
+          className={`w-full px-4 py-3 rounded-2xl border bg-[#FFFBF8] text-[#252525] placeholder:text-[#B59D8B] text-sm font-medium focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
             errors.email ? 'border-red-500 bg-red-50/50' : 'border-[#F0E6DD]'
           }`}
         />
@@ -61,12 +61,12 @@ export default function EventSignupForm() {
       </div>
 
       <div className="flex flex-col space-y-1.5 w-full">
-        <label className="text-[11px] font-black text-[#4A3225] uppercase tracking-wider">Phone Number</label>
+        <label className="text-[11px] font-black text-[#E50914] uppercase tracking-wider">Phone Number</label>
         <input
           {...register('phone')}
           type="tel"
           placeholder="+91 9876543210"
-          className={`w-full px-4 py-3 rounded-2xl border bg-[#FFFBF8] text-[#2C1810] placeholder:text-[#B59D8B] text-sm font-medium focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
+          className={`w-full px-4 py-3 rounded-2xl border bg-[#FFFBF8] text-[#252525] placeholder:text-[#B59D8B] text-sm font-medium focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
             errors.phone ? 'border-red-500 bg-red-50/50' : 'border-[#F0E6DD]'
           }`}
         />

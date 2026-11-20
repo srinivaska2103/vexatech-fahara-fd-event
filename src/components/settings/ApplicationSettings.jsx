@@ -20,7 +20,7 @@ const ApplicationSettings = () => {
         </div>
         <div>
           <h2 className="text-xl font-bold text-text">Application Preferences</h2>
-          <p className="text-sm text-gray-500 mt-1">Customize your Fahara workspace experience.</p>
+          <p className="text-sm text-gray-500 mt-1">Customize your Grab2GO workspace experience.</p>
         </div>
       </div>
 

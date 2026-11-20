@@ -40,7 +40,7 @@ export default function LogoutConfirmModal({ isOpen, onClose, onConfirm }) {
                 Confirm Logout
               </h3>
               <p className="text-xs text-text/60 mt-0.5">
-                Fahara Event Dashboard
+                Grab2GO Event Dashboard
               </p>
             </div>
           </div>

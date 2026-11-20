@@ -28,7 +28,7 @@ export default function BusinessVerificationCard() {
               <ShieldCheck className="w-8 h-8" />
             </div>
             <h3 className="text-lg font-bold text-green-700 mb-1">Fully Verified</h3>
-            <p className="text-sm text-text/60 mb-6 max-w-xs">Your business profile has been reviewed and verified by the Fahara Trust Team.</p>
+            <p className="text-sm text-text/60 mb-6 max-w-xs">Your business profile has been reviewed and verified by the Grab2GO Trust Team.</p>
             
             <div className="w-full bg-background border border-border rounded-xl p-4 text-left">
               <h4 className="text-xs font-bold uppercase tracking-wider text-text/50 mb-3">Verified Documents</h4>

@@ -18,9 +18,9 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
 
   if (isLoading) {
     return (
-      <div className="bg-white border border-[#E8DED5] rounded-3xl py-20 flex flex-col items-center justify-center text-[#8C6D58] gap-3 shadow-xs">
-        <Loader2 className="w-8 h-8 animate-spin text-[#6F4E37]" />
-        <p className="text-xs font-black text-[#2C1810]">Loading payment account & bank verification...</p>
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl py-20 flex flex-col items-center justify-center text-[#757575] gap-3 shadow-xs">
+        <Loader2 className="w-8 h-8 animate-spin text-[#E50914]" />
+        <p className="text-xs font-black text-[#252525]">Loading payment account & bank verification...</p>
       </div>
     );
   }
@@ -114,30 +114,30 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="bg-gradient-to-r from-[#FFFBF8] via-[#FFF8F0] to-[#FAF5EF] border border-[#E8DED5] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden group hover:border-[#6F4E37]/30 transition-all duration-300"
+        className="bg-gradient-to-r from-[#FFFBF8] via-[#FFF5F5] to-[#FAF5EF] border border-[#FEE2E2] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden group hover:border-[#E50914]/30 transition-all duration-300"
       >
-        <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-[#6F4E37]/10 via-[#A67B5B]/5 to-transparent rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-500" />
+        <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-[#E50914]/10 via-[#B71C1C]/5 to-transparent rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-500" />
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2.5">
             <div className="flex items-center gap-2.5 flex-wrap">
               <Link 
                 href="/event/finance/payments"
-                className="px-3.5 py-1.5 rounded-full bg-white border border-[#E8DED5] text-[#6F4E37] hover:bg-[#6F4E37] hover:text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95 cursor-pointer"
+                className="px-3.5 py-1.5 rounded-full bg-white border border-[#FEE2E2] text-[#E50914] hover:bg-[#E50914] hover:text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95 cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Back to Payments</span>
               </Link>
-              <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#6F4E37]/10 text-[#6F4E37]">
+              <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#E50914]/10 text-[#E50914]">
                 • BANK VERIFICATION
               </span>
             </div>
             
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#252525] tracking-tight">
               Payment Account & Bank Verification
             </h1>
             
-            <p className="text-xs sm:text-sm text-[#8C6D58] font-medium max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#757575] font-medium max-w-2xl leading-relaxed">
               Validate your bank account details for direct split settlement payouts.
             </p>
           </div>
@@ -147,7 +147,7 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
             type="button"
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="px-5 py-3 rounded-2xl bg-[#6F4E37] hover:bg-[#5C3B29] text-white text-xs font-black shadow-md shadow-[#6F4E37]/20 flex items-center gap-2 transition-all active:scale-95 shrink-0 self-start md:self-center min-h-[44px] cursor-pointer disabled:opacity-70"
+            className="px-5 py-3 rounded-2xl bg-[#E50914] hover:bg-[#5C3B29] text-white text-xs font-black shadow-md shadow-[#E50914]/20 flex items-center gap-2 transition-all active:scale-95 shrink-0 self-start md:self-center min-h-[44px] cursor-pointer disabled:opacity-70"
           >
             <RefreshCw className={`w-4 h-4 text-white ${isRefreshing ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-500'}`} />
             <span>{isRefreshing ? 'Refreshing...' : 'Refresh Status'}</span>
@@ -162,15 +162,15 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
-        className="bg-white border border-[#E8DED5] hover:border-[#6F4E37]/30 rounded-3xl p-6 sm:p-7 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-300"
+        className="bg-white border border-[#FEE2E2] hover:border-[#E50914]/30 rounded-3xl p-6 sm:p-7 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-300"
       >
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#FFF8F0] border border-[#6F4E37]/20 flex items-center justify-center text-[#6F4E37] shrink-0 shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-[#FFF5F5] border border-[#E50914]/20 flex items-center justify-center text-[#E50914] shrink-0 shadow-xs">
             <Shield className="w-6 h-6 stroke-[2]" />
           </div>
           <div className="space-y-1">
             <div className="flex items-center gap-3 flex-wrap">
-              <h3 className="text-lg sm:text-xl font-extrabold text-[#2C1810]">
+              <h3 className="text-lg sm:text-xl font-extrabold text-[#252525]">
                 Vendor Payment Account
               </h3>
               {isVerified ? (
@@ -185,7 +185,7 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
                 </span>
               )}
             </div>
-            <p className="text-xs sm:text-sm text-[#8C6D58] font-medium leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#757575] font-medium leading-relaxed">
               Direct split settlement transfers are routed strictly to your verified bank account.
             </p>
           </div>
@@ -194,9 +194,9 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
         <button
           type="button"
           onClick={() => setUpdateBankModalOpen(true)}
-          className="px-5 py-3 rounded-2xl bg-[#FFFBF8] hover:bg-[#6F4E37] border border-[#E8DED5] hover:border-[#6F4E37] text-[#2C1810] hover:text-white text-xs font-extrabold shadow-xs flex items-center gap-2 transition-all active:scale-95 shrink-0 min-h-[44px] cursor-pointer group"
+          className="px-5 py-3 rounded-2xl bg-[#FFFBF8] hover:bg-[#E50914] border border-[#FEE2E2] hover:border-[#E50914] text-[#252525] hover:text-white text-xs font-extrabold shadow-xs flex items-center gap-2 transition-all active:scale-95 shrink-0 min-h-[44px] cursor-pointer group"
         >
-          <Edit3 className="w-4 h-4 text-[#8C6D58] group-hover:text-white transition-colors" />
+          <Edit3 className="w-4 h-4 text-[#757575] group-hover:text-white transition-colors" />
           <span>Edit Bank Details</span>
         </button>
       </motion.div>
@@ -208,13 +208,13 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         
         {/* Left Column (2/3 width): Settlement Destination */}
-        <div className="lg:col-span-2 bg-white border border-[#E8DED5] rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div className="lg:col-span-2 bg-white border border-[#FEE2E2] rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
           <div className="space-y-1 border-b border-[#F2EAE1] pb-4">
-            <h3 className="text-lg font-extrabold text-[#2C1810] flex items-center gap-2">
-              <Landmark className="w-5 h-5 text-[#6F4E37]" />
+            <h3 className="text-lg font-extrabold text-[#252525] flex items-center gap-2">
+              <Landmark className="w-5 h-5 text-[#E50914]" />
               <span>Settlement Destination</span>
             </h3>
-            <p className="text-xs text-[#8C6D58] font-medium">
+            <p className="text-xs text-[#757575] font-medium">
               Bank account linked to your Vendor ID
             </p>
           </div>
@@ -254,85 +254,85 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             
             {/* Beneficiary Name Card */}
-            <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-5 space-y-2 hover:-translate-y-0.5 hover:shadow-xs hover:border-[#6F4E37]/30 transition-all duration-200">
+            <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl p-5 space-y-2 hover:-translate-y-0.5 hover:shadow-xs hover:border-[#E50914]/30 transition-all duration-200">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider block">
+                <span className="text-[10px] font-black text-[#757575] uppercase tracking-wider block">
                   Beneficiary Name
                 </span>
               </div>
-              <span className="text-base sm:text-lg font-extrabold text-[#2C1810] block truncate">
+              <span className="text-base sm:text-lg font-extrabold text-[#252525] block truncate">
                 {accountHolderName !== 'Not Configured' ? accountHolderName.toUpperCase() : 'Not Configured'}
               </span>
             </div>
 
             {/* Masked Bank Account Card */}
-            <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-5 space-y-2 hover:-translate-y-0.5 hover:shadow-xs hover:border-[#6F4E37]/30 transition-all duration-200">
+            <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl p-5 space-y-2 hover:-translate-y-0.5 hover:shadow-xs hover:border-[#E50914]/30 transition-all duration-200">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider block">
+                <span className="text-[10px] font-black text-[#757575] uppercase tracking-wider block">
                   Masked Bank Account
                 </span>
                 {maskedBankAccount !== 'Not Configured' && (
                   <button 
                     onClick={() => copyToClipboard(maskedBankAccount, 'Account Number')}
-                    className="p-1 rounded-lg hover:bg-[#6F4E37]/10 text-[#8C6D58] hover:text-[#6F4E37] transition-colors"
+                    className="p-1 rounded-lg hover:bg-[#E50914]/10 text-[#757575] hover:text-[#E50914] transition-colors"
                     title="Copy Account Number"
                   >
                     <Copy className="w-3.5 h-3.5" />
                   </button>
                 )}
               </div>
-              <span className="text-base sm:text-lg font-black text-[#2C1810] block tracking-wider flex items-center gap-2">
-                <CreditCard className="w-4 h-4 text-[#8C6D58] shrink-0" />
+              <span className="text-base sm:text-lg font-black text-[#252525] block tracking-wider flex items-center gap-2">
+                <CreditCard className="w-4 h-4 text-[#757575] shrink-0" />
                 <span>{maskedBankAccount}</span>
               </span>
             </div>
 
             {/* IFSC Code Card */}
-            <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-5 space-y-2 hover:-translate-y-0.5 hover:shadow-xs hover:border-[#6F4E37]/30 transition-all duration-200">
+            <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl p-5 space-y-2 hover:-translate-y-0.5 hover:shadow-xs hover:border-[#E50914]/30 transition-all duration-200">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider block">
+                <span className="text-[10px] font-black text-[#757575] uppercase tracking-wider block">
                   IFSC Code
                 </span>
                 {ifscCode !== 'Not Configured' && (
                   <button 
                     onClick={() => copyToClipboard(ifscCode, 'IFSC Code')}
-                    className="p-1 rounded-lg hover:bg-[#6F4E37]/10 text-[#8C6D58] hover:text-[#6F4E37] transition-colors"
+                    className="p-1 rounded-lg hover:bg-[#E50914]/10 text-[#757575] hover:text-[#E50914] transition-colors"
                     title="Copy IFSC Code"
                   >
                     <Copy className="w-3.5 h-3.5" />
                   </button>
                 )}
               </div>
-              <span className="text-base sm:text-lg font-black text-[#2C1810] block tracking-wider font-mono">
+              <span className="text-base sm:text-lg font-black text-[#252525] block tracking-wider font-mono">
                 {ifscCode}
               </span>
             </div>
 
             {/* Beneficiary Email Card */}
-            <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-5 space-y-2 hover:-translate-y-0.5 hover:shadow-xs hover:border-[#6F4E37]/30 transition-all duration-200">
+            <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl p-5 space-y-2 hover:-translate-y-0.5 hover:shadow-xs hover:border-[#E50914]/30 transition-all duration-200">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider block">
+                <span className="text-[10px] font-black text-[#757575] uppercase tracking-wider block">
                   Beneficiary Email
                 </span>
                 {emailAddress !== 'Not Configured' && (
                   <button 
                     onClick={() => copyToClipboard(emailAddress, 'Email')}
-                    className="p-1 rounded-lg hover:bg-[#6F4E37]/10 text-[#8C6D58] hover:text-[#6F4E37] transition-colors"
+                    className="p-1 rounded-lg hover:bg-[#E50914]/10 text-[#757575] hover:text-[#E50914] transition-colors"
                     title="Copy Email"
                   >
                     <Copy className="w-3.5 h-3.5" />
                   </button>
                 )}
               </div>
-              <span className="text-base sm:text-lg font-extrabold text-[#2C1810] block truncate flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#8C6D58] shrink-0" />
+              <span className="text-base sm:text-lg font-extrabold text-[#252525] block truncate flex items-center gap-2">
+                <Mail className="w-4 h-4 text-[#757575] shrink-0" />
                 <span className="truncate">{emailAddress}</span>
               </span>
             </div>
 
             {/* Settlement Capability Card */}
-            <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-5 space-y-2 sm:col-span-2 hover:-translate-y-0.5 hover:shadow-xs hover:border-[#6F4E37]/30 transition-all duration-200">
-              <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider block">
+            <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl p-5 space-y-2 sm:col-span-2 hover:-translate-y-0.5 hover:shadow-xs hover:border-[#E50914]/30 transition-all duration-200">
+              <span className="text-[10px] font-black text-[#757575] uppercase tracking-wider block">
                 Settlement Capability
               </span>
               {isVerified ? (
@@ -352,17 +352,17 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
         </div>
 
         {/* Right Column (1/3 width): Verification Status Card */}
-        <div className="lg:col-span-1 bg-white border border-[#E8DED5] rounded-3xl p-6 sm:p-7 shadow-xs space-y-5 h-fit">
+        <div className="lg:col-span-1 bg-white border border-[#FEE2E2] rounded-3xl p-6 sm:p-7 shadow-xs space-y-5 h-fit">
           <div className="border-b border-[#F2EAE1] pb-3">
-            <h3 className="text-base font-extrabold text-[#2C1810] flex items-center gap-2">
-              <FileText className="w-4 h-4 text-[#6F4E37]" />
+            <h3 className="text-base font-extrabold text-[#252525] flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#E50914]" />
               <span>Verification Status</span>
             </h3>
           </div>
 
           <div className="space-y-3">
-            <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-4 flex items-center justify-between">
-              <span className="text-xs font-bold text-[#8C6D58]">Bank Account Status</span>
+            <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl p-4 flex items-center justify-between">
+              <span className="text-xs font-bold text-[#757575]">Bank Account Status</span>
               {isVerified ? (
                 <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
@@ -376,15 +376,15 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
               )}
             </div>
 
-            <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-4 flex items-center justify-between">
-              <span className="text-xs font-bold text-[#8C6D58]">Vendor ID</span>
-              <span className="text-xs font-black text-[#2C1810]">
+            <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl p-4 flex items-center justify-between">
+              <span className="text-xs font-bold text-[#757575]">Vendor ID</span>
+              <span className="text-xs font-black text-[#252525]">
                 {isVerified ? '✓ Active' : 'Pending Setup'}
               </span>
             </div>
 
-            <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-4 flex items-center justify-between">
-              <span className="text-xs font-bold text-[#8C6D58]">Vendor Gateway Status</span>
+            <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl p-4 flex items-center justify-between">
+              <span className="text-xs font-bold text-[#757575]">Vendor Gateway Status</span>
               {isVerified ? (
                 <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase tracking-wider">
                   ✓ Active
@@ -396,8 +396,8 @@ export default function PaymentAccountCard({ accountData, profileData, user, isL
               )}
             </div>
 
-            <div className="bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl p-4 flex items-center justify-between">
-              <span className="text-xs font-bold text-[#8C6D58]">Settlement Status</span>
+            <div className="bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl p-4 flex items-center justify-between">
+              <span className="text-xs font-bold text-[#757575]">Settlement Status</span>
               <span className={`text-xs font-black ${isVerified ? 'text-emerald-700' : 'text-amber-700'}`}>
                 {isVerified ? '✓ Enabled' : 'Disabled'}
               </span>

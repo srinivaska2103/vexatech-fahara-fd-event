@@ -83,17 +83,17 @@ export default function CustomDatePicker({
         onClick={() => setIsOpen((prev) => !prev)}
         className={`w-full bg-[#FFFDF9] border transition-all duration-200 rounded-2xl px-3.5 py-2.5 text-left flex items-center justify-between gap-2 shadow-xs group ${
           isOpen
-            ? 'border-[#6F4E37] ring-2 ring-[#6F4E37]/15 shadow-sm'
-            : 'border-[#E8DED5] hover:border-[#DDB892] hover:bg-white'
+            ? 'border-[#E50914] ring-2 ring-[#E50914]/15 shadow-sm'
+            : 'border-[#FEE2E2] hover:border-[#EF5350] hover:bg-white'
         }`}
       >
         <div className="flex items-center gap-2.5 min-w-0">
           <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-            isOpen ? 'bg-[#6F4E37] text-white' : 'bg-[#FFF8F0] text-[#6F4E37]'
+            isOpen ? 'bg-[#E50914] text-white' : 'bg-[#FFF5F5] text-[#E50914]'
           }`}>
             <CalendarIcon className="w-3.5 h-3.5" />
           </div>
-          <span className="text-xs font-bold text-[#2C1810] truncate">
+          <span className="text-xs font-bold text-[#252525] truncate">
             {value ? format(new Date(value), 'EEE, dd MMM yyyy') : label}
           </span>
         </div>
@@ -101,24 +101,24 @@ export default function CustomDatePicker({
 
       {/* Popover Calendar */}
       {isOpen && (
-        <div className="absolute z-50 left-0 mt-2 bg-white border border-[#E8DED5] rounded-3xl p-4 shadow-2xl w-72 animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute z-50 left-0 mt-2 bg-white border border-[#FEE2E2] rounded-3xl p-4 shadow-2xl w-72 animate-in fade-in zoom-in-95 duration-150">
           {/* Calendar Header */}
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-xs font-black text-[#2C1810]">
+            <h4 className="text-xs font-black text-[#252525]">
               {format(viewDate, 'MMMM yyyy')}
             </h4>
             <div className="flex items-center gap-1">
               <button
                 type="button"
                 onClick={() => setViewDate(subMonths(viewDate, 1))}
-                className="w-7 h-7 rounded-xl flex items-center justify-center text-[#8C6D58] hover:bg-[#FFF8F0] hover:text-[#6F4E37] transition-colors"
+                className="w-7 h-7 rounded-xl flex items-center justify-center text-[#757575] hover:bg-[#FFF5F5] hover:text-[#E50914] transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 type="button"
                 onClick={() => setViewDate(addMonths(viewDate, 1))}
-                className="w-7 h-7 rounded-xl flex items-center justify-center text-[#8C6D58] hover:bg-[#FFF8F0] hover:text-[#6F4E37] transition-colors"
+                className="w-7 h-7 rounded-xl flex items-center justify-center text-[#757575] hover:bg-[#FFF5F5] hover:text-[#E50914] transition-colors"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -128,7 +128,7 @@ export default function CustomDatePicker({
           {/* Weekday Labels */}
           <div className="grid grid-cols-7 gap-1 text-center mb-1.5">
             {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((d) => (
-              <span key={d} className="text-[10px] font-black text-[#8C6D58] py-0.5">
+              <span key={d} className="text-[10px] font-black text-[#757575] py-0.5">
                 {d}
               </span>
             ))}
@@ -148,12 +148,12 @@ export default function CustomDatePicker({
                   onClick={() => handleSelect(d)}
                   className={`w-8 h-8 rounded-xl text-xs font-bold flex items-center justify-center transition-all ${
                     isSelected
-                      ? 'bg-[#6F4E37] text-white shadow-xs font-black scale-105'
+                      ? 'bg-[#E50914] text-white shadow-xs font-black scale-105'
                       : isToday
-                      ? 'bg-[#FFF8F0] text-[#6F4E37] border border-[#6F4E37]/30 hover:bg-[#6F4E37] hover:text-white'
+                      ? 'bg-[#FFF5F5] text-[#E50914] border border-[#E50914]/30 hover:bg-[#E50914] hover:text-white'
                       : isCurrentMonth
-                      ? 'text-[#2C1810] hover:bg-[#FFF8F0] hover:text-[#6F4E37]'
-                      : 'text-[#8C6D58]/35 hover:bg-[#FFF8F0]/50'
+                      ? 'text-[#252525] hover:bg-[#FFF5F5] hover:text-[#E50914]'
+                      : 'text-[#757575]/35 hover:bg-[#FFF5F5]/50'
                   }`}
                 >
                   {format(d, 'd')}
@@ -167,14 +167,14 @@ export default function CustomDatePicker({
             <button
               type="button"
               onClick={handleToday}
-              className="text-[11px] font-black text-[#6F4E37] hover:underline"
+              className="text-[11px] font-black text-[#E50914] hover:underline"
             >
               Today
             </button>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="text-[11px] font-bold text-[#8C6D58] hover:text-[#2C1810]"
+              className="text-[11px] font-bold text-[#757575] hover:text-[#252525]"
             >
               Done
             </button>

@@ -33,8 +33,25 @@ export default function PayoutsPage() {
   const sort = useFinanceStore(state => state.sort);
 
   const { data: payoutsApiData, isLoading: isPayoutsLoading, error, refetch } = usePayoutList(filters, pagination, sort);
-  const { data: dashboardData, isLoading: isDashboardLoading } = useDashboardQueries();
-  const { data: profileData } = useGetProfileQuery();
+  const { data: dashboardData, isLoading: isDashboardLoading, refetch: refetchDashboard } = useDashboardQueries();
+  const { data: profileData, refetch: refetchProfile } = useGetProfileQuery();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    try {
+      setIsRefreshing(true);
+      await Promise.all([
+        refetch ? refetch() : Promise.resolve(),
+        refetchDashboard ? refetchDashboard() : Promise.resolve(),
+        refetchProfile ? refetchProfile() : Promise.resolve(),
+      ]);
+      toast.success('Payout settlements updated');
+    } catch {
+      toast.error('Failed to refresh payouts');
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 500);
+    }
+  };
   
   const rawBookings = dashboardData?.rawBookings || [];
   const apiPayouts = payoutsApiData?.data || [];
@@ -203,7 +220,7 @@ export default function PayoutsPage() {
               </span>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#2C1810] tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#252525] tracking-tight">
               Bank Payout Settlements
             </h1>
             
@@ -217,7 +234,7 @@ export default function PayoutsPage() {
             <button 
               type="button"
               onClick={handleExport}
-              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-[#FAF5EF] border border-[#F0E6DD] text-[#2C1810] text-xs font-bold shadow-xs flex items-center gap-2 transition-all active:scale-95 min-h-[42px] cursor-pointer"
+              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-[#FAF5EF] border border-[#F0E6DD] text-[#252525] text-xs font-bold shadow-xs flex items-center gap-2 transition-all active:scale-95 min-h-[42px] cursor-pointer"
             >
               <Download className="w-4 h-4 text-[#7A5A44]" />
               <span>Export CSV</span>
@@ -241,7 +258,7 @@ export default function PayoutsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         
         {/* Card 1: TOTAL SETTLED */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-emerald-300 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-emerald-300 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-black text-emerald-700 uppercase tracking-wider">
               Total Settled
@@ -251,7 +268,7 @@ export default function PayoutsPage() {
             </div>
           </div>
           <div>
-            <div className="text-3xl sm:text-4xl font-black text-[#2C1810] tracking-tight">
+            <div className="text-3xl sm:text-4xl font-black text-[#252525] tracking-tight">
               ₹{Math.round(totalSettled).toLocaleString('en-IN')}
             </div>
             <p className="text-xs text-emerald-700 font-bold mt-1">
@@ -261,7 +278,7 @@ export default function PayoutsPage() {
         </div>
 
         {/* Card 2: PENDING SETTLEMENT */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-amber-300 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-amber-300 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-black text-amber-700 uppercase tracking-wider">
               Pending Settlement
@@ -271,7 +288,7 @@ export default function PayoutsPage() {
             </div>
           </div>
           <div>
-            <div className="text-3xl sm:text-4xl font-black text-[#2C1810] tracking-tight">
+            <div className="text-3xl sm:text-4xl font-black text-[#252525] tracking-tight">
               ₹{Math.round(pendingSettlement).toLocaleString('en-IN')}
             </div>
             <p className="text-xs text-amber-700 font-bold mt-1">
@@ -281,7 +298,7 @@ export default function PayoutsPage() {
         </div>
 
         {/* Card 3: PROCESSING QUEUE */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-blue-300 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-blue-300 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-black text-blue-700 uppercase tracking-wider">
               Processing Queue
@@ -291,7 +308,7 @@ export default function PayoutsPage() {
             </div>
           </div>
           <div>
-            <div className="text-3xl sm:text-4xl font-black text-[#2C1810] tracking-tight">
+            <div className="text-3xl sm:text-4xl font-black text-[#252525] tracking-tight">
               ₹{Math.round(processingQueue).toLocaleString('en-IN')}
             </div>
             <p className="text-xs text-blue-700 font-bold mt-1">
@@ -301,7 +318,7 @@ export default function PayoutsPage() {
         </div>
 
         {/* Card 4: FAILED / REVERSED */}
-        <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-rose-300 transition-colors">
+        <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-3 hover:border-rose-300 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-black text-rose-700 uppercase tracking-wider">
               Failed / Reversed
@@ -311,7 +328,7 @@ export default function PayoutsPage() {
             </div>
           </div>
           <div>
-            <div className="text-3xl sm:text-4xl font-black text-[#2C1810] tracking-tight">
+            <div className="text-3xl sm:text-4xl font-black text-[#252525] tracking-tight">
               ₹{Math.round(failedReversed).toLocaleString('en-IN')}
             </div>
             <p className="text-xs text-rose-700 font-bold mt-1">
@@ -325,7 +342,7 @@ export default function PayoutsPage() {
       {/* ========================================== */}
       {/* 3. FILTER TABS & SEARCH TOOLBAR            */}
       {/* ========================================== */}
-      <div className="bg-white border border-[#E8DED5] rounded-3xl p-4 sm:p-5 shadow-2xs flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-4">
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl p-4 sm:p-5 shadow-2xs flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-4">
         
         {/* Status Filter Pills Left */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 xl:pb-0 scrollbar-none">
@@ -336,13 +353,13 @@ export default function PayoutsPage() {
               onClick={() => setActiveTab(tab.id)}
               className={`px-4 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
                 activeTab === tab.id
-                  ? 'bg-[#6F4E37] text-white shadow-xs'
-                  : 'bg-[#FFF8F0] hover:bg-[#6F4E37]/10 text-[#8C6D58]'
+                  ? 'bg-[#E50914] text-white shadow-xs'
+                  : 'bg-[#FFF5F5] hover:bg-[#E50914]/10 text-[#757575]'
               }`}
             >
               <span>{tab.label}</span>
               <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-[#E8DED5]/60 text-[#6F4E37]'
+                activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-[#FEE2E2]/60 text-[#E50914]'
               }`}>
                 {tab.count}
               </span>
@@ -351,26 +368,38 @@ export default function PayoutsPage() {
         </div>
 
         {/* Right Search Input */}
-        <div className="relative flex-1 xl:w-80">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8C6D58]" />
-          <input 
-            type="text"
-            placeholder="Search Booking ID, Reference..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#2C1810] focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/15 transition-all"
-          />
+        <div className="flex items-center gap-3 w-full xl:w-auto">
+          <div className="relative flex-1 xl:w-80">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#757575]" />
+            <input 
+              type="text"
+              placeholder="Search Booking ID, Reference..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#252525] focus:outline-none focus:border-[#E50914] focus:ring-2 focus:ring-[#E50914]/15 transition-all"
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="p-2.5 rounded-2xl bg-[#FFFDF9] border border-[#FEE2E2] text-[#757575] hover:text-[#252525] hover:bg-[#FFF5F5] transition-colors shrink-0 disabled:opacity-50 cursor-pointer"
+            title="Refresh settlements"
+          >
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#E50914]' : ''}`} />
+          </button>
         </div>
       </div>
 
       {/* ========================================== */}
       {/* 4. MAIN SETTLEMENTS DIRECTORY CONTENT      */}
       {/* ========================================== */}
-      <div className="bg-white border border-[#E8DED5] rounded-3xl shadow-xs overflow-hidden min-h-[380px]">
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl shadow-xs overflow-hidden min-h-[380px]">
         {isPayoutsLoading || isDashboardLoading ? (
-          <div className="flex flex-col items-center justify-center p-20 text-[#8C6D58] gap-3">
-            <Loader2 className="w-8 h-8 animate-spin text-[#6F4E37]" />
-            <p className="text-xs font-black text-[#2C1810]">Loading bank settlements...</p>
+          <div className="flex flex-col items-center justify-center p-20 text-[#757575] gap-3">
+            <Loader2 className="w-8 h-8 animate-spin text-[#E50914]" />
+            <p className="text-xs font-black text-[#252525]">Loading bank settlements...</p>
           </div>
         ) : error ? (
           <div className="bg-rose-50 border border-rose-200 rounded-3xl py-12 px-6 flex flex-col items-center justify-center text-center space-y-3">
@@ -385,18 +414,18 @@ export default function PayoutsPage() {
             animate={{ opacity: 1, scale: 1 }}
             className="py-20 px-6 flex flex-col items-center justify-center text-center space-y-3"
           >
-            <div className="w-16 h-16 rounded-3xl bg-[#FFF8F0] border border-[#6F4E37]/20 flex items-center justify-center text-[#6F4E37] text-2xl font-black shadow-inner mb-1">
+            <div className="w-16 h-16 rounded-3xl bg-[#FFF5F5] border border-[#E50914]/20 flex items-center justify-center text-[#E50914] text-2xl font-black shadow-inner mb-1">
               <Repeat className="w-8 h-8 stroke-[2]" />
             </div>
-            <h3 className="text-xl font-black text-[#2C1810]">No Settlement Records Found</h3>
-            <p className="text-xs sm:text-sm text-[#8C6D58] font-medium max-w-md leading-relaxed">
+            <h3 className="text-xl font-black text-[#252525]">No Settlement Records Found</h3>
+            <p className="text-xs sm:text-sm text-[#757575] font-medium max-w-md leading-relaxed">
               No bank split settlement entries match your current search and status filter.
             </p>
           </motion.div>
         ) : (
           <div className="w-full overflow-x-auto">
-            <table className="w-full text-left text-xs sm:text-sm text-[#2C1810] whitespace-nowrap">
-              <thead className="bg-[#FFF8F0] border-b border-[#E8DED5] text-[10px] uppercase tracking-wider text-[#8C6D58] font-black select-none">
+            <table className="w-full text-left text-xs sm:text-sm text-[#252525] whitespace-nowrap">
+              <thead className="bg-[#FFF5F5] border-b border-[#FEE2E2] text-[10px] uppercase tracking-wider text-[#757575] font-black select-none">
                 <tr>
                   <th className="p-4">Booking ID</th>
                   <th className="p-4">Settlement Date</th>
@@ -416,17 +445,17 @@ export default function PayoutsPage() {
                     className="hover:bg-[#FFFDF9] transition-colors"
                   >
                     {/* BOOKING ID */}
-                    <td className="p-4 font-black text-[#2C1810] text-xs sm:text-sm">
+                    <td className="p-4 font-black text-[#252525] text-xs sm:text-sm">
                       {item.bookingId}
                     </td>
 
                     {/* SETTLEMENT DATE */}
-                    <td className="p-4 text-xs sm:text-sm font-medium text-[#8C6D58]/80">
+                    <td className="p-4 text-xs sm:text-sm font-medium text-[#757575]/80">
                       {formatDateTime(item.settlementDate || item.date)}
                     </td>
 
                     {/* NET EVENT AMOUNT */}
-                    <td className="p-4 font-black text-[#2C1810] text-sm">
+                    <td className="p-4 font-black text-[#252525] text-sm">
                       ₹{item.amount.toLocaleString('en-IN')}
                     </td>
 
@@ -463,7 +492,7 @@ export default function PayoutsPage() {
                         })(item.status)}
 
                         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F5EFEA] text-[#7A5A44] border border-[#E5DCD3] text-xs font-bold">
-                          <GitBranch className="w-3.5 h-3.5 text-[#8C6D58]" /> {item.tag || 'Date as Expected'}
+                          <GitBranch className="w-3.5 h-3.5 text-[#757575]" /> {item.tag || 'Date as Expected'}
                         </span>
                       </div>
                     </td>
@@ -478,7 +507,7 @@ export default function PayoutsPage() {
                       <button
                         type="button"
                         onClick={() => setSelectedSettlement(item)}
-                        className="w-8 h-8 rounded-full bg-[#6F4E37] text-white hover:bg-[#583E2C] flex items-center justify-center transition-all shadow-xs active:scale-90 cursor-pointer mx-auto"
+                        className="w-8 h-8 rounded-full bg-[#E50914] text-white hover:bg-[#583E2C] flex items-center justify-center transition-all shadow-xs active:scale-90 cursor-pointer mx-auto"
                         title="View Settlement Details"
                       >
                         <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -499,17 +528,17 @@ export default function PayoutsPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-white border border-[#E8DED5] rounded-3xl max-w-lg w-full p-6 shadow-xl space-y-5"
+            className="bg-white border border-[#FEE2E2] rounded-3xl max-w-lg w-full p-6 shadow-xl space-y-5"
           >
             <div className="flex items-center justify-between border-b border-[#F2EAE1] pb-4">
               <div>
-                <h3 className="text-lg font-black text-[#2C1810]">Settlement Details</h3>
-                <p className="text-xs text-[#8C6D58] font-bold">Booking Ref: {selectedSettlement.bookingId}</p>
+                <h3 className="text-lg font-black text-[#252525]">Settlement Details</h3>
+                <p className="text-xs text-[#757575] font-bold">Booking Ref: {selectedSettlement.bookingId}</p>
               </div>
               <button 
                 type="button"
                 onClick={() => setSelectedSettlement(null)}
-                className="p-1.5 rounded-full hover:bg-[#FFF8F0] text-[#8C6D58] transition-colors cursor-pointer"
+                className="p-1.5 rounded-full hover:bg-[#FFF5F5] text-[#757575] transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -517,33 +546,33 @@ export default function PayoutsPage() {
 
             <div className="space-y-3 text-xs">
               <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
-                <span className="text-[#8C6D58] font-semibold">Settlement ID</span>
-                <span className="font-black text-[#6F4E37]">{selectedSettlement.id}</span>
+                <span className="text-[#757575] font-semibold">Settlement ID</span>
+                <span className="font-black text-[#E50914]">{selectedSettlement.id}</span>
               </div>
 
               <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
-                <span className="text-[#8C6D58] font-semibold">Razorpay Reference</span>
+                <span className="text-[#757575] font-semibold">Razorpay Reference</span>
                 <span className="font-mono font-bold text-[#4A3427]">{selectedSettlement.razorpayRef}</span>
               </div>
 
               <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
-                <span className="text-[#8C6D58] font-semibold">Net Event Amount</span>
-                <span className="font-black text-[#2C1810] text-sm">₹{selectedSettlement.amount.toLocaleString('en-IN')}</span>
+                <span className="text-[#757575] font-semibold">Net Event Amount</span>
+                <span className="font-black text-[#252525] text-sm">₹{selectedSettlement.amount.toLocaleString('en-IN')}</span>
               </div>
 
               <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
-                <span className="text-[#8C6D58] font-semibold">Settlement Date</span>
-                <span className="font-bold text-[#2C1810]">{formatDateTime(selectedSettlement.settlementDate || selectedSettlement.date)}</span>
+                <span className="text-[#757575] font-semibold">Settlement Date</span>
+                <span className="font-bold text-[#252525]">{formatDateTime(selectedSettlement.settlementDate || selectedSettlement.date)}</span>
               </div>
 
               <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
-                <span className="text-[#8C6D58] font-semibold">Bank Account</span>
-                <span className="font-bold text-[#2C1810]">{selectedSettlement.bankAccount}</span>
+                <span className="text-[#757575] font-semibold">Bank Account</span>
+                <span className="font-bold text-[#252525]">{selectedSettlement.bankAccount}</span>
               </div>
 
               <div className="flex justify-between py-2 border-b border-[#F2EAE1]">
-                <span className="text-[#8C6D58] font-semibold">Status & Tag</span>
-                <span className="font-bold uppercase text-[#6F4E37]">{selectedSettlement.status} — ({selectedSettlement.tag || 'Date as Expected'})</span>
+                <span className="text-[#757575] font-semibold">Status & Tag</span>
+                <span className="font-bold uppercase text-[#E50914]">{selectedSettlement.status} — ({selectedSettlement.tag || 'Date as Expected'})</span>
               </div>
             </div>
 
@@ -551,7 +580,7 @@ export default function PayoutsPage() {
               <button
                 type="button"
                 onClick={() => setSelectedSettlement(null)}
-                className="px-5 py-2.5 bg-[#6F4E37] text-white rounded-2xl text-xs font-bold hover:bg-[#583E2C] transition-colors cursor-pointer"
+                className="px-5 py-2.5 bg-[#E50914] text-white rounded-2xl text-xs font-bold hover:bg-[#583E2C] transition-colors cursor-pointer"
               >
                 Close
               </button>

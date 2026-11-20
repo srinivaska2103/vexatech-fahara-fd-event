@@ -19,12 +19,12 @@ export default function SettingsSidebar() {
     <div className="w-full lg:w-72 shrink-0 space-y-4 font-sans select-none">
       
       {/* Desktop & Tablet Vertical Stepper */}
-      <div className="bg-white border border-[#E8DED5] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
         <div className="border-b border-[#F2EAE1] pb-3">
-          <span className="text-[10px] font-black text-[#8C6D58] uppercase tracking-wider block">
+          <span className="text-[10px] font-black text-[#757575] uppercase tracking-wider block">
             SETUP WIZARD
           </span>
-          <h3 className="text-base font-extrabold text-[#2C1810]">
+          <h3 className="text-base font-extrabold text-[#252525]">
             Step {currentStepObj.step} of {STEPS.length}
           </h3>
         </div>
@@ -44,12 +44,12 @@ export default function SettingsSidebar() {
                   isActive
                     ? stepItem.danger
                       ? 'bg-rose-50 text-rose-700 border border-rose-200 shadow-xs'
-                      : 'bg-[#6F4E37] text-white shadow-md shadow-[#6F4E37]/20 scale-[1.01]'
+                      : 'bg-[#E50914] text-white shadow-md shadow-[#E50914]/20 scale-[1.01]'
                     : isCompleted
-                    ? 'bg-[#FFF8F0] text-[#6F4E37] hover:bg-[#6F4E37]/10'
+                    ? 'bg-[#FFF5F5] text-[#E50914] hover:bg-[#E50914]/10'
                     : stepItem.danger
                     ? 'bg-white text-rose-600 hover:bg-rose-50 border border-transparent'
-                    : 'bg-white text-[#8C6D58] hover:bg-[#FFF8F0] hover:text-[#2C1810]'
+                    : 'bg-white text-[#757575] hover:bg-[#FFF5F5] hover:text-[#252525]'
                 }`}
               >
                 <div className="flex items-center gap-3 min-w-0">
@@ -57,10 +57,10 @@ export default function SettingsSidebar() {
                     isActive
                       ? stepItem.danger ? 'bg-rose-200 text-rose-800' : 'bg-white/20 text-white'
                       : isCompleted
-                      ? 'bg-[#6F4E37]/10 text-[#6F4E37]'
-                      : 'bg-[#FAF5EF] text-[#8C6D58]'
+                      ? 'bg-[#E50914]/10 text-[#E50914]'
+                      : 'bg-[#FAF5EF] text-[#757575]'
                   }`}>
-                    {isCompleted ? <CheckCircle2 className="w-4 h-4 text-[#6F4E37]" /> : stepItem.step}
+                    {isCompleted ? <CheckCircle2 className="w-4 h-4 text-[#E50914]" /> : stepItem.step}
                   </div>
 
                   <div className="min-w-0">
@@ -68,14 +68,14 @@ export default function SettingsSidebar() {
                       {stepItem.title}
                     </span>
                     <span className={`text-[10px] font-medium block truncate ${
-                      isActive ? (stepItem.danger ? 'text-rose-600' : 'text-white/80') : 'text-[#8C6D58]'
+                      isActive ? (stepItem.danger ? 'text-rose-600' : 'text-white/80') : 'text-[#757575]'
                     }`}>
                       {stepItem.subtitle}
                     </span>
                   </div>
                 </div>
 
-                <Icon className={`w-4 h-4 shrink-0 ${isActive ? (stepItem.danger ? 'text-rose-700' : 'text-white') : 'text-[#8C6D58]'}`} />
+                <Icon className={`w-4 h-4 shrink-0 ${isActive ? (stepItem.danger ? 'text-rose-700' : 'text-white') : 'text-[#757575]'}`} />
               </button>
             );
           })}

@@ -32,13 +32,13 @@ export default function WeeklyCalendar({ events = [] }) {
   });
 
   return (
-    <div className="flex-1 flex flex-col w-full bg-white border border-[#E8DED5] rounded-3xl overflow-hidden shadow-xs">
+    <div className="flex-1 flex flex-col w-full bg-white border border-[#FEE2E2] rounded-3xl overflow-hidden shadow-xs">
       <div className="flex-1 overflow-x-auto scrollbar-none">
         <div className="min-w-[750px] flex flex-col h-full">
           
           {/* Header Row */}
-          <div className="flex border-b border-[#E8DED5] bg-[#FFF8F0] sticky top-0 z-20 select-none">
-            <div className="w-20 shrink-0 border-r border-[#E8DED5] py-3 text-center text-[10px] font-black text-[#8C6D58] uppercase">
+          <div className="flex border-b border-[#FEE2E2] bg-[#FFF5F5] sticky top-0 z-20 select-none">
+            <div className="w-20 shrink-0 border-r border-[#FEE2E2] py-3 text-center text-[10px] font-black text-[#757575] uppercase">
               TIME
             </div>
             {days.map(day => {
@@ -48,19 +48,19 @@ export default function WeeklyCalendar({ events = [] }) {
                 <div 
                   key={day.toISOString()} 
                   onClick={() => setSelectedDate(day)}
-                  className={`flex-1 py-3 px-1 text-center border-r border-[#E8DED5] last:border-r-0 cursor-pointer transition-colors ${
-                    isDaySelected ? 'bg-[#FFF8F0]' : 'hover:bg-white/80'
+                  className={`flex-1 py-3 px-1 text-center border-r border-[#FEE2E2] last:border-r-0 cursor-pointer transition-colors ${
+                    isDaySelected ? 'bg-[#FFF5F5]' : 'hover:bg-white/80'
                   }`}
                 >
-                  <div className={`text-[10px] font-black uppercase tracking-wider mb-1 ${isCurrentDay ? 'text-[#6F4E37]' : 'text-[#8C6D58]'}`}>
+                  <div className={`text-[10px] font-black uppercase tracking-wider mb-1 ${isCurrentDay ? 'text-[#E50914]' : 'text-[#757575]'}`}>
                     {format(day, 'EEE')}
                   </div>
                   <div className={`text-xs font-black w-7 h-7 mx-auto flex items-center justify-center rounded-xl transition-all ${
                     isCurrentDay 
-                      ? 'bg-[#6F4E37] text-white shadow-xs scale-105' 
+                      ? 'bg-[#E50914] text-white shadow-xs scale-105' 
                       : isDaySelected
-                      ? 'bg-[#A67B5B] text-white'
-                      : 'text-[#2C1810]'
+                      ? 'bg-[#B71C1C] text-white'
+                      : 'text-[#252525]'
                   }`}>
                     {format(day, 'd')}
                   </div>
@@ -73,10 +73,10 @@ export default function WeeklyCalendar({ events = [] }) {
           <div className="flex-1 overflow-y-auto max-h-[650px] scrollbar-none">
             <div className="flex relative">
               {/* Hour Labels */}
-              <div className="w-20 shrink-0 border-r border-[#E8DED5] bg-[#FFFDF9] sticky left-0 z-10 select-none">
+              <div className="w-20 shrink-0 border-r border-[#FEE2E2] bg-[#FFFDF9] sticky left-0 z-10 select-none">
                 {hours.map(hour => (
                   <div key={hour} className="h-16 border-b border-[#F2EAE1] relative text-right pr-2">
-                    <span className="text-[10px] font-extrabold text-[#8C6D58] absolute -top-2.5 right-1.5 bg-[#FFFDF9] px-1 rounded-md border border-[#E8DED5]/40">
+                    <span className="text-[10px] font-extrabold text-[#757575] absolute -top-2.5 right-1.5 bg-[#FFFDF9] px-1 rounded-md border border-[#FEE2E2]/40">
                       {hour === 0 ? '12 AM' : hour < 12 ? `${hour} AM` : hour === 12 ? '12 PM' : `${hour - 12} PM`}
                     </span>
                   </div>
@@ -111,9 +111,9 @@ export default function WeeklyCalendar({ events = [] }) {
                             setSelectedDate(d);
                             openCreateBlockModal(d);
                           }}
-                          className="h-16 border-b border-[#F2EAE1] border-dashed hover:bg-[#FFF8F0]/40 transition-colors cursor-pointer group relative"
+                          className="h-16 border-b border-[#F2EAE1] border-dashed hover:bg-[#FFF5F5]/40 transition-colors cursor-pointer group relative"
                         >
-                          <span className="opacity-0 group-hover:opacity-100 absolute inset-0 flex items-center justify-center text-[9px] font-black text-[#6F4E37]/60">
+                          <span className="opacity-0 group-hover:opacity-100 absolute inset-0 flex items-center justify-center text-[9px] font-black text-[#E50914]/60">
                             + Add
                           </span>
                         </div>
@@ -170,7 +170,7 @@ export default function WeeklyCalendar({ events = [] }) {
                               <span className="truncate">{evt.title}</span>
                             </div>
                             {evt.venueName && (
-                              <div className="flex items-center gap-1 text-[9px] text-[#2C1810]/70 truncate mt-0.5">
+                              <div className="flex items-center gap-1 text-[9px] text-[#252525]/70 truncate mt-0.5">
                                 <MapPin className="w-2.5 h-2.5 shrink-0" />
                                 <span className="truncate">{evt.venueName}</span>
                               </div>

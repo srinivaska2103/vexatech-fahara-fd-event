@@ -1,8 +1,8 @@
 export default function manifest() {
   return {
-    name: 'Fahara Event Manager Partner Portal',
-    short_name: 'Fahara Event',
-    description: 'Event Manager Dashboard for Fahara Partners to manage bookings, services, calendar, and staff.',
+    name: 'Grab2GO Event Manager Partner Portal',
+    short_name: 'Grab2GO Event',
+    description: 'Event Manager Dashboard for Grab2GO Partners to manage bookings, services, calendar, and staff.',
     start_url: '/',
     display: 'standalone',
     background_color: '#1C1917',
@@ -14,13 +14,13 @@ export default function manifest() {
     dir: 'ltr',
     icons: [
       {
-        src: '/fahara-logo.jpeg',
+        src: '/grab-it-logo.png',
         sizes: '192x192',
         type: 'image/jpeg',
         purpose: 'any maskable'
       },
       {
-        src: '/fahara-logo.jpeg',
+        src: '/grab-it-logo.png',
         sizes: '512x512',
         type: 'image/jpeg',
         purpose: 'any maskable'
@@ -32,21 +32,21 @@ export default function manifest() {
         short_name: 'Dashboard',
         url: '/event/dashboard',
         description: 'View event company metrics and bookings',
-        icons: [{ src: '/fahara-logo.jpeg', sizes: '192x192' }]
+        icons: [{ src: '/grab-it-logo.png', sizes: '192x192' }]
       },
       {
         name: 'Calendar Schedule',
         short_name: 'Calendar',
         url: '/event/calendar',
         description: 'Manage event calendar schedule',
-        icons: [{ src: '/fahara-logo.jpeg', sizes: '192x192' }]
+        icons: [{ src: '/grab-it-logo.png', sizes: '192x192' }]
       },
       {
         name: 'Bookings',
         short_name: 'Bookings',
         url: '/event/bookings',
         description: 'Manage event bookings',
-        icons: [{ src: '/fahara-logo.jpeg', sizes: '192x192' }]
+        icons: [{ src: '/grab-it-logo.png', sizes: '192x192' }]
       }
     ],
     categories: ['business', 'productivity', 'utilities', 'events'],

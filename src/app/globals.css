@@ -7,13 +7,13 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
 
-  --color-primary: #6F4E37;
-  --color-secondary: #A67B5B;
-  --color-accent: #DDB892;
-  --color-background: #FFF8F0;
+  --color-primary: #E50914;
+  --color-secondary: #B71C1C;
+  --color-accent: #EF5350;
+  --color-background: #FFF5F5;
   --color-surface: #FFFFFF;
-  --color-border: #E8DED5;
-  --color-text: #2C1810;
+  --color-border: #FEE2E2;
+  --color-text: #252525;
 }
 
 html, body {
@@ -30,8 +30,8 @@ html, body {
   .dark {
     --background: #1A110D;
     --foreground: #F5EBE1;
-    --color-surface: #2C1810;
-    --color-border: #4A3225;
+    --color-surface: #252525;
+    --color-border: #E50914;
   }
 }
 

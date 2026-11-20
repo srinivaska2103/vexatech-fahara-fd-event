@@ -46,24 +46,24 @@ export default function CustomSelect({
         onClick={() => setIsOpen((prev) => !prev)}
         className={`w-full bg-[#FFFDF9] border transition-all duration-200 rounded-2xl px-3.5 py-2.5 text-left flex items-center justify-between gap-2 shadow-xs group ${
           isOpen
-            ? 'border-[#6F4E37] ring-2 ring-[#6F4E37]/15 shadow-sm'
-            : 'border-[#E8DED5] hover:border-[#DDB892] hover:bg-white'
+            ? 'border-[#E50914] ring-2 ring-[#E50914]/15 shadow-sm'
+            : 'border-[#FEE2E2] hover:border-[#EF5350] hover:bg-white'
         }`}
       >
         <div className="flex items-center gap-2.5 min-w-0">
           {Icon && (
             <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-              isOpen ? 'bg-[#6F4E37] text-white' : 'bg-[#FFF8F0] text-[#6F4E37]'
+              isOpen ? 'bg-[#E50914] text-white' : 'bg-[#FFF5F5] text-[#E50914]'
             }`}>
               <Icon className="w-3.5 h-3.5" />
             </div>
           )}
           <div className="min-w-0 flex flex-col">
-            <span className="text-xs font-bold text-[#2C1810] truncate">
-              {selectedOption ? selectedOption.label : <span className="text-[#8C6D58]/60 font-normal">{placeholder}</span>}
+            <span className="text-xs font-bold text-[#252525] truncate">
+              {selectedOption ? selectedOption.label : <span className="text-[#757575]/60 font-normal">{placeholder}</span>}
             </span>
             {selectedOption?.sublabel && (
-              <span className="text-[10px] text-[#8C6D58] font-medium truncate">
+              <span className="text-[10px] text-[#757575] font-medium truncate">
                 {selectedOption.sublabel}
               </span>
             )}
@@ -72,13 +72,13 @@ export default function CustomSelect({
 
         <div className="flex items-center gap-1.5 shrink-0">
           {badge && (
-            <span className="px-1.5 py-0.5 rounded-md bg-[#FFF8F0] text-[#6F4E37] border border-[#E8DED5] text-[10px] font-black">
+            <span className="px-1.5 py-0.5 rounded-md bg-[#FFF5F5] text-[#E50914] border border-[#FEE2E2] text-[10px] font-black">
               {badge}
             </span>
           )}
           <ChevronDown
-            className={`w-4 h-4 text-[#8C6D58] group-hover:text-[#6F4E37] transition-transform duration-200 ${
-              isOpen ? 'rotate-180 text-[#6F4E37]' : ''
+            className={`w-4 h-4 text-[#757575] group-hover:text-[#E50914] transition-transform duration-200 ${
+              isOpen ? 'rotate-180 text-[#E50914]' : ''
             }`}
           />
         </div>
@@ -86,18 +86,18 @@ export default function CustomSelect({
 
       {/* Modern Popover Menu */}
       {isOpen && (
-        <div className="absolute z-50 left-0 right-0 mt-2 bg-white border border-[#E8DED5] rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute z-50 left-0 right-0 mt-2 bg-white border border-[#FEE2E2] rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
           {searchable && options.length > 5 && (
-            <div className="p-2 border-b border-[#F0E6DE] bg-[#FFF8F0]/40">
+            <div className="p-2 border-b border-[#F0E6DE] bg-[#FFF5F5]/40">
               <div className="relative">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C6D58]" />
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#757575]" />
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search..."
                   autoFocus
-                  className="w-full pl-8 pr-3 py-1.5 bg-white border border-[#E8DED5] rounded-xl text-xs font-semibold text-[#2C1810] placeholder:text-[#8C6D58]/50 focus:border-[#6F4E37] focus:outline-none"
+                  className="w-full pl-8 pr-3 py-1.5 bg-white border border-[#FEE2E2] rounded-xl text-xs font-semibold text-[#252525] placeholder:text-[#757575]/50 focus:border-[#E50914] focus:outline-none"
                 />
               </div>
             </div>
@@ -105,7 +105,7 @@ export default function CustomSelect({
 
           <div className="max-h-56 overflow-y-auto p-1.5 space-y-0.5 custom-scrollbar">
             {filteredOptions.length === 0 ? (
-              <div className="p-3 text-center text-xs text-[#8C6D58] font-medium">
+              <div className="p-3 text-center text-xs text-[#757575] font-medium">
                 No matching options
               </div>
             ) : (
@@ -123,24 +123,24 @@ export default function CustomSelect({
                     }}
                     className={`w-full px-3 py-2 rounded-xl text-left flex items-center justify-between gap-2.5 transition-all duration-150 group ${
                       isSelected
-                        ? 'bg-[#6F4E37] text-white shadow-xs'
-                        : 'text-[#2C1810] hover:bg-[#FFF8F0] hover:text-[#6F4E37]'
+                        ? 'bg-[#E50914] text-white shadow-xs'
+                        : 'text-[#252525] hover:bg-[#FFF5F5] hover:text-[#E50914]'
                     }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       {ItemIcon && (
                         <ItemIcon
                           className={`w-4 h-4 shrink-0 transition-colors ${
-                            isSelected ? 'text-white' : 'text-[#8C6D58] group-hover:text-[#6F4E37]'
+                            isSelected ? 'text-white' : 'text-[#757575] group-hover:text-[#E50914]'
                           }`}
                         />
                       )}
                       <div className="min-w-0">
-                        <div className={`text-xs font-bold truncate ${isSelected ? 'text-white' : 'text-[#2C1810]'}`}>
+                        <div className={`text-xs font-bold truncate ${isSelected ? 'text-white' : 'text-[#252525]'}`}>
                           {opt.label}
                         </div>
                         {opt.sublabel && (
-                          <div className={`text-[10px] truncate ${isSelected ? 'text-white/80' : 'text-[#8C6D58]'}`}>
+                          <div className={`text-[10px] truncate ${isSelected ? 'text-white/80' : 'text-[#757575]'}`}>
                             {opt.sublabel}
                           </div>
                         )}

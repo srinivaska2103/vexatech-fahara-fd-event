@@ -63,18 +63,18 @@ export default function IncludedServicesCard({ booking }) {
     STANDARD: { bg: 'bg-violet-50', border: 'border-violet-300/60', text: 'text-violet-700', pill: 'bg-violet-100 text-violet-700 border-violet-300' },
     PREMIUM:  { bg: 'bg-amber-50',  border: 'border-amber-300/60',  text: 'text-amber-700',  pill: 'bg-amber-100 text-amber-700 border-amber-400' },
   };
-  const getTierColors = (tier) => TIER_COLORS[String(tier || '').toUpperCase()] || { bg: 'bg-surface/40', border: 'border-border/50', text: 'text-[#6F4E37]', pill: 'bg-[#6F4E37]/10 text-[#6F4E37] border-[#DDB892]/60' };
+  const getTierColors = (tier) => TIER_COLORS[String(tier || '').toUpperCase()] || { bg: 'bg-surface/40', border: 'border-border/50', text: 'text-[#E50914]', pill: 'bg-[#E50914]/10 text-[#E50914] border-[#EF5350]/60' };
 
   const guestCount = bookingData.total_persons || bookingData.guest_count || bookingData.guestCount || 1;
 
   return (
-    <div className="bg-white p-6 sm:p-7 rounded-3xl border border-stone-200/80 shadow-xs space-y-5 text-[#2C1810]">
+    <div className="bg-white p-6 sm:p-7 rounded-3xl border border-stone-200/80 shadow-xs space-y-5 text-[#252525]">
       <div className="flex items-center gap-3.5 pb-4 border-b border-stone-100">
         <div className="w-11 h-11 rounded-2xl bg-purple-50 text-purple-700 border border-purple-200 flex items-center justify-center font-black text-sm shrink-0">
           <Coffee className="w-5 h-5" />
         </div>
         <div>
-          <h3 className="text-base font-black text-[#2C1810] tracking-tight">Included Services & Packages</h3>
+          <h3 className="text-base font-black text-[#252525] tracking-tight">Included Services & Packages</h3>
           <p className="text-xs text-stone-500 font-medium">Selected party packages and event add-ons</p>
         </div>
       </div>
@@ -82,16 +82,16 @@ export default function IncludedServicesCard({ booking }) {
       <div className="space-y-3">
         {/* Package Base Row if present */}
         {packageItem && packageItem.service_name && (
-          <div className="p-4 rounded-2xl bg-[#FFF8F0] border border-[#DDB892]/60 flex items-start gap-4">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#DDB892]/30 to-[#FFF8F0] border border-[#DDB892]/60 flex items-center justify-center text-[#6F4E37] shrink-0 font-black text-sm">
+          <div className="p-4 rounded-2xl bg-[#FFF5F5] border border-[#EF5350]/60 flex items-start gap-4">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#EF5350]/30 to-[#FFF5F5] border border-[#EF5350]/60 flex items-center justify-center text-[#E50914] shrink-0 font-black text-sm">
               <Sparkles className="w-5 h-5" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <h4 className="font-extrabold text-[#2C1810] text-sm">
+                <h4 className="font-extrabold text-[#252525] text-sm">
                   {packageItem.service_name || packageItem.package_name || 'Event Package'}
                 </h4>
-                <span className="text-[10px] font-black bg-[#6F4E37]/10 text-[#6F4E37] border border-[#DDB892]/60 px-2 py-0.5 rounded-full uppercase tracking-wider">Package</span>
+                <span className="text-[10px] font-black bg-[#E50914]/10 text-[#E50914] border border-[#EF5350]/60 px-2 py-0.5 rounded-full uppercase tracking-wider">Package</span>
               </div>
               {packageItem.description && (
                 <p className="text-xs text-stone-500 font-medium mt-0.5">{packageItem.description}</p>
@@ -112,7 +112,7 @@ export default function IncludedServicesCard({ booking }) {
               </div>
               <div className="min-w-0 flex-1 space-y-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h4 className="font-extrabold text-[#2C1810] text-sm">{inc.name}</h4>
+                  <h4 className="font-extrabold text-[#252525] text-sm">{inc.name}</h4>
                   {tierKey && (
                     <span className={`text-[10px] font-black border px-2 py-0.5 rounded-full uppercase tracking-wider ${colors.pill}`}>
                       {tierKey}

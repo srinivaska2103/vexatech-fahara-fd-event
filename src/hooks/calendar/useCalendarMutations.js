@@ -12,7 +12,7 @@ export const useCreateBlockMutation = () => {
       if (data?.hasConflictingBookings) {
         toast((t) => (
           <div className="flex flex-col gap-1">
-            <span className="font-bold text-[#2C1810]">Block created with warnings!</span>
+            <span className="font-bold text-[#252525]">Block created with warnings!</span>
             <span className="text-xs text-amber-700">
               {data.conflictingBookingsCount} existing booking(s) overlap with this blocked period.
             </span>

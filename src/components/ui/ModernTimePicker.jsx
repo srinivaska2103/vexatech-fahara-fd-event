@@ -36,15 +36,15 @@ export default function ModernTimePicker({ value, onChange, placeholder = "Selec
         onClick={() => setIsOpen(!isOpen)}
         className={`w-full flex items-center justify-between gap-2 px-3 py-2 bg-white border rounded-xl text-xs font-bold transition-all shadow-2xs ${
           isOpen 
-            ? 'border-[#6F4E37] ring-2 ring-[#6F4E37]/15 text-[#2C1810]' 
-            : 'border-[#E8DED5] text-[#2C1810] hover:border-[#6F4E37]/40 hover:bg-[#FFFDF9]'
+            ? 'border-[#E50914] ring-2 ring-[#E50914]/15 text-[#252525]' 
+            : 'border-[#FEE2E2] text-[#252525] hover:border-[#E50914]/40 hover:bg-[#FFFDF9]'
         }`}
       >
         <div className="flex items-center gap-1.5 truncate">
-          <Clock className="w-3.5 h-3.5 text-[#6F4E37] shrink-0" />
+          <Clock className="w-3.5 h-3.5 text-[#E50914] shrink-0" />
           <span className="truncate">{selectedSlot.label}</span>
         </div>
-        <ChevronDown className={`w-3.5 h-3.5 text-[#8C6D58] shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#6F4E37]' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 text-[#757575] shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#E50914]' : ''}`} />
       </button>
 
       <AnimatePresence>
@@ -54,7 +54,7 @@ export default function ModernTimePicker({ value, onChange, placeholder = "Selec
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute z-50 left-0 right-0 sm:right-auto sm:w-44 mt-1.5 bg-white border border-[#E8DED5] rounded-2xl shadow-xl p-1.5 space-y-1 max-h-56 overflow-y-auto custom-scrollbar"
+            className="absolute z-50 left-0 right-0 sm:right-auto sm:w-44 mt-1.5 bg-white border border-[#FEE2E2] rounded-2xl shadow-xl p-1.5 space-y-1 max-h-56 overflow-y-auto custom-scrollbar"
           >
             {TIME_SLOTS.map((slot) => {
               const isSelected = slot.value === value;
@@ -68,8 +68,8 @@ export default function ModernTimePicker({ value, onChange, placeholder = "Selec
                   }}
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
                     isSelected
-                      ? 'bg-[#6F4E37] text-white font-bold shadow-xs'
-                      : 'text-[#2C1810] hover:bg-[#FFF8F0] hover:text-[#6F4E37]'
+                      ? 'bg-[#E50914] text-white font-bold shadow-xs'
+                      : 'text-[#252525] hover:bg-[#FFF5F5] hover:text-[#E50914]'
                   }`}
                 >
                   <span>{slot.label}</span>

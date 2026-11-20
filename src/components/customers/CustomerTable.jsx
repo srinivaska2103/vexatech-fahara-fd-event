@@ -18,15 +18,15 @@ export default function CustomerTable({ customers }) {
   };
 
   return (
-    <div className="w-full bg-white border border-[#E8DED5] rounded-3xl overflow-hidden shadow-xs">
+    <div className="w-full bg-white border border-[#FEE2E2] rounded-3xl overflow-hidden shadow-xs">
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs sm:text-sm text-[#2C1810] whitespace-nowrap">
-          <thead className="bg-[#FFF8F0] border-b border-[#E8DED5] text-[10px] uppercase tracking-wider text-[#8C6D58] font-black select-none">
+        <table className="w-full text-left text-xs sm:text-sm text-[#252525] whitespace-nowrap">
+          <thead className="bg-[#FFF5F5] border-b border-[#FEE2E2] text-[10px] uppercase tracking-wider text-[#757575] font-black select-none">
             <tr>
               <th className="p-4 w-12 text-center">
                 <input 
                   type="checkbox" 
-                  className="w-4 h-4 rounded-md border-[#E8DED5] text-[#6F4E37] focus:ring-[#6F4E37]"
+                  className="w-4 h-4 rounded-md border-[#FEE2E2] text-[#E50914] focus:ring-[#E50914]"
                   checked={customers.length > 0 && selectedCustomerIds.length === customers.length}
                   onChange={handleSelectAll}
                 />
@@ -50,44 +50,44 @@ export default function CustomerTable({ customers }) {
                 <td className="p-4 text-center" onClick={(e) => e.stopPropagation()}>
                   <input 
                     type="checkbox" 
-                    className="w-4 h-4 rounded-md border-[#E8DED5] text-[#6F4E37] focus:ring-[#6F4E37]"
+                    className="w-4 h-4 rounded-md border-[#FEE2E2] text-[#E50914] focus:ring-[#E50914]"
                     checked={selectedCustomerIds.includes(customer.id)}
                     onChange={() => toggleCustomerSelection(customer.id)}
                   />
                 </td>
                 <td className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-[#FFF8F0] border border-[#6F4E37]/20 flex items-center justify-center font-black text-[#6F4E37] text-sm shadow-2xs">
+                    <div className="w-10 h-10 rounded-2xl bg-[#FFF5F5] border border-[#E50914]/20 flex items-center justify-center font-black text-[#E50914] text-sm shadow-2xs">
                       {customer.name?.charAt(0)?.toUpperCase() || 'C'}
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#2C1810] text-sm group-hover:text-[#6F4E37] transition-colors">
+                        <span className="font-bold text-[#252525] text-sm group-hover:text-[#E50914] transition-colors">
                           {customer.name || 'Guest Client'}
                         </span>
                         <VIPBadge isVip={customer.is_vip} />
                       </div>
-                      <span className="text-[10px] text-[#8C6D58] font-bold">Ref: #{customer.id}</span>
+                      <span className="text-[10px] text-[#757575] font-bold">Ref: #{customer.id}</span>
                     </div>
                   </div>
                 </td>
                 <td className="p-4">
-                  <div className="text-xs font-bold text-[#2C1810] flex items-center gap-1.5">
-                    <Phone className="w-3 h-3 text-[#8C6D58]" />
+                  <div className="text-xs font-bold text-[#252525] flex items-center gap-1.5">
+                    <Phone className="w-3 h-3 text-[#757575]" />
                     <span>{customer.phone || 'N/A'}</span>
                   </div>
-                  <div className="text-xs text-[#8C6D58] font-medium flex items-center gap-1.5 mt-0.5">
-                    <Mail className="w-3 h-3 text-[#8C6D58]/70" />
+                  <div className="text-xs text-[#757575] font-medium flex items-center gap-1.5 mt-0.5">
+                    <Mail className="w-3 h-3 text-[#757575]/70" />
                     <span>{customer.email || 'No Email'}</span>
                   </div>
                 </td>
                 <td className="p-4">
-                  <div className="text-xs font-black text-[#2C1810]">
+                  <div className="text-xs font-black text-[#252525]">
                     {customer.total_bookings || 0} Bookings
                   </div>
-                  <div className="text-xs text-[#8C6D58] font-bold flex items-center mt-0.5">
+                  <div className="text-xs text-[#757575] font-bold flex items-center mt-0.5">
                     <span>LTV: </span>
-                    <IndianRupee className="w-3 h-3 text-[#6F4E37] ml-1 stroke-[2.5]" />
+                    <IndianRupee className="w-3 h-3 text-[#E50914] ml-1 stroke-[2.5]" />
                     <span>{(customer.total_spend || 0).toLocaleString('en-IN')}</span>
                   </div>
                 </td>
@@ -97,7 +97,7 @@ export default function CustomerTable({ customers }) {
                 <td className="p-4 text-right">
                   <Link 
                     href={`/event/customers/${customer.id}`} 
-                    className="inline-flex items-center justify-center p-2 rounded-xl bg-[#FFF8F0] hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white border border-[#6F4E37]/20 transition-all shadow-2xs"
+                    className="inline-flex items-center justify-center p-2 rounded-xl bg-[#FFF5F5] hover:bg-[#E50914] text-[#E50914] hover:text-white border border-[#E50914]/20 transition-all shadow-2xs"
                   >
                     <ChevronRight className="w-4 h-4 stroke-[2.5]" />
                   </Link>

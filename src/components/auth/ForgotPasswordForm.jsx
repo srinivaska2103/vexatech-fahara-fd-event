@@ -33,12 +33,12 @@ export default function ForgotPasswordForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full select-none mt-2">
       <div className="flex flex-col space-y-2 w-full">
-        <label className="text-[11px] font-black text-[#4A3225] uppercase tracking-wider">EMAIL ADDRESS</label>
+        <label className="text-[11px] font-black text-[#E50914] uppercase tracking-wider">EMAIL ADDRESS</label>
         <input
           {...register('email')}
           type="email"
           placeholder="Enter your registered cafe email"
-          className={`w-full px-4 py-3.5 rounded-2xl border bg-[#FFFBF8] text-[#2C1810] placeholder:text-[#B59D8B] text-sm font-medium focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
+          className={`w-full px-4 py-3.5 rounded-2xl border bg-[#FFFBF8] text-[#252525] placeholder:text-[#B59D8B] text-sm font-medium focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
             errors.email ? 'border-red-500 bg-red-50/50' : 'border-[#F0E6DD]'
           }`}
         />

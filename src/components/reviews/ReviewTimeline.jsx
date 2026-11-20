@@ -49,10 +49,10 @@ export default function ReviewTimeline({ review }) {
       className="bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-3xl p-6 shadow-[0_10px_35px_rgba(0,0,0,0.04)] mb-6 font-sans"
     >
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-stone-100">
-        <h3 className="text-sm font-black text-[#2C1810] uppercase tracking-wider flex items-center gap-2">
-          <Clock className="w-4.5 h-4.5 text-[#6F4E37]" /> Review Activity
+        <h3 className="text-sm font-black text-[#252525] uppercase tracking-wider flex items-center gap-2">
+          <Clock className="w-4.5 h-4.5 text-[#E50914]" /> Review Activity
         </h3>
-        <span className="text-[10px] font-black uppercase tracking-wider text-[#6F4E37] bg-[#FFF8F0] px-2.5 py-1 rounded-full border border-[#DDB892]/40">
+        <span className="text-[10px] font-black uppercase tracking-wider text-[#E50914] bg-[#FFF5F5] px-2.5 py-1 rounded-full border border-[#EF5350]/40">
           History Log
         </span>
       </div>
@@ -66,9 +66,9 @@ export default function ReviewTimeline({ review }) {
                 <Icon className="w-3.5 h-3.5" />
               </div>
               <div>
-                <h4 className="font-black text-sm text-[#2C1810]">{event.title}</h4>
+                <h4 className="font-black text-sm text-[#252525]">{event.title}</h4>
                 <p className="text-xs text-stone-500 font-medium mt-0.5">{event.description}</p>
-                <span className="text-[10px] font-extrabold text-[#6F4E37] uppercase tracking-wider mt-1 block">
+                <span className="text-[10px] font-extrabold text-[#E50914] uppercase tracking-wider mt-1 block">
                   {format(new Date(event.date), 'MMM d, yyyy · h:mm a')}
                 </span>
               </div>

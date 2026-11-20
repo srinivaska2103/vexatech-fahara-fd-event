@@ -53,9 +53,9 @@ export default function DangerZone() {
 
       <div className="border border-rose-200 bg-rose-50/40 p-5 sm:p-6 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h4 className="font-extrabold text-[#2C1810] text-sm sm:text-base">Delete Partner Account</h4>
-          <p className="text-xs text-[#8C6D58] font-medium mt-1 max-w-lg leading-relaxed">
-            Permanently remove your venue partner account and all of its contents from the Fahara platform. This action is not reversible.
+          <h4 className="font-extrabold text-[#252525] text-sm sm:text-base">Delete Partner Account</h4>
+          <p className="text-xs text-[#757575] font-medium mt-1 max-w-lg leading-relaxed">
+            Permanently remove your venue partner account and all of its contents from the Grab2GO platform. This action is not reversible.
           </p>
         </div>
 
@@ -77,9 +77,9 @@ export default function DangerZone() {
         <button 
           type="button" 
           onClick={() => setActiveTab('business')}
-          className="px-5 py-2.5 rounded-2xl bg-white hover:bg-[#FFF8F0] border border-[#E8DED5] text-[#2C1810] text-xs font-bold shadow-2xs flex items-center gap-2 transition-all active:scale-95"
+          className="px-5 py-2.5 rounded-2xl bg-white hover:bg-[#FFF5F5] border border-[#FEE2E2] text-[#252525] text-xs font-bold shadow-2xs flex items-center gap-2 transition-all active:scale-95"
         >
-          <ArrowLeft className="w-4 h-4 text-[#8C6D58]" />
+          <ArrowLeft className="w-4 h-4 text-[#757575]" />
           <span>Back to Step 2</span>
         </button>
 
@@ -111,7 +111,7 @@ export default function DangerZone() {
               </div>
 
               <div className="p-6 space-y-4">
-                <p className="text-xs text-[#8C6D58] font-semibold leading-relaxed">
+                <p className="text-xs text-[#757575] font-semibold leading-relaxed">
                   Are you absolutely sure you want to delete your account? This will immediately wipe all your data, including bookings, customer records, and settings.
                 </p>
 
@@ -124,7 +124,7 @@ export default function DangerZone() {
                     type="text" 
                     value={confirmText}
                     onChange={(e) => setConfirmText(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-white border border-rose-300 rounded-xl text-xs font-bold text-[#2C1810] focus:outline-none focus:border-rose-600"
+                    className="w-full px-3.5 py-2.5 bg-white border border-rose-300 rounded-xl text-xs font-bold text-[#252525] focus:outline-none focus:border-rose-600"
                     placeholder="Type DELETE"
                     autoFocus
                   />

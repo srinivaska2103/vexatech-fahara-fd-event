@@ -30,7 +30,7 @@ const StaffPerformanceChart = ({ data = [], isLoading }) => {
               cursor={{ fill: '#f9fafb' }}
               contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
             />
-            <Bar dataKey="events" fill="#A67B5B" radius={[0, 4, 4, 0]} barSize={20} />
+            <Bar dataKey="events" fill="#B71C1C" radius={[0, 4, 4, 0]} barSize={20} />
           </BarChart>
         </ResponsiveContainer>
       </div>

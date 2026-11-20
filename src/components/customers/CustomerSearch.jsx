@@ -7,13 +7,13 @@ export default function CustomerSearch() {
 
   return (
     <div className="relative flex-1 w-full">
-      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8C6D58]" />
+      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#757575]" />
       <input 
         type="text"
         placeholder="Search customers by name, email, phone..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl pl-11 pr-4 py-2.5 text-xs sm:text-sm font-semibold text-[#2C1810] focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/15 transition-all"
+        className="w-full bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl pl-11 pr-4 py-2.5 text-xs sm:text-sm font-semibold text-[#252525] focus:outline-none focus:border-[#E50914] focus:ring-2 focus:ring-[#E50914]/15 transition-all"
       />
     </div>
   );

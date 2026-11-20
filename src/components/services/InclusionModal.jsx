@@ -56,7 +56,7 @@ export const InclusionModal = ({ isOpen, onClose, onSave, initialData = null }) 
   return (
     <AnimatePresence>
       <div 
-        className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-[#2C1810]/60 backdrop-blur-xs p-0 sm:p-4 select-none font-sans"
+        className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-[#252525]/60 backdrop-blur-xs p-0 sm:p-4 select-none font-sans"
         onClick={onClose}
       >
         {/* Modal Box */}
@@ -65,28 +65,28 @@ export const InclusionModal = ({ isOpen, onClose, onSave, initialData = null }) 
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="w-full max-w-lg bg-white rounded-t-3xl sm:rounded-2xl border border-[#E8DED5] shadow-2xl p-5 sm:p-6 space-y-5 text-[#2C1810]"
+          className="w-full max-w-lg bg-white rounded-t-3xl sm:rounded-2xl border border-[#FEE2E2] shadow-2xl p-5 sm:p-6 space-y-5 text-[#252525]"
           onClick={(e) => e.stopPropagation()}
         >
           
           {/* Modal Header */}
-          <div className="flex items-center justify-between pb-3.5 border-b border-[#E8DED5]">
+          <div className="flex items-center justify-between pb-3.5 border-b border-[#FEE2E2]">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#6F4E37]/10 text-[#6F4E37] flex items-center justify-center font-bold">
+              <div className="w-9 h-9 rounded-xl bg-[#E50914]/10 text-[#E50914] flex items-center justify-center font-bold">
                 <Package className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-black text-[#2C1810]">
+                <h3 className="text-base font-black text-[#252525]">
                   {initialData ? 'Edit Custom Inclusion' : 'Add Custom Inclusion'}
                 </h3>
-                <p className="text-[11px] text-[#2C1810]/60">Specify items included in this event package.</p>
+                <p className="text-[11px] text-[#252525]/60">Specify items included in this event package.</p>
               </div>
             </div>
 
             <button
               type="button"
               onClick={onClose}
-              className="w-8 h-8 rounded-xl text-[#2C1810]/50 hover:bg-[#FFF8F0] hover:text-[#2C1810] flex items-center justify-center transition-all cursor-pointer"
+              className="w-8 h-8 rounded-xl text-[#252525]/50 hover:bg-[#FFF5F5] hover:text-[#252525] flex items-center justify-center transition-all cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -97,26 +97,26 @@ export const InclusionModal = ({ isOpen, onClose, onSave, initialData = null }) 
             
             {/* Inclusion Name */}
             <div className="space-y-1">
-              <label className="text-xs font-black text-[#2C1810]" htmlFor="inc_name">Inclusion Name *</label>
+              <label className="text-xs font-black text-[#252525]" htmlFor="inc_name">Inclusion Name *</label>
               <input
                 id="inc_name"
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Birthday Cake, Welcome Drinks, Balloon Setup..."
-                className="w-full h-11 px-3.5 text-xs font-bold rounded-xl border border-[#E8DED5] focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                className="w-full h-11 px-3.5 text-xs font-bold rounded-xl border border-[#FEE2E2] focus:outline-none focus:border-[#E50914] text-[#252525]"
               />
             </div>
 
             {/* Description */}
             <div className="space-y-1">
-              <label className="text-xs font-black text-[#2C1810]" htmlFor="inc_desc">Description (Optional)</label>
+              <label className="text-xs font-black text-[#252525]" htmlFor="inc_desc">Description (Optional)</label>
               <input
                 id="inc_desc"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="e.g. 1 Kg Chocolate Cake, Table setup with fairy lights..."
-                className="w-full h-11 px-3.5 text-xs font-medium rounded-xl border border-[#E8DED5] focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                className="w-full h-11 px-3.5 text-xs font-medium rounded-xl border border-[#FEE2E2] focus:outline-none focus:border-[#E50914] text-[#252525]"
               />
             </div>
 
@@ -125,12 +125,12 @@ export const InclusionModal = ({ isOpen, onClose, onSave, initialData = null }) 
               
               {/* Stepper Quantity */}
               <div className="space-y-1">
-                <label className="text-xs font-black text-[#2C1810]" htmlFor="inc_qty">Quantity *</label>
-                <div className="flex items-center gap-2 h-11 p-1 bg-[#FFF8F0] rounded-xl border border-[#E8DED5]">
+                <label className="text-xs font-black text-[#252525]" htmlFor="inc_qty">Quantity *</label>
+                <div className="flex items-center gap-2 h-11 p-1 bg-[#FFF5F5] rounded-xl border border-[#FEE2E2]">
                   <button
                     type="button"
                     onClick={decrementQty}
-                    className="w-9 h-full rounded-lg bg-white border border-[#E8DED5] hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white flex items-center justify-center transition-all cursor-pointer shrink-0 font-extrabold shadow-2xs"
+                    className="w-9 h-full rounded-lg bg-white border border-[#FEE2E2] hover:bg-[#E50914] text-[#E50914] hover:text-white flex items-center justify-center transition-all cursor-pointer shrink-0 font-extrabold shadow-2xs"
                   >
                     <Minus className="w-3.5 h-3.5" />
                   </button>
@@ -142,13 +142,13 @@ export const InclusionModal = ({ isOpen, onClose, onSave, initialData = null }) 
                     required
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
-                    className="w-full h-full border-none bg-transparent text-center font-black text-sm p-0 focus:outline-none text-[#2C1810]"
+                    className="w-full h-full border-none bg-transparent text-center font-black text-sm p-0 focus:outline-none text-[#252525]"
                   />
 
                   <button
                     type="button"
                     onClick={incrementQty}
-                    className="w-9 h-full rounded-lg bg-[#6F4E37] text-white hover:bg-[#5D3F2B] flex items-center justify-center transition-all cursor-pointer shrink-0 font-extrabold shadow-2xs"
+                    className="w-9 h-full rounded-lg bg-[#E50914] text-white hover:bg-[#E50914] flex items-center justify-center transition-all cursor-pointer shrink-0 font-extrabold shadow-2xs"
                   >
                     <Plus className="w-3.5 h-3.5" />
                   </button>
@@ -157,25 +157,25 @@ export const InclusionModal = ({ isOpen, onClose, onSave, initialData = null }) 
 
               {/* Unit Input */}
               <div className="space-y-1">
-                <label className="text-xs font-black text-[#2C1810]" htmlFor="inc_unit">Unit *</label>
+                <label className="text-xs font-black text-[#252525]" htmlFor="inc_unit">Unit *</label>
                 <input
                   id="inc_unit"
                   required
                   value={unit}
                   onChange={(e) => setUnit(e.target.value)}
                   placeholder="e.g. Cake, Guests, Hours, Setup"
-                  className="w-full h-11 px-3.5 text-xs font-bold rounded-xl border border-[#E8DED5] focus:outline-none focus:border-[#6F4E37] text-[#2C1810]"
+                  className="w-full h-11 px-3.5 text-xs font-bold rounded-xl border border-[#FEE2E2] focus:outline-none focus:border-[#E50914] text-[#252525]"
                 />
               </div>
 
             </div>
 
             {/* Action Buttons */}
-            <div className="pt-4 border-t border-[#E8DED5] flex items-center justify-end gap-2.5">
+            <div className="pt-4 border-t border-[#FEE2E2] flex items-center justify-end gap-2.5">
               <button
                 type="button"
                 onClick={onClose}
-                className="py-2.5 px-4 rounded-xl border border-[#E8DED5] text-xs font-bold text-[#2C1810] hover:bg-stone-50 cursor-pointer"
+                className="py-2.5 px-4 rounded-xl border border-[#FEE2E2] text-xs font-bold text-[#252525] hover:bg-stone-50 cursor-pointer"
               >
                 Cancel
               </button>
@@ -183,7 +183,7 @@ export const InclusionModal = ({ isOpen, onClose, onSave, initialData = null }) 
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="py-2.5 px-6 rounded-xl bg-[#6F4E37] hover:bg-[#5D3F2B] text-white text-xs font-extrabold shadow-2xs flex items-center gap-1.5 cursor-pointer"
+                className="py-2.5 px-6 rounded-xl bg-[#E50914] hover:bg-[#E50914] text-white text-xs font-extrabold shadow-2xs flex items-center gap-1.5 cursor-pointer"
               >
                 <Check className="w-4 h-4" />
                 <span>{initialData ? 'Save Inclusion' : 'Add Inclusion'}</span>

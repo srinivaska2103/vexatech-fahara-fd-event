@@ -143,7 +143,7 @@ export default function SupportPage() {
       details: [
         'Navigate to Finance → Refunds in your dashboard sidebar.',
         'Inspect completed refund logs, pending authorization claims, and adjustment amounts.',
-        'Refunds are executed strictly via secure backend Fahara API integrations.',
+        'Refunds are executed strictly via secure backend Grab2GO API integrations.',
         'Export CSV financial reports anytime for internal accounting.'
       ]
     }
@@ -162,14 +162,14 @@ export default function SupportPage() {
     <div className="space-y-6 sm:space-y-8 select-none font-sans pb-28 sm:pb-36">
       
       {/* Top Title */}
-      <h1 className="text-2xl sm:text-3xl font-extrabold text-[#2C1810] tracking-tight">
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-[#252525] tracking-tight">
         Event Manager User Guide & Support
       </h1>
 
       {/* ========================================== */}
       {/* 1. INTERACTIVE ONBOARDING HERO BANNER CARD */}
       {/* ========================================== */}
-      <div className="bg-gradient-to-br from-[#6F4E37] via-[#5D4037] to-[#432A1C] rounded-3xl p-6 sm:p-10 text-white relative overflow-hidden shadow-md">
+      <div className="bg-gradient-to-br from-[#E50914] via-[#B71C1C] to-[#432A1C] rounded-3xl p-6 sm:p-10 text-white relative overflow-hidden shadow-md">
         <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none" />
         
         <div className="relative z-10 max-w-3xl space-y-4">
@@ -185,7 +185,7 @@ export default function SupportPage() {
           </div>
 
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-            New to Fahara? Take the Interactive Guided Tour!
+            New to Grab2GO? Take the Interactive Guided Tour!
           </h2>
 
           <p className="text-xs sm:text-sm text-[#F3EFEA] font-medium leading-relaxed">
@@ -196,9 +196,9 @@ export default function SupportPage() {
             <button
               type="button"
               onClick={startTour}
-              className="bg-white text-[#2C1810] hover:bg-[#FFF8F0] px-6 py-3.5 rounded-full font-black text-xs sm:text-sm shadow-lg flex items-center gap-2 transition-all active:scale-95"
+              className="bg-white text-[#252525] hover:bg-[#FFF5F5] px-6 py-3.5 rounded-full font-black text-xs sm:text-sm shadow-lg flex items-center gap-2 transition-all active:scale-95"
             >
-              <PlayCircle className="w-4 h-4 text-[#6F4E37]" />
+              <PlayCircle className="w-4 h-4 text-[#E50914]" />
               <span>Start Guided Tour →</span>
             </button>
           </div>
@@ -208,17 +208,17 @@ export default function SupportPage() {
       {/* ========================================== */}
       {/* 2. SEARCH & TOPIC FILTERS BAR              */}
       {/* ========================================== */}
-      <div className="bg-white border border-[#E8DED5] rounded-3xl p-4 sm:p-5 shadow-2xs flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl p-4 sm:p-5 shadow-2xs flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
         
         {/* Search Input Left */}
         <div className="relative flex-1 md:max-w-md">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8C6D58]" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#757575]" />
           <input 
             type="text"
             placeholder="Search guides, topics, or FAQs..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#2C1810] focus:outline-none focus:border-[#6F4E37] focus:ring-2 focus:ring-[#6F4E37]/15 transition-all"
+            className="w-full bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#252525] focus:outline-none focus:border-[#E50914] focus:ring-2 focus:ring-[#E50914]/15 transition-all"
           />
         </div>
 
@@ -231,8 +231,8 @@ export default function SupportPage() {
               onClick={() => setSelectedTopic(t.id)}
               className={`px-4 py-2.5 rounded-2xl text-xs font-black transition-all shrink-0 ${
                 selectedTopic === t.id
-                  ? 'bg-[#6F4E37] text-white shadow-xs'
-                  : 'bg-[#FFF8F0] hover:bg-[#6F4E37]/10 text-[#8C6D58]'
+                  ? 'bg-[#E50914] text-white shadow-xs'
+                  : 'bg-[#FFF5F5] hover:bg-[#E50914]/10 text-[#757575]'
               }`}
             >
               {t.label}
@@ -250,11 +250,11 @@ export default function SupportPage() {
         {/* Left Column (2/3 width): Step-by-Step User Guides */}
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-extrabold text-[#2C1810] flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-[#6F4E37]" />
+            <h3 className="text-xl font-extrabold text-[#252525] flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-[#E50914]" />
               <span>Step-by-Step User Guides</span>
             </h3>
-            <span className="text-xs text-[#8C6D58] font-bold">
+            <span className="text-xs text-[#757575] font-bold">
               {filteredGuides.length} Guides Found
             </span>
           </div>
@@ -268,33 +268,33 @@ export default function SupportPage() {
                   animate={{ opacity: 1, y: 0 }}
                   key={guide.id}
                   onClick={() => setActiveGuideModal(guide)}
-                  className="bg-white border border-[#E8DED5] rounded-[28px] p-5 sm:p-6 shadow-2xs hover:shadow-xl hover:border-[#6F4E37]/40 transition-all duration-300 cursor-pointer group relative overflow-hidden space-y-3"
+                  className="bg-white border border-[#FEE2E2] rounded-[28px] p-5 sm:p-6 shadow-2xs hover:shadow-xl hover:border-[#E50914]/40 transition-all duration-300 cursor-pointer group relative overflow-hidden space-y-3"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black text-[#6F4E37] bg-[#FFF8F0] border border-[#6F4E37]/20 px-3 py-1 rounded-full uppercase tracking-wider">
+                    <span className="text-[10px] font-black text-[#E50914] bg-[#FFF5F5] border border-[#E50914]/20 px-3 py-1 rounded-full uppercase tracking-wider">
                       {guide.badge}
                     </span>
-                    <span className="text-xs text-[#8C6D58] font-bold flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5 text-[#8C6D58]" />
+                    <span className="text-xs text-[#757575] font-bold flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5 text-[#757575]" />
                       {guide.readTime}
                     </span>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-[#FFF8F0] border border-[#6F4E37]/20 text-[#6F4E37] group-hover:bg-[#6F4E37] group-hover:text-white group-hover:border-[#6F4E37] flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-all duration-300 shadow-2xs">
+                    <div className="w-12 h-12 rounded-2xl bg-[#FFF5F5] border border-[#E50914]/20 text-[#E50914] group-hover:bg-[#E50914] group-hover:text-white group-hover:border-[#E50914] flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-all duration-300 shadow-2xs">
                       <Icon className="w-6 h-6 stroke-[2]" />
                     </div>
 
                     <div className="space-y-1 flex-1 min-w-0">
-                      <h4 className="text-base sm:text-lg font-extrabold text-[#2C1810] group-hover:text-[#6F4E37] transition-colors leading-tight">
+                      <h4 className="text-base sm:text-lg font-extrabold text-[#252525] group-hover:text-[#E50914] transition-colors leading-tight">
                         {guide.title}
                       </h4>
-                      <p className="text-xs text-[#8C6D58] font-medium leading-relaxed line-clamp-2">
+                      <p className="text-xs text-[#757575] font-medium leading-relaxed line-clamp-2">
                         {guide.desc}
                       </p>
                     </div>
 
-                    <div className="w-9 h-9 rounded-full bg-[#FFF8F0] border border-[#E8DED5] text-[#2C1810] group-hover:bg-[#6F4E37] group-hover:text-white group-hover:border-[#6F4E37] flex items-center justify-center transition-all duration-300 shrink-0 self-center shadow-2xs">
+                    <div className="w-9 h-9 rounded-full bg-[#FFF5F5] border border-[#FEE2E2] text-[#252525] group-hover:bg-[#E50914] group-hover:text-white group-hover:border-[#E50914] flex items-center justify-center transition-all duration-300 shrink-0 self-center shadow-2xs">
                       <ChevronRight className="w-4 h-4 stroke-[2.5]" />
                     </div>
                   </div>
@@ -308,13 +308,13 @@ export default function SupportPage() {
         <div className="lg:col-span-1 space-y-6">
           
           {/* Card 1: Quick Tour Actions Card */}
-          <div className="bg-white border border-[#E8DED5] rounded-3xl p-6 sm:p-7 shadow-xs space-y-4">
+          <div className="bg-white border border-[#FEE2E2] rounded-3xl p-6 sm:p-7 shadow-xs space-y-4">
             <div className="space-y-1">
-              <span className="text-xs font-black text-[#8C6D58] uppercase tracking-wider block flex items-center gap-1.5">
-                <PlayCircle className="w-4 h-4 text-[#6F4E37]" />
+              <span className="text-xs font-black text-[#757575] uppercase tracking-wider block flex items-center gap-1.5">
+                <PlayCircle className="w-4 h-4 text-[#E50914]" />
                 QUICK TOUR ACTIONS
               </span>
-              <p className="text-xs text-[#8C6D58] font-medium leading-relaxed">
+              <p className="text-xs text-[#757575] font-medium leading-relaxed">
                 Need a refresher on how the portal works? Launch the 9-step interactive guided overlay anytime.
               </p>
             </div>
@@ -322,7 +322,7 @@ export default function SupportPage() {
             <button
               type="button"
               onClick={startTour}
-              className="w-full py-3 rounded-2xl bg-[#6F4E37] hover:bg-[#5D4037] text-white font-extrabold text-xs shadow-md shadow-[#6F4E37]/20 flex items-center justify-center gap-2 transition-all active:scale-95"
+              className="w-full py-3 rounded-2xl bg-[#E50914] hover:bg-[#B71C1C] text-white font-extrabold text-xs shadow-md shadow-[#E50914]/20 flex items-center justify-center gap-2 transition-all active:scale-95"
             >
               <PlayCircle className="w-4 h-4" />
               <span>Restart Interactive Tour</span>
@@ -351,18 +351,18 @@ export default function SupportPage() {
 
           {/* Card 3: Direct Support Desk & WhatsApp */}
           <div className="space-y-2">
-            <span className="text-xs font-black text-[#8C6D58] uppercase tracking-wider block px-1">
+            <span className="text-xs font-black text-[#757575] uppercase tracking-wider block px-1">
               DIRECT SUPPORT DESK
             </span>
 
-            <div className="bg-white border border-[#E8DED5] rounded-3xl p-6 sm:p-7 shadow-xs space-y-4">
+            <div className="bg-white border border-[#FEE2E2] rounded-3xl p-6 sm:p-7 shadow-xs space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-sm">
                   <MessageCircle className="w-5 h-5 fill-white stroke-none" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-black text-[#2C1810]">WhatsApp Support</h4>
-                  <p className="text-xs text-[#8C6D58] font-bold">+91 89460 29205</p>
+                  <h4 className="text-xs font-black text-[#252525]">WhatsApp Support</h4>
+                  <p className="text-xs text-[#757575] font-bold">+91 89460 29205</p>
                 </div>
               </div>
 
@@ -370,7 +370,7 @@ export default function SupportPage() {
                 href="https://wa.me/918946029205"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3 rounded-2xl bg-white hover:bg-[#FFF8F0] border border-[#E8DED5] text-[#2C1810] font-extrabold text-xs shadow-2xs flex items-center justify-center gap-2 transition-all active:scale-95 block text-center"
+                className="w-full py-3 rounded-2xl bg-white hover:bg-[#FFF5F5] border border-[#FEE2E2] text-[#252525] font-extrabold text-xs shadow-2xs flex items-center justify-center gap-2 transition-all active:scale-95 block text-center"
               >
                 <span>Chat on WhatsApp</span>
               </a>
@@ -378,37 +378,37 @@ export default function SupportPage() {
           </div>
 
           {/* Card 4: 24/7 Dedicated Partner Hotline */}
-          <div className="bg-[#FFF8F0]/90 border border-[#E8DED5] rounded-3xl p-6 sm:p-7 shadow-xs space-y-4">
+          <div className="bg-[#FFF5F5]/90 border border-[#FEE2E2] rounded-3xl p-6 sm:p-7 shadow-xs space-y-4">
             <div className="space-y-1">
-              <span className="text-xs font-black text-[#6F4E37] uppercase tracking-wider block flex items-center gap-1.5">
+              <span className="text-xs font-black text-[#E50914] uppercase tracking-wider block flex items-center gap-1.5">
                 <PhoneCall className="w-4 h-4" />
                 24/7 DEDICATED PARTNER HOTLINE
               </span>
-              <p className="text-xs text-[#8C6D58] font-medium leading-relaxed">
-                Speak directly with your assigned Fahara Partner Executive for priority onboarding and setup assistance.
+              <p className="text-xs text-[#757575] font-medium leading-relaxed">
+                Speak directly with your assigned Grab2GO Partner Executive for priority onboarding and setup assistance.
               </p>
             </div>
 
             <div className="space-y-2 pt-1">
               <a 
                 href="tel:+918946029205"
-                className="p-3 bg-white border border-[#E8DED5] rounded-2xl flex items-center gap-3 hover:border-[#6F4E37] transition-all block"
+                className="p-3 bg-white border border-[#FEE2E2] rounded-2xl flex items-center gap-3 hover:border-[#E50914] transition-all block"
               >
-                <PhoneCall className="w-4 h-4 text-[#6F4E37] shrink-0" />
+                <PhoneCall className="w-4 h-4 text-[#E50914] shrink-0" />
                 <div>
-                  <span className="text-[10px] font-black text-[#8C6D58] uppercase block">Toll-Free Helpline</span>
-                  <span className="text-xs font-extrabold text-[#2C1810]">+91 89460 29205</span>
+                  <span className="text-[10px] font-black text-[#757575] uppercase block">Toll-Free Helpline</span>
+                  <span className="text-xs font-extrabold text-[#252525]">+91 89460 29205</span>
                 </div>
               </a>
 
               <a 
                 href="mailto:vexatech.connect@gmail.com"
-                className="p-3 bg-white border border-[#E8DED5] rounded-2xl flex items-center gap-3 hover:border-[#6F4E37] transition-all block"
+                className="p-3 bg-white border border-[#FEE2E2] rounded-2xl flex items-center gap-3 hover:border-[#E50914] transition-all block"
               >
-                <Mail className="w-4 h-4 text-[#6F4E37] shrink-0" />
+                <Mail className="w-4 h-4 text-[#E50914] shrink-0" />
                 <div>
-                  <span className="text-[10px] font-black text-[#8C6D58] uppercase block">Partner Inbox</span>
-                  <span className="text-xs font-extrabold text-[#2C1810]">vexatech.connect@gmail.com</span>
+                  <span className="text-[10px] font-black text-[#757575] uppercase block">Partner Inbox</span>
+                  <span className="text-xs font-extrabold text-[#252525]">vexatech.connect@gmail.com</span>
                 </div>
               </a>
             </div>
@@ -434,19 +434,19 @@ export default function SupportPage() {
               exit={{ opacity: 0, scale: 0.92, y: 15 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-[#FFFDFB] border border-[#E8DED5] rounded-[32px] max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden select-none"
+              className="bg-[#FFFDFB] border border-[#FEE2E2] rounded-[32px] max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden select-none"
             >
               {/* Header Tag Badge & Close Button */}
               <div className="flex items-center justify-between gap-4">
-                <span className="text-[10px] font-black text-[#6F4E37] bg-[#FFF8F0] border border-[#6F4E37]/20 px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow-2xs flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#6F4E37]" />
+                <span className="text-[10px] font-black text-[#E50914] bg-[#FFF5F5] border border-[#E50914]/20 px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow-2xs flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#E50914]" />
                   {activeGuideModal.badge}
                 </span>
 
                 <button
                   type="button"
                   onClick={() => setActiveGuideModal(null)}
-                  className="w-9 h-9 rounded-full bg-[#FFF8F0] border border-[#E8DED5] text-[#6F4E37] hover:bg-[#6F4E37] hover:text-white transition-all flex items-center justify-center cursor-pointer shadow-2xs active:scale-90"
+                  className="w-9 h-9 rounded-full bg-[#FFF5F5] border border-[#FEE2E2] text-[#E50914] hover:bg-[#E50914] hover:text-white transition-all flex items-center justify-center cursor-pointer shadow-2xs active:scale-90"
                   aria-label="Close Guide"
                 >
                   <X className="w-4.5 h-4.5 stroke-[2.5]" />
@@ -455,34 +455,34 @@ export default function SupportPage() {
 
               {/* Title & Description */}
               <div className="space-y-2">
-                <h3 className="text-xl sm:text-2xl font-black text-[#2C1810] tracking-tight leading-snug">
+                <h3 className="text-xl sm:text-2xl font-black text-[#252525] tracking-tight leading-snug">
                   {activeGuideModal.title}
                 </h3>
-                <p className="text-xs text-[#8C6D58] font-medium leading-relaxed">
+                <p className="text-xs text-[#757575] font-medium leading-relaxed">
                   {activeGuideModal.desc}
                 </p>
               </div>
 
               {/* Divider */}
-              <div className="w-full h-px bg-[#E8DED5]" />
+              <div className="w-full h-px bg-[#FEE2E2]" />
 
               {/* Progress Tracker & Procedure List */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-xs font-black">
-                  <span className="text-[#2C1810] uppercase tracking-wider text-[11px]">
+                  <span className="text-[#252525] uppercase tracking-wider text-[11px]">
                     INSTRUCTIONS & PROCEDURE
                   </span>
-                  <span className="text-[#6F4E37] text-[11px] font-extrabold">
+                  <span className="text-[#E50914] text-[11px] font-extrabold">
                     {getGuideProgress(activeGuideModal.id, activeGuideModal.details.length)}% Completed
                   </span>
                 </div>
 
                 {/* Animated Progress Bar */}
-                <div className="w-full h-2 bg-[#FFF8F0] rounded-full border border-[#E8DED5] overflow-hidden">
+                <div className="w-full h-2 bg-[#FFF5F5] rounded-full border border-[#FEE2E2] overflow-hidden">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${getGuideProgress(activeGuideModal.id, activeGuideModal.details.length)}%` }}
-                    className="h-full bg-[#6F4E37] rounded-full transition-all duration-300"
+                    className="h-full bg-[#E50914] rounded-full transition-all duration-300"
                   />
                 </div>
 
@@ -499,18 +499,18 @@ export default function SupportPage() {
                         className={`flex items-start gap-3 p-3.5 rounded-2xl border transition-all cursor-pointer ${
                           isCompleted
                             ? 'bg-emerald-50/90 border-emerald-300 text-emerald-950 shadow-2xs'
-                            : 'bg-[#FFFDF9] border-[#E8DED5] hover:bg-[#FFF8F0] hover:border-[#6F4E37]/30 text-[#2C1810]'
+                            : 'bg-[#FFFDF9] border-[#FEE2E2] hover:bg-[#FFF5F5] hover:border-[#E50914]/30 text-[#252525]'
                         }`}
                       >
                         <div className={`w-6 h-6 rounded-full font-black text-xs flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
                           isCompleted 
                             ? 'bg-emerald-600 text-white shadow-xs' 
-                            : 'bg-[#6F4E37] text-white shadow-xs'
+                            : 'bg-[#E50914] text-white shadow-xs'
                         }`}>
                           {isCompleted ? <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" /> : idx + 1}
                         </div>
                         <span className={`text-xs font-semibold leading-relaxed flex-1 ${
-                          isCompleted ? 'line-through text-emerald-800/80' : 'text-[#2C1810]'
+                          isCompleted ? 'line-through text-emerald-800/80' : 'text-[#252525]'
                         }`}>
                           {step}
                         </span>
@@ -525,7 +525,7 @@ export default function SupportPage() {
                 <button
                   type="button"
                   onClick={() => setActiveGuideModal(null)}
-                  className="w-full py-3.5 rounded-2xl bg-[#6F4E37] hover:bg-[#5D4037] text-white font-extrabold text-xs sm:text-sm transition-all shadow-md shadow-[#6F4E37]/25 flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  className="w-full py-3.5 rounded-2xl bg-[#E50914] hover:bg-[#B71C1C] text-white font-extrabold text-xs sm:text-sm transition-all shadow-md shadow-[#E50914]/25 flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                 >
                   <CheckCircle2 className="w-4 h-4 text-emerald-300" />
                   <span>Got It, Close Guide</span>

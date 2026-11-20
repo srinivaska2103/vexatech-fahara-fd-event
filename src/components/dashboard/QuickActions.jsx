@@ -30,12 +30,12 @@ export default function QuickActions() {
           >
             <Link 
               href={action.href}
-              className="flex flex-col items-center justify-center p-3.5 sm:p-4 bg-white border border-[#E8DED5] rounded-2xl hover:border-[#6F4E37]/40 hover:shadow-md hover:-translate-y-0.5 transition-all group h-full relative overflow-hidden"
+              className="flex flex-col items-center justify-center p-3.5 sm:p-4 bg-white border border-[#FEE2E2] rounded-2xl hover:border-[#E50914]/40 hover:shadow-md hover:-translate-y-0.5 transition-all group h-full relative overflow-hidden"
             >
               <div className={`w-11 h-11 rounded-2xl border flex items-center justify-center mb-2.5 transition-transform group-hover:scale-110 shadow-2xs ${action.color}`}>
                 <Icon className="w-5 h-5" />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-[#2C1810] text-center tracking-tight truncate w-full">
+              <span className="text-xs sm:text-sm font-bold text-[#252525] text-center tracking-tight truncate w-full">
                 {action.name}
               </span>
             </Link>

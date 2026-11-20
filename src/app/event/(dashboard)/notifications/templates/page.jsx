@@ -26,7 +26,7 @@ const EMAIL_TEMPLATES = [
     badgeColor: 'bg-rose-50 text-rose-800 border-rose-200',
     iconGradient: 'from-rose-500 to-pink-600',
     subject: '🔥 Exclusive 15% OFF on Your Next Event Reservation!',
-    content: 'Hi {{customer_name}},\n\nWe have an exclusive offer just for you! Book your next event management service or party setup with us and enjoy a flat 15% OFF.\n\nUse Promo Code: FAHARA15 when booking your event package.\n\nDon\'t miss out—this limited-time discount is valid through the end of the month!\n\nBest regards,\nFahara Event Management',
+    content: 'Hi {{customer_name}},\n\nWe have an exclusive offer just for you! Book your next event management service or party setup with us and enjoy a flat 15% OFF.\n\nUse Promo Code: Grab2GO15 when booking your event package.\n\nDon\'t miss out—this limited-time discount is valid through the end of the month!\n\nBest regards,\nGrab2GO Event Management',
   },
   {
     id: 'venue-announcement',
@@ -46,7 +46,7 @@ const EMAIL_TEMPLATES = [
     badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200',
     iconGradient: 'from-emerald-500 to-teal-600',
     subject: 'Thank you for celebrating your event with us! ❤️',
-    content: 'Dear {{customer_name}},\n\nThank you so much for celebrating your recent occasion with {{service_name}}! It was our absolute pleasure hosting you and your guests.\n\nWe would love to hear about your experience! Please take a quick moment to leave us a review or reply with any feedback.\n\nWe look forward to hosting your next event soon!\n\nWarm wishes,\nFahara Events',
+    content: 'Dear {{customer_name}},\n\nThank you so much for celebrating your recent occasion with {{service_name}}! It was our absolute pleasure hosting you and your guests.\n\nWe would love to hear about your experience! Please take a quick moment to leave us a review or reply with any feedback.\n\nWe look forward to hosting your next event soon!\n\nWarm wishes,\nGrab2GO Events',
   },
   {
     id: 'birthday-special',
@@ -55,7 +55,7 @@ const EMAIL_TEMPLATES = [
     icon: PartyPopper,
     badgeColor: 'bg-cyan-50 text-cyan-800 border-cyan-200',
     iconGradient: 'from-cyan-500 to-blue-600',
-    subject: '🎂 Make Your Upcoming Birthday Magical with Fahara Event Packages!',
+    subject: '🎂 Make Your Upcoming Birthday Magical with Grab2GO Event Packages!',
     content: 'Hi {{customer_name}},\n\nIs your birthday or a loved one\'s special day around the corner?\n\nCelebrate stress-free with our complete Birthday Extravaganza setup! Includes customized balloon arches, personalized theme backdrops, cake cutting arrangements, and dedicated event coordination.\n\nBook 7 days in advance and get free custom invitation graphics for your guests!\n\nCheers,\n{{company_name}} Celebrations Team',
   },
   {
@@ -76,7 +76,7 @@ const EMAIL_TEMPLATES = [
     badgeColor: 'bg-amber-50 text-amber-800 border-amber-200',
     iconGradient: 'from-amber-400 to-amber-600',
     subject: '⚡ Reserve Early for Weekend & Holiday Celebrations!',
-    content: 'Hello {{customer_name}},\n\nWeekend and holiday dates fill up fast! Lock in your preferred venue time slot and event manager setup early to secure priority scheduling.\n\nEarly bird reservations made this week qualify for a complimentary welcome drink bar for up to 10 guests.\n\nDon\'t wait—confirm your booking today!\n\nBest regards,\nFahara Reservations Team',
+    content: 'Hello {{customer_name}},\n\nWeekend and holiday dates fill up fast! Lock in your preferred venue time slot and event manager setup early to secure priority scheduling.\n\nEarly bird reservations made this week qualify for a complimentary welcome drink bar for up to 10 guests.\n\nDon\'t wait—confirm your booking today!\n\nBest regards,\nGrab2GO Reservations Team',
   },
   {
     id: 'vip-membership',
@@ -86,7 +86,7 @@ const EMAIL_TEMPLATES = [
     badgeColor: 'bg-violet-50 text-violet-800 border-violet-200',
     iconGradient: 'from-violet-600 to-purple-800',
     subject: '⭐ You are Invited: Exclusive VIP Event Consultation & Tasting',
-    content: 'Dear {{customer_name}},\n\nAs one of our valued guests, we are delighted to extend a private invitation for a complimentary event planning consultation.\n\nDiscuss your upcoming celebration with our top event directors and preview our premium decor & food options.\n\nReply directly to this message to claim your VIP consultation slot.\n\nWarm regards,\nFahara Executive Suite',
+    content: 'Dear {{customer_name}},\n\nAs one of our valued guests, we are delighted to extend a private invitation for a complimentary event planning consultation.\n\nDiscuss your upcoming celebration with our top event directors and preview our premium decor & food options.\n\nReply directly to this message to claim your VIP consultation slot.\n\nWarm regards,\nGrab2GO Executive Suite',
   },
 ];
 
@@ -118,25 +118,25 @@ export default function MessageTemplatesPage() {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 text-[#2C1810]">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 text-[#252525]">
       
       {/* Modern Header Banner */}
-      <div className="bg-gradient-to-r from-white via-[#FFF8F0] to-[#FFF5EA] p-6 sm:p-8 rounded-3xl border border-[#DDB892]/60 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-gradient-to-r from-white via-[#FFF5F5] to-[#FFF5F5] p-6 sm:p-8 rounded-3xl border border-[#EF5350]/60 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <button 
             type="button"
             onClick={() => router.push('/event/notifications/compose')}
-            className="w-10 h-10 rounded-2xl bg-white border border-[#DDB892]/60 hover:bg-[#6F4E37] text-[#6F4E37] hover:text-white flex items-center justify-center shadow-2xs transition-all shrink-0 cursor-pointer"
+            className="w-10 h-10 rounded-2xl bg-white border border-[#EF5350]/60 hover:bg-[#E50914] text-[#E50914] hover:text-white flex items-center justify-center shadow-2xs transition-all shrink-0 cursor-pointer"
             title="Back to Compose"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#6F4E37]/10 text-[#6F4E37] text-xs font-extrabold mb-1">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E50914]/10 text-[#E50914] text-xs font-extrabold mb-1">
               <Sparkles className="w-3.5 h-3.5" />
               <span>BROADCAST TEMPLATES</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-[#2C1810] tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black text-[#252525] tracking-tight">
               Email Message Templates
             </h1>
             <p className="text-xs sm:text-sm text-stone-500 font-medium mt-0.5">
@@ -146,7 +146,7 @@ export default function MessageTemplatesPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-black text-[#6F4E37] bg-white border border-[#DDB892]/60 px-3.5 py-2 rounded-2xl shadow-2xs">
+          <span className="text-xs font-black text-[#E50914] bg-white border border-[#EF5350]/60 px-3.5 py-2 rounded-2xl shadow-2xs">
             {filteredTemplates.length} Template{filteredTemplates.length !== 1 ? 's' : ''} Available
           </span>
         </div>
@@ -166,7 +166,7 @@ export default function MessageTemplatesPage() {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-3.5 py-2 rounded-2xl text-xs font-extrabold transition-all cursor-pointer shrink-0 ${
                     isActive 
-                      ? 'bg-[#6F4E37] text-white shadow-2xs' 
+                      ? 'bg-[#E50914] text-white shadow-2xs' 
                       : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border border-stone-200'
                   }`}
                 >
@@ -185,7 +185,7 @@ export default function MessageTemplatesPage() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-2xl border border-stone-200 bg-stone-50/50 focus:bg-white text-xs font-medium text-[#2C1810] placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#6F4E37]/20" 
+              className="w-full pl-9 pr-4 py-2 rounded-2xl border border-stone-200 bg-stone-50/50 focus:bg-white text-xs font-medium text-[#252525] placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#E50914]/20" 
               placeholder="Search templates or subjects..." 
             />
           </div>
@@ -199,7 +199,7 @@ export default function MessageTemplatesPage() {
           <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mx-auto font-black">
             <MessageSquare size={22} />
           </div>
-          <h3 className="text-base font-extrabold text-[#2C1810]">No Templates Found</h3>
+          <h3 className="text-base font-extrabold text-[#252525]">No Templates Found</h3>
           <p className="text-xs text-stone-500 font-medium">Try adjusting your search terms or category filter.</p>
         </div>
       ) : (
@@ -219,7 +219,7 @@ export default function MessageTemplatesPage() {
                         <Icon className="w-5 h-5" />
                       </div>
                       <div>
-                        <h3 className="text-base font-extrabold text-[#2C1810] leading-tight">{tmpl.title}</h3>
+                        <h3 className="text-base font-extrabold text-[#252525] leading-tight">{tmpl.title}</h3>
                         <span className={`text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider border inline-block mt-1 ${tmpl.badgeColor}`}>
                           {tmpl.category}
                         </span>
@@ -228,7 +228,7 @@ export default function MessageTemplatesPage() {
                   </div>
 
                   <div className="p-4 bg-stone-50/90 rounded-2xl border border-stone-200/80 space-y-1.5">
-                    <p className="text-xs font-black text-[#2C1810] truncate">Subject: {tmpl.subject}</p>
+                    <p className="text-xs font-black text-[#252525] truncate">Subject: {tmpl.subject}</p>
                     <p className="text-xs text-stone-500 font-medium line-clamp-3 leading-relaxed whitespace-pre-wrap">{tmpl.content}</p>
                   </div>
                 </div>
@@ -237,7 +237,7 @@ export default function MessageTemplatesPage() {
                   <button
                     type="button"
                     onClick={() => setPreviewTemplate(tmpl)}
-                    className="py-2.5 px-3 bg-stone-100 hover:bg-stone-200 text-[#2C1810] text-xs font-black rounded-2xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="py-2.5 px-3 bg-stone-100 hover:bg-stone-200 text-[#252525] text-xs font-black rounded-2xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <Eye size={14} /> Preview
                   </button>
@@ -245,7 +245,7 @@ export default function MessageTemplatesPage() {
                   <button
                     type="button"
                     onClick={() => handleSelectTemplate(tmpl)}
-                    className="py-2.5 px-4 bg-gradient-to-r from-[#4A2C11] to-[#6F4E37] hover:from-[#3D2509] hover:to-[#5C402E] text-white text-xs font-black rounded-2xl shadow-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer active:scale-95"
+                    className="py-2.5 px-4 bg-gradient-to-r from-[#B71C1C] to-[#E50914] hover:from-[#3D2509] hover:to-[#5C402E] text-white text-xs font-black rounded-2xl shadow-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer active:scale-95"
                   >
                     <Send size={14} /> Use Template
                   </button>
@@ -264,7 +264,7 @@ export default function MessageTemplatesPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl border border-stone-200 p-6 max-w-lg w-full shadow-2xl space-y-4 text-[#2C1810] max-h-[85vh] overflow-y-auto"
+              className="bg-white rounded-3xl border border-stone-200 p-6 max-w-lg w-full shadow-2xl space-y-4 text-[#252525] max-h-[85vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between pb-3 border-b border-stone-100">
                 <div className="flex items-center gap-3">
@@ -272,8 +272,8 @@ export default function MessageTemplatesPage() {
                     <previewTemplate.icon size={18} />
                   </div>
                   <div>
-                    <h3 className="font-extrabold text-sm text-[#2C1810]">{previewTemplate.title}</h3>
-                    <span className="text-[10px] font-black text-[#6F4E37] uppercase">{previewTemplate.category}</span>
+                    <h3 className="font-extrabold text-sm text-[#252525]">{previewTemplate.title}</h3>
+                    <span className="text-[10px] font-black text-[#E50914] uppercase">{previewTemplate.category}</span>
                   </div>
                 </div>
                 <button
@@ -288,7 +288,7 @@ export default function MessageTemplatesPage() {
               <div className="space-y-3">
                 <div className="p-3 bg-stone-50 rounded-2xl border border-stone-200">
                   <span className="text-[10px] font-black text-stone-400 uppercase tracking-wider block mb-0.5">Subject Line</span>
-                  <p className="text-xs font-black text-[#2C1810]">{previewTemplate.subject}</p>
+                  <p className="text-xs font-black text-[#252525]">{previewTemplate.subject}</p>
                 </div>
 
                 <div className="p-4 bg-stone-50 rounded-2xl border border-stone-200">
@@ -312,7 +312,7 @@ export default function MessageTemplatesPage() {
                     setPreviewTemplate(null);
                     handleSelectTemplate(tmpl);
                   }}
-                  className="px-5 py-2 bg-[#6F4E37] text-white font-bold rounded-xl text-xs hover:bg-[#4A2C11] transition-all cursor-pointer shadow-xs flex items-center gap-1.5"
+                  className="px-5 py-2 bg-[#E50914] text-white font-bold rounded-xl text-xs hover:bg-[#B71C1C] transition-all cursor-pointer shadow-xs flex items-center gap-1.5"
                 >
                   <Send size={13} /> Select This Template
                 </button>

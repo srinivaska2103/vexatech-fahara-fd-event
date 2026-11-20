@@ -71,12 +71,12 @@ export default function EventLoginForm() {
       <div className="space-y-4">
         {/* Email Address */}
         <div className="flex flex-col space-y-1.5 w-full">
-          <label className="text-[11px] font-black text-[#4A3225] uppercase tracking-wider">EMAIL ADDRESS</label>
+          <label className="text-[11px] font-black text-[#E50914] uppercase tracking-wider">EMAIL ADDRESS</label>
           <input
             {...register('email')}
             type="email"
             placeholder="Enter your email"
-            className={`w-full px-4 py-3 rounded-2xl border bg-[#FFFBF8] text-[#2C1810] placeholder:text-[#B59D8B] text-sm font-medium focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
+            className={`w-full px-4 py-3 rounded-2xl border bg-[#FFFBF8] text-[#252525] placeholder:text-[#B59D8B] text-sm font-medium focus:bg-white focus:outline-none focus:border-[#966746] focus:ring-2 focus:ring-[#966746]/15 transition-all ${
               errors.email ? 'border-red-500 bg-red-50/50' : 'border-[#F0E6DD]'
             }`}
           />
@@ -86,7 +86,7 @@ export default function EventLoginForm() {
         {/* Password Header (Label & Forgot password?) */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <label className="text-[11px] font-black text-[#4A3225] uppercase tracking-wider">PASSWORD</label>
+            <label className="text-[11px] font-black text-[#E50914] uppercase tracking-wider">PASSWORD</label>
             <Link href="/event/forgot-password" className="text-xs font-bold text-[#966746] hover:underline transition-all">
               Forgot password?
             </Link>

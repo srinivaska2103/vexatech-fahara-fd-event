@@ -35,7 +35,7 @@ export default function AcceptBookingModal() {
           </div>
           
           <div>
-            <h3 className="text-lg font-black text-[#2C1810] mb-2 tracking-tight">Accept & Confirm Reservation</h3>
+            <h3 className="text-lg font-black text-[#252525] mb-2 tracking-tight">Accept & Confirm Reservation</h3>
             <p className="text-xs text-stone-500 font-medium leading-relaxed">
               Accepting this booking will update the status to <strong className="text-emerald-700">Confirmed</strong>. Instant confirmation emails will be automatically sent to the <strong>customer</strong> and the <strong>respected cafe venue</strong>.
             </p>

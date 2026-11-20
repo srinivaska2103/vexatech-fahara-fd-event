@@ -14,10 +14,10 @@ export default function ReviewGallery({ images = [] }) {
       className="bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-3xl p-6 sm:p-8 shadow-[0_10px_35px_rgba(0,0,0,0.04)] mb-6 font-sans"
     >
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-stone-100">
-        <h3 className="text-sm font-black text-[#2C1810] uppercase tracking-wider flex items-center gap-2">
-          <ImageIcon className="w-4.5 h-4.5 text-[#6F4E37]" /> Customer Attachments ({images.length})
+        <h3 className="text-sm font-black text-[#252525] uppercase tracking-wider flex items-center gap-2">
+          <ImageIcon className="w-4.5 h-4.5 text-[#E50914]" /> Customer Attachments ({images.length})
         </h3>
-        <span className="text-[10px] font-black uppercase tracking-wider text-[#6F4E37] bg-[#FFF8F0] px-2.5 py-1 rounded-full border border-[#DDB892]/40">
+        <span className="text-[10px] font-black uppercase tracking-wider text-[#E50914] bg-[#FFF5F5] px-2.5 py-1 rounded-full border border-[#EF5350]/40">
           User Uploads
         </span>
       </div>

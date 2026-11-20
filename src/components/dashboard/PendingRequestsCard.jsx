@@ -55,7 +55,7 @@ export default function PendingRequestsCard({ requests = [] }) {
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: 0.1 }}
-      className="relative overflow-hidden bg-white border border-[#E8DED5] rounded-3xl p-6 sm:p-7 h-full flex flex-col justify-between hover:border-[#6F4E37]/40 hover:shadow-[0_20px_40px_-15px_rgba(111,78,55,0.12)] transition-all duration-300 group select-none"
+      className="relative overflow-hidden bg-white border border-[#FEE2E2] rounded-3xl p-6 sm:p-7 h-full flex flex-col justify-between hover:border-[#E50914]/40 hover:shadow-[0_20px_40px_-15px_rgba(111,78,55,0.12)] transition-all duration-300 group select-none"
     >
       {/* Background Glow */}
       <div className="absolute top-0 right-0 w-60 h-60 bg-gradient-to-bl from-amber-500/10 via-rose-500/5 to-transparent rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
@@ -63,12 +63,12 @@ export default function PendingRequestsCard({ requests = [] }) {
       {/* Header */}
       <div className="flex justify-between items-center mb-6 relative z-10">
         <div>
-          <h3 className="text-lg font-black text-[#2C1810] tracking-tight">Pending Requests</h3>
-          <p className="text-xs text-[#8C6D58] font-medium mt-0.5">Booking approvals awaiting action</p>
+          <h3 className="text-lg font-black text-[#252525] tracking-tight">Pending Requests</h3>
+          <p className="text-xs text-[#757575] font-medium mt-0.5">Booking approvals awaiting action</p>
         </div>
         <Link 
           href="/event/bookings?tab=pending" 
-          className="group/link text-xs font-bold text-[#6F4E37] hover:text-[#4A3324] px-3.5 py-1.5 rounded-full bg-[#FFF8F0] border border-[#6F4E37]/20 hover:border-[#6F4E37] transition-all duration-300 flex items-center gap-1.5 shadow-2xs"
+          className="group/link text-xs font-bold text-[#E50914] hover:text-[#4A3324] px-3.5 py-1.5 rounded-full bg-[#FFF5F5] border border-[#E50914]/20 hover:border-[#E50914] transition-all duration-300 flex items-center gap-1.5 shadow-2xs"
         >
           <span>Review All</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" />
@@ -78,11 +78,11 @@ export default function PendingRequestsCard({ requests = [] }) {
       {/* Body Content */}
       {!hasRequests ? (
         <div className="flex-1 flex flex-col items-center justify-center text-center p-8 sm:p-10 relative z-10">
-          <div className="w-16 h-16 bg-gradient-to-br from-[#FFF8F0] to-[#F3E8DC] border border-[#6F4E37]/15 rounded-2xl flex items-center justify-center mb-4 text-[#6F4E37] shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+          <div className="w-16 h-16 bg-gradient-to-br from-[#FFF5F5] to-[#F3E8DC] border border-[#E50914]/15 rounded-2xl flex items-center justify-center mb-4 text-[#E50914] shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
             <AlertCircle className="w-8 h-8 stroke-[1.8]" />
           </div>
-          <h4 className="text-base font-extrabold text-[#2C1810] mb-1">You're all caught up!</h4>
-          <p className="text-xs text-[#2C1810]/60 max-w-xs leading-relaxed">No pending booking requests to review right now.</p>
+          <h4 className="text-base font-extrabold text-[#252525] mb-1">You're all caught up!</h4>
+          <p className="text-xs text-[#252525]/60 max-w-xs leading-relaxed">No pending booking requests to review right now.</p>
         </div>
       ) : (
         <div className="space-y-3 flex-1 relative z-10">
@@ -95,19 +95,19 @@ export default function PendingRequestsCard({ requests = [] }) {
             const note = request.event_special_request || request.special_request || request.special_requests || request.specialRequests;
 
             return (
-              <div key={request.id || idx} className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center p-4 rounded-2xl bg-[#FFFDF9] border border-[#F2EAE1] hover:border-[#6F4E37]/30 hover:bg-white hover:shadow-md transition-all duration-300">
+              <div key={request.id || idx} className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center p-4 rounded-2xl bg-[#FFFDF9] border border-[#F2EAE1] hover:border-[#E50914]/30 hover:bg-white hover:shadow-md transition-all duration-300">
                 <div>
-                  <h4 className="font-extrabold text-sm text-[#2C1810]">{customerName}</h4>
-                  <p className="text-xs text-[#2C1810]/60 font-medium mt-0.5 flex items-center gap-1.5">
-                    <span>Requested for <strong className="text-[#6F4E37] font-bold">{dateFormatted}</strong></span>
+                  <h4 className="font-extrabold text-sm text-[#252525]">{customerName}</h4>
+                  <p className="text-xs text-[#252525]/60 font-medium mt-0.5 flex items-center gap-1.5">
+                    <span>Requested for <strong className="text-[#E50914] font-bold">{dateFormatted}</strong></span>
                     {timeFormatted && (
                       <span className="flex items-center gap-1">
-                        • <Clock className="w-3 h-3 text-[#6F4E37]" /> {timeFormatted}
+                        • <Clock className="w-3 h-3 text-[#E50914]" /> {timeFormatted}
                       </span>
                     )}
                   </p>
                   {note && (
-                    <p className="text-xs mt-2 text-[#6F4E37] bg-[#FFF8F0] px-3 py-1.5 rounded-xl border border-[#6F4E37]/15 inline-block font-medium">
+                    <p className="text-xs mt-2 text-[#E50914] bg-[#FFF5F5] px-3 py-1.5 rounded-xl border border-[#E50914]/15 inline-block font-medium">
                       "{note}"
                     </p>
                   )}

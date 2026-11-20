@@ -19,6 +19,7 @@ import {
   Utensils
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import { useGetServicesQuery } from '@/hooks/services/useServicesQueries';
 import { useServicesStore } from '@/store/servicesStore';
 import ServiceCard from '@/components/services/ServiceCard';
@@ -40,7 +41,23 @@ import { useGetProfileQuery, useToggleServiceAvailabilityMutation } from '@/hook
 
 export default function ServicesPage() {
   const { data: services, isLoading, isError, error, refetch } = useGetServicesQuery();
-  const { data: profileData } = useGetProfileQuery();
+  const { data: profileData, refetch: refetchProfile } = useGetProfileQuery();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    try {
+      setIsRefreshing(true);
+      await Promise.all([
+        refetch ? refetch() : Promise.resolve(),
+        refetchProfile ? refetchProfile() : Promise.resolve(),
+      ]);
+      toast.success('Event packages refreshed');
+    } catch {
+      toast.error('Failed to refresh event packages');
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 500);
+    }
+  };
   const { mutate: toggleAvailability, isPending: isToggling } = useToggleServiceAvailabilityMutation();
   const isAvailable = profileData?.is_active ?? true;
 
@@ -90,11 +107,11 @@ export default function ServicesPage() {
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8 select-none font-sans text-[#2C1810]">
+    <div className="space-y-6 sm:space-y-8 select-none font-sans text-[#252525]">
       
       {/* Top Header Card */}
-      <div className="bg-[#FFF8F0]/80 border border-[#E8DED5] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#6F4E37]/10 via-[#A67B5B]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
+      <div className="bg-[#FFF5F5]/80 border border-[#FEE2E2] rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#E50914]/10 via-[#B71C1C]/5 to-transparent rounded-full blur-2xl pointer-events-none" />
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
@@ -103,7 +120,7 @@ export default function ServicesPage() {
               <span>Event Services Studio</span>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#2C1810] tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#252525] tracking-tight">
               Event Packages & Services
             </h1>
             
@@ -116,11 +133,12 @@ export default function ServicesPage() {
           <div className="flex items-center gap-3 shrink-0">
             <button
               type="button"
-              onClick={() => refetch()}
-              className="p-3 rounded-2xl bg-white border border-[#E8DED5] text-stone-600 hover:text-[#2C1810] hover:bg-[#FFF8F0] transition-colors shadow-2xs cursor-pointer"
+              onClick={handleRefresh}
+              disabled={isRefreshing}
+              className="p-3 rounded-2xl bg-white border border-[#FEE2E2] text-stone-600 hover:text-[#252525] hover:bg-[#FFF5F5] transition-colors shadow-2xs disabled:opacity-50 cursor-pointer"
               title="Refresh services"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#E50914]' : ''}`} />
             </button>
 
             <Link 
@@ -162,7 +180,7 @@ export default function ServicesPage() {
             </div>
             <p className="text-xs text-stone-600 font-medium mt-0.5">
               {isAvailable 
-                ? 'Customers can browse and book all your active packages on the Fahara user app.' 
+                ? 'Customers can browse and book all your active packages on the Grab2GO user app.' 
                 : 'Your packages and celebration offerings are temporarily unlisted and hidden from users.'}
             </p>
           </div>
@@ -183,7 +201,7 @@ export default function ServicesPage() {
       </div>
 
       {/* Filter Tabs & Search Bar */}
-      <div className="bg-white border border-[#E8DED5] rounded-3xl p-4 shadow-2xs flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-4">
+      <div className="bg-white border border-[#FEE2E2] rounded-3xl p-4 shadow-2xs flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-4">
         
         {/* Category Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 xl:pb-0 scrollbar-none">
@@ -195,7 +213,7 @@ export default function ServicesPage() {
               className={`px-4 py-2.5 rounded-2xl text-xs font-black transition-all shrink-0 cursor-pointer ${
                 selectedCategory === cat
                   ? 'bg-[#4A2E1D] text-white shadow-xs'
-                  : 'bg-[#FFF8F0] hover:bg-[#4A2E1D]/10 text-stone-700'
+                  : 'bg-[#FFF5F5] hover:bg-[#4A2E1D]/10 text-stone-700'
               }`}
             >
               {cat === 'ALL' ? 'All Packages' : cat}
@@ -211,7 +229,7 @@ export default function ServicesPage() {
             placeholder="Search package name..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#FFFDF9] border border-[#E8DED5] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#2C1810] focus:outline-none focus:border-[#4A2E1D] focus:ring-2 focus:ring-[#4A2E1D]/15 transition-all"
+            className="w-full bg-[#FFFDF9] border border-[#FEE2E2] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-semibold text-[#252525] focus:outline-none focus:border-[#4A2E1D] focus:ring-2 focus:ring-[#4A2E1D]/15 transition-all"
           />
         </div>
       </div>
@@ -243,14 +261,14 @@ export default function ServicesPage() {
               <div key={catKey} className="space-y-5">
                 
                 {/* CATEGORY BANNER HEADER (Screenshot 1) */}
-                <div className="bg-[#FFF8F0] border border-[#F2E8DE] p-4 sm:p-5 rounded-3xl shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="bg-[#FFF5F5] border border-[#F2E8DE] p-4 sm:p-5 rounded-3xl shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-white border border-[#E8DED5] flex items-center justify-center text-[#4A2E1D] shadow-2xs shrink-0">
+                    <div className="w-10 h-10 rounded-2xl bg-white border border-[#FEE2E2] flex items-center justify-center text-[#4A2E1D] shadow-2xs shrink-0">
                       <CategoryIcon className="w-5 h-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h2 className="text-lg sm:text-xl font-extrabold text-[#2C1810] tracking-tight">{catKey}</h2>
+                        <h2 className="text-lg sm:text-xl font-extrabold text-[#252525] tracking-tight">{catKey}</h2>
                         <span className="px-2.5 py-0.5 rounded-full bg-[#4A2E1D] text-white text-xs font-black">
                           {catPackages.length}
                         </span>
@@ -286,12 +304,12 @@ export default function ServicesPage() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white border border-[#E8DED5] rounded-3xl py-16 px-6 flex flex-col items-center justify-center text-center shadow-xs"
+            className="bg-white border border-[#FEE2E2] rounded-3xl py-16 px-6 flex flex-col items-center justify-center text-center shadow-xs"
           >
-            <div className="w-20 h-20 bg-[#FFF8F0] border border-[#4A2E1D]/20 rounded-3xl flex items-center justify-center text-[#4A2E1D] mb-4 shadow-inner">
+            <div className="w-20 h-20 bg-[#FFF5F5] border border-[#4A2E1D]/20 rounded-3xl flex items-center justify-center text-[#4A2E1D] mb-4 shadow-inner">
               <Layers className="w-10 h-10 stroke-[1.8]" />
             </div>
-            <h3 className="text-xl font-black text-[#2C1810] mb-2">No Event Packages Found</h3>
+            <h3 className="text-xl font-black text-[#252525] mb-2">No Event Packages Found</h3>
             <p className="text-xs sm:text-sm text-stone-500 font-medium max-w-md mb-6 leading-relaxed">
               You haven't created any event packages yet, or no packages match your search filter.
             </p>

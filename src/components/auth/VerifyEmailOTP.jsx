@@ -50,7 +50,7 @@ export default function VerifyEmailOTP() {
     <div className="space-y-6 w-full flex flex-col items-center select-none mt-2">
       <div className="w-full text-center">
         <p className="text-xs sm:text-sm text-[#7A5A44] font-medium mb-4">
-          We've sent a 6-digit verification code to Account ID <span className="font-extrabold text-[#2C1810] font-mono border border-stone-300 px-2 py-0.5 rounded-lg bg-white/60">{idParam}</span>
+          We've sent a 6-digit verification code to Account ID <span className="font-extrabold text-[#252525] font-mono border border-stone-300 px-2 py-0.5 rounded-lg bg-white/60">{idParam}</span>
         </p>
       </div>
 

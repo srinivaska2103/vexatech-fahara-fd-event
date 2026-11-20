@@ -54,7 +54,7 @@ export default function RejectBookingModal() {
           </div>
           
           <div>
-            <h3 className="text-lg font-black text-[#2C1810] mb-2 tracking-tight">Decline Reservation</h3>
+            <h3 className="text-lg font-black text-[#252525] mb-2 tracking-tight">Decline Reservation</h3>
             <p className="text-xs text-stone-500 font-medium leading-relaxed">
               Please provide a clear reason for declining this booking. A cancellation notification with this reason will be sent to the customer.
             </p>
@@ -62,12 +62,12 @@ export default function RejectBookingModal() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
-              <label className="block text-[11px] font-black text-[#6F4E37] uppercase tracking-wider mb-2">Rejection Reason</label>
+              <label className="block text-[11px] font-black text-[#E50914] uppercase tracking-wider mb-2">Rejection Reason</label>
               <textarea
                 {...register('reason')}
                 rows={3}
-                className={`w-full bg-[#FFFDF9] border rounded-2xl px-4 py-3 text-xs font-semibold text-[#2C1810] focus:outline-none focus:ring-2 focus:ring-[#6F4E37]/15 transition-all resize-none
-                  ${errors.reason ? 'border-rose-400 focus:border-rose-500' : 'border-stone-200 focus:border-[#6F4E37]'}
+                className={`w-full bg-[#FFFDF9] border rounded-2xl px-4 py-3 text-xs font-semibold text-[#252525] focus:outline-none focus:ring-2 focus:ring-[#E50914]/15 transition-all resize-none
+                  ${errors.reason ? 'border-rose-400 focus:border-rose-500' : 'border-stone-200 focus:border-[#E50914]'}
                 `}
                 placeholder="e.g. Schedule conflict, capacity limit, out of service radius..."
               />

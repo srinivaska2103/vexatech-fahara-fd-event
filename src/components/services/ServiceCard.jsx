@@ -42,7 +42,7 @@ export default function ServiceCard({ service, onDelete, onEdit }) {
   const pricingType = service.pricing_type || 'package'; // 'package' or 'guest'
 
   return (
-    <div className="bg-white rounded-3xl border border-[#F2E8DE] shadow-xs hover:shadow-md transition-all duration-300 flex flex-col h-full overflow-hidden p-5 sm:p-6 text-[#2C1810]">
+    <div className="bg-white rounded-3xl border border-[#F2E8DE] shadow-xs hover:shadow-md transition-all duration-300 flex flex-col h-full overflow-hidden p-5 sm:p-6 text-[#252525]">
       
       {/* Card Header: Category Badge & Status */}
       <div className="flex items-center justify-between gap-2 mb-4">
@@ -61,12 +61,12 @@ export default function ServiceCard({ service, onDelete, onEdit }) {
 
       {/* Package Name & Price */}
       <div className="space-y-1 mb-3">
-        <h3 className="text-lg sm:text-xl font-extrabold text-[#2C1810] tracking-tight line-clamp-1">
+        <h3 className="text-lg sm:text-xl font-extrabold text-[#252525] tracking-tight line-clamp-1">
           {service.service_name}
         </h3>
         
         <div className="flex items-baseline gap-1">
-          <span className="text-2xl sm:text-3xl font-black text-[#2C1810] tracking-tight">
+          <span className="text-2xl sm:text-3xl font-black text-[#252525] tracking-tight">
             ₹{Number(service.price || 0).toLocaleString('en-IN')}
           </span>
           <span className="text-xs font-semibold text-stone-500">
@@ -77,7 +77,7 @@ export default function ServiceCard({ service, onDelete, onEdit }) {
 
       {/* Capacity & Duration Pills */}
       <div className="flex flex-wrap items-center gap-2 mb-4">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF8F0] border border-[#FDE68A] text-[#92400E] text-xs font-bold">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF5F5] border border-[#FDE68A] text-[#92400E] text-xs font-bold">
           <Users className="w-3.5 h-3.5 text-[#D97706]" />
           <span>Up to {guestCount} Guests</span>
         </div>
@@ -110,7 +110,7 @@ export default function ServiceCard({ service, onDelete, onEdit }) {
                 <div key={idx} className="flex items-center justify-between p-2 rounded-xl bg-stone-50/80 border border-stone-100 text-xs">
                   <div className="flex items-center gap-2 min-w-0">
                     <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 stroke-[2.5]" />
-                    <span className="font-bold text-[#2C1810] truncate">{name}</span>
+                    <span className="font-bold text-[#252525] truncate">{name}</span>
                   </div>
                   {unit && (
                     <span className="text-[10px] font-extrabold text-stone-600 bg-white px-2 py-0.5 rounded-md border border-stone-200 shrink-0 ml-2">

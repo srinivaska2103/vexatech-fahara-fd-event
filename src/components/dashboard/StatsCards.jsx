@@ -39,7 +39,7 @@ const StatCard = ({ title, value, icon: Icon, trend, trendLabel, delay, accentCo
       whileHover={{ y: -4, scale: 1.015 }}
       whileTap={{ scale: 0.985 }}
       transition={{ delay, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="relative overflow-hidden bg-white/95 backdrop-blur-md border border-[#E8DED5] rounded-3xl p-6 flex flex-col justify-between hover:border-[#6F4E37]/40 hover:shadow-[0_20px_40px_-15px_rgba(111,78,55,0.15)] transition-all duration-300 group cursor-pointer select-none"
+      className="relative overflow-hidden bg-white/95 backdrop-blur-md border border-[#FEE2E2] rounded-3xl p-6 flex flex-col justify-between hover:border-[#E50914]/40 hover:shadow-[0_20px_40px_-15px_rgba(111,78,55,0.15)] transition-all duration-300 group cursor-pointer select-none"
     >
       {/* Top-Right Soft Quarter-Circle Glow (Matching Image 1) */}
       <div className={`absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl ${currentStyle.glow} rounded-bl-full transition-transform duration-500 group-hover:scale-125 pointer-events-none`} />
@@ -68,20 +68,20 @@ const StatCard = ({ title, value, icon: Icon, trend, trendLabel, delay, accentCo
 
       {/* Middle Section: Title & Value */}
       <div className="relative z-10 mb-4">
-        <h3 className="text-[#8C6D58] font-black text-[11px] uppercase tracking-wider mb-1 group-hover:text-[#6F4E37] transition-colors">
+        <h3 className="text-[#757575] font-black text-[11px] uppercase tracking-wider mb-1 group-hover:text-[#E50914] transition-colors">
           {title}
         </h3>
-        <p className="text-3xl font-black text-[#2C1810] tracking-tight group-hover:scale-[1.01] origin-left transition-transform">
+        <p className="text-3xl font-black text-[#252525] tracking-tight group-hover:scale-[1.01] origin-left transition-transform">
           {value}
         </p>
       </div>
 
       {/* Bottom Section: Divider Line & Trend Subtext with Micro Icon (Exact to Image 1) */}
       <div className="relative z-10 pt-3 border-t border-[#F2EAE1] flex items-center justify-between">
-        <span className="text-[11px] text-[#2C1810]/50 font-semibold tracking-tight">
+        <span className="text-[11px] text-[#252525]/50 font-semibold tracking-tight">
           {trendLabel || 'vs last month'}
         </span>
-        <TrendingUp className="w-3.5 h-3.5 text-[#2C1810]/35 group-hover:text-[#6F4E37] transition-colors" />
+        <TrendingUp className="w-3.5 h-3.5 text-[#252525]/35 group-hover:text-[#E50914] transition-colors" />
       </div>
     </motion.div>
   );

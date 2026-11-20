@@ -6,7 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 const CustomerGrowthChart = ({ data = [], isLoading }) => {
   if (isLoading) {
     return (
-      <div className="bg-white p-6 rounded-3xl border border-[#E8DED5] shadow-xs animate-pulse h-[360px] flex items-center justify-center text-[#8C6D58] font-bold text-xs">
+      <div className="bg-white p-6 rounded-3xl border border-[#FEE2E2] shadow-xs animate-pulse h-[360px] flex items-center justify-center text-[#757575] font-bold text-xs">
         Loading Customer Chart...
       </div>
     );
@@ -15,10 +15,10 @@ const CustomerGrowthChart = ({ data = [], isLoading }) => {
   const chartData = data || [];
 
   return (
-    <div className="bg-white p-6 sm:p-7 rounded-3xl border border-[#E8DED5] shadow-xs select-none space-y-4">
+    <div className="bg-white p-6 sm:p-7 rounded-3xl border border-[#FEE2E2] shadow-xs select-none space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-black text-[#2C1810] tracking-tight">Customer Growth</h3>
-        <span className="text-[10px] font-black text-[#8C6D58] bg-[#FFF8F0] px-3 py-1 rounded-full border border-[#6F4E37]/20 uppercase tracking-wider">
+        <h3 className="text-lg font-black text-[#252525] tracking-tight">Customer Growth</h3>
+        <span className="text-[10px] font-black text-[#757575] bg-[#FFF5F5] px-3 py-1 rounded-full border border-[#E50914]/20 uppercase tracking-wider">
           New Clients
         </span>
       </div>
@@ -30,19 +30,19 @@ const CustomerGrowthChart = ({ data = [], isLoading }) => {
               dataKey="name" 
               axisLine={false} 
               tickLine={false} 
-              tick={{ fontSize: 11, fill: '#8C6D58', fontWeight: 700 }} 
+              tick={{ fontSize: 11, fill: '#757575', fontWeight: 700 }} 
               dy={10} 
             />
             <YAxis 
               axisLine={false} 
               tickLine={false} 
-              tick={{ fontSize: 11, fill: '#8C6D58', fontWeight: 700 }} 
+              tick={{ fontSize: 11, fill: '#757575', fontWeight: 700 }} 
               allowDecimals={false}
             />
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F2EAE1" />
             <Tooltip 
               contentStyle={{ 
-                backgroundColor: '#2C1810', 
+                backgroundColor: '#252525', 
                 borderRadius: '16px', 
                 border: 'none', 
                 color: '#fff',
@@ -50,16 +50,16 @@ const CustomerGrowthChart = ({ data = [], isLoading }) => {
                 fontSize: '12px',
                 boxShadow: '0 10px 25px -5px rgba(0,0,0,0.2)' 
               }}
-              itemStyle={{ color: '#FFF8F0' }}
+              itemStyle={{ color: '#FFF5F5' }}
               formatter={(value) => [`${value} Clients`, 'Growth']}
             />
             <Line 
               type="monotone" 
               dataKey="customers" 
-              stroke="#6F4E37" 
+              stroke="#E50914" 
               strokeWidth={3.5} 
-              dot={{ r: 4, fill: '#A67B5B', strokeWidth: 2, stroke: '#fff' }} 
-              activeDot={{ r: 7, fill: '#6F4E37', stroke: '#fff', strokeWidth: 2 }} 
+              dot={{ r: 4, fill: '#B71C1C', strokeWidth: 2, stroke: '#fff' }} 
+              activeDot={{ r: 7, fill: '#E50914', stroke: '#fff', strokeWidth: 2 }} 
             />
           </LineChart>
         </ResponsiveContainer>
